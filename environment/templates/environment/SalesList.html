@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="flex-1 p-6 mx-auto bg-gray-100 ">
+        <!-- Sales Overview -->
+        <div class="card">
+            <!-- header -->
+            <div class="flex flex-row justify-between card-header">
+                <h1 class="h6">Sales List</h1>
+            </div>
+            <!-- end header -->
+            <!-- body -->
+            <div class="grid grid-cols-3 gap-2 px-4 py-2 mx-4 border-2 ">
+                <div class="">
+                    <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">
+                        <a href="{% url 'lme_sales_create' %}">Add new Sale</a>
+                    </button>
+                </div>
+                <div class="">
+                    <button class="px-4 py-2 text-red-500 bg-gray-300 border-2 rounded-lg outline-blue-500">Sales List</button>
+                </div>
+                <div class="">
+                    <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">Report</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-5 gap-4 px-4 py-2 mx-4 border-2 ">
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Factory
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <input type="text"
+                               class="w-full p-2 text-sm border-2 rounded-lg"
+                               placeholder="Search Factory">
+                    </div>
+                </div>
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            LME
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <input type="text"
+                               class="w-full p-2 text-sm border-2 rounded-lg"
+                               placeholder="Search LME"/>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Contact Person
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <input type="text"
+                               class="w-full p-2 text-sm border-2 rounded-lg"
+                               placeholder="Search Person"/>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            School Name
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <input type="text"
+                               class="w-full p-2 text-sm border-2 rounded-lg"
+                               placeholder=""/>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Action
+                        </p>
+                    </div>
+                    <div>
+                        <button class="w-1/2 px-2 py-2 bg-gray-500 rounded-lg">Filter</button>
+                    </div>
+                </div>
+            </div>
+            <div class=" w-[90%] mx-2 mt-4 border-2 bg-slate-100 rounded-2xl">
+                <table class="w-full text-left table-auto">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 border-r">LME</th>
+                            <th class="px-4 py-2 border-r">Project</th>
+                            <th class="px-4 py-2 border-r">Month</th>
+                            <th class="px-4 py-2 border-r">Kijo Sasa</th>
+                            <th class="px-4 py-2 border-r">Multipurpose</th>
+                            <th class="px-4 py-2 border-r">KCJ</th>
+                            <th class="px-4 py-2 border-r">Liners</th>
+                            <th class="px-4 py-2 border-r">Rocket</th>
+                            <th class="px-4 py-2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600">
+                        <tr>
+                            <td class="px-4 py-2 text-center text-green-500 border border-l-0">
+                                <p>
+                                    Kangaita
+                                </p>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">Francis M.</td>
+                            <td class="px-4 py-2 border border-l-0">Francis M.</td>
+                            <td class="px-4 py-2 border border-l-0">
+                                <span class="">+254717xxxxx</span>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0 ">
+                                KES<span class="pl-1">5,300</span>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">Francis M.</td>
+                            <td class="px-4 py-2 border border-l-0">Francis M.</td>
+                            <td class="px-4 py-2 border border-l-0">Francis M.</td>
+                            <td class="px-4 py-2 border border-l-0 border-r-0">
+                                <button class="px-4 py-2 text-white bg-blue-500 rounded-md ">Save</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 text-center text-green-500 border border-l-0">
+                                <p>
+                                    Kangaita
+                                </p>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">Francis M.</td>
+                            <td class="px-4 py-2 border border-l-0">Francis M.</td>
+                            <td class="px-4 py-2 border border-l-0">
+                                <span class="">+254717xxxxx</span>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0 ">
+                                KES<span class="pl-1">5,300</span>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                Francis M.
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                Francis M.
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                Francis M.
+                            </td>
+                            <td class="px-4 py-2 border border-l-0 border-r-0">
+                                <button class="px-4 py-2 text-white bg-blue-500 rounded-md ">
+                                    Save
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 text-center text-green-500 border border-l-0">
+                                <p>
+                                    Kangaita
+                                </p>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                Francis M.
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                Francis M.
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                <span class="">+254717xxxxx</span>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0 ">
+                                KES<span class="pl-1">5,300</span>
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                Francis M.
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                Francis M.
+                            </td>
+                            <td class="px-4 py-2 border border-l-0">
+                                Francis M.
+                            </td>
+                            <td class="px-4 py-2 border border-l-0 border-r-0">
+                                <button class="px-4 py-2 text-white bg-blue-500 rounded-md ">
+                                    Save
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end Sales Overview -->
+    </div>
+{% endblock content %}

@@ -45,11 +45,19 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     "django_browser_reload",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "crispy_forms",
+    "crispy_tailwind",
     "accounts",
     "ui",
     "education",
     "environment",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="flex-1 p-6 mx-auto bg-gray-100 ">
+        <!-- Sales Overview -->
+        <div class="card">
+            <!-- header -->
+            <div class="flex flex-row justify-between card-header">
+                <h1 class="h6">Last Mile EnterPreneurs</h1>
+            </div>
+            <!-- end header -->
+            <div class="flex flex-row justify-center py-2 text-blue-600">
+                <h1 class="text-2xl font-bold text-center">Add Coaching & Mentorship Record for LME</h1>
+            </div>
+            <!-- body -->
+            <div class="grid grid-cols-3 gap-2 px-4 py-2 mx-4 border-2 ">
+                <div class="">
+                    <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">Add new LME</button>
+                </div>
+                <div class="">
+                    <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">Sales List</button>
+                </div>
+                <div class="">
+                    <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">Report</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 px-4 py-2 mx-4 border-2 ">
+                {% comment %} Enterprise Name {% endcomment %}
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            LME Name
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <input type="text"
+                               class="w-full p-2 text-sm border-2 rounded-lg"
+                               placeholder=" LME Name"/>
+                    </div>
+                </div>
+                {% comment %} Topic Covered{% endcomment %}
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Topic Covered
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <input type="text"
+                               class="w-full p-2 text-sm border-2 rounded-lg"
+                               placeholder=""/>
+                    </div>
+                </div>
+                {% comment %}Meeting Date {% endcomment %}
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Date
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <input type="date"
+                               id="meeting_date"
+                               class="w-full p-2 text-sm border-2 rounded-lg"
+                               placeholder=""/>
+                    </div>
+                </div>
+                {% comment %} Next Date of meeting {% endcomment %}
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Next Meeting Date
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <input type="date"
+                               id="next_meeting_date"
+                               class="w-full p-2 text-sm border-2 rounded-lg"
+                               placeholder=""/>
+                    </div>
+                </div>
+                {% comment %} Remarks by Mentor {% endcomment %}
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Remarks by Mentor
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <textarea id="w3review" name="w3review" rows="4" class="text-justify border-2 rounded-lg">
+                        </textarea>
+                    </div>
+                </div>
+                {% comment %} Action Points{% endcomment %}
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Action Points
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <textarea id="w3review" name="w3review" rows="4" class="text-justify border-2 rounded-lg">
+                        </textarea>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-around">
+                    <div>
+                        <p>
+                            Action
+                        </p>
+                    </div>
+                    <div class="flex flex-row justify-around">
+                        <button class="w-5/12 px-2 py-2 bg-blue-500 rounded-lg">Save</button>
+                        <button class="w-5/12 px-2 py-2 bg-gray-500 rounded-lg">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Sales Overview -->
+    </div>
+{% endblock content %}

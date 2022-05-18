@@ -20,13 +20,20 @@ from django.urls import include, path
 
 from django.conf.urls.static import static
 from django.conf import settings
-from accounts.views import ReactView
+from accounts.views import ReactView, home
 from django.urls import include, path
+
+# from django.conf.urls import url
+from django.urls import include, path, re_path
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", ReactView.as_view(), name="react"),
+    path("", home, name="home"),
+    path("environment/", include("environment.urls")),
+    path("api/v1/environment/", include("environment.api.urls")),
+    # path("ui/", ReactView.as_view(), name="react"),
+    re_path(r"ui/.*", ReactView.as_view(), name="react"),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 
