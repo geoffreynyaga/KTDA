@@ -17,31 +17,40 @@
 
 from django.urls import path
 from environment.views import (
-    CapacityBuildingAddView,
+    CoachingAndMentorshipCreateView,
     CapacityBuildingIndividualAddView,
     LMEAddView,
     LMEMainView,
-    LMESalesAddView,
     SalesCreateView,
-    SalesListView,
     LMECreateView,
+    TrainingCreateView,
+    TreeGrowingCreateView,
 )
 
 urlpatterns = [
     path("lme/", LMEMainView.as_view(), name="LMEMain"),
     # path("lme/add/", LMEAddView.as_view(), name="add_lme"),
     path("lme/create/", LMECreateView.as_view(), name="lme_create"),
-    # path("lme/sales/add/", LMESalesAddView.as_view(), name="sales_add_lme"),
     path("lme/sales/create/", SalesCreateView.as_view(), name="lme_sales_create"),
-    path("lme/sales/list/", SalesListView.as_view(), name="sales_list_lme"),
+    # path("lme/sales/list/", SalesListView.as_view(), name="sales_list_lme"),
     path(
         "lme/capacity/individual-add/",
         CapacityBuildingIndividualAddView.as_view(),
         name="add_individual_capacity_building",
     ),
     path(
-        "lme/capacity/add/",
-        CapacityBuildingAddView.as_view(),
+        "cnm/create/",
+        CoachingAndMentorshipCreateView.as_view(),
         name="add_capacity_building",
+    ),
+    path(
+        "training/create/",
+        TrainingCreateView.as_view(),
+        name="cnm_create",
+    ),
+    path(
+        "tree-growing/create/",
+        TreeGrowingCreateView.as_view(),
+        name="tree_growing_create",
     ),
 ]

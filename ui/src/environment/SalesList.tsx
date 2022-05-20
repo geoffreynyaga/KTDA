@@ -1,38 +1,36 @@
-// /*
-//  * File: /home/geoff/KTDA/ui/src/LMEList.tsx
-//  * Project: /home/geoff/KTDA/ui
-//  * Created Date: Sunday, May 15th 2022, 2:16:28 pm
-//  * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
-//  * -----
-//  * Last Modified: Sunday May 15th 2022 2:16:28 pm
-//  * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
-//  * -----
-//  * This file should not be copied and/or distributed without the express
-//  * permission of Swift Lab Limited.
-//  * -----
-//  * Copyright (c) 2022 Swift Lab Limited.
-//  */
+/*
+ * File: /home/geoff/KTDA/ui/src/environment/SalesList.tsx
+ * Project: /home/geoff/KTDA/ui
+ * Created Date: Wednesday, May 18th 2022, 3:29:58 pm
+ * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
+ * -----
+ * Last Modified: Thursday May 19th 2022 8:37:27 pm
+ * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
+ * -----
+ * This file should not be copied and/or distributed without the express
+ * permission of Swift Lab Limited.
+ * -----
+ * Copyright (c) 2022 Swift Lab Limited.
+ */
 
 import React, { useEffect, useState } from "react";
-import { ILME } from "../../typings/LMETypes";
+import { IMonthlySales } from "../../typings/LMETypes";
 
 import { useTable, useFilters } from "react-table";
 
-function LMEList() {
-  const [lme, setLme] = useState<null | ILME[]>(null);
+function LMESalesList() {
+  const [lme, setLme] = useState<null | IMonthlySales[]>(null);
   const [LMENameInput, setLMENameInput] = useState("");
   const [factoryInput, setFactoryInput] = useState("");
-  const [phoneNumberInput, setPhoneNumberInput] = useState("");
-  const [contactPersonInput, setContactPersonInput] = useState("");
+  const [monthInput, setMonthInput] = useState("");
+  const [yearInput, setYearInput] = useState("");
 
   async function fetchLMEs() {
-    await fetch("/api/v1/environment/lme/")
+    await fetch("/api/v1/environment/lme/sales/list/")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        if (data.length > 0) {
-          setLme(data);
-        }
+        console.log(data, "data");
+        setLme(data);
       });
   }
 
@@ -46,44 +44,39 @@ function LMEList() {
     () => [
       {
         Header: "LME",
-        accessor: "name", // accessor is the "key" in the data
+        accessor: "lme", // accessor is the "key" in the data
       },
       {
         Header: "Factory",
         accessor: "factory",
       },
       {
-        Header: "Contact Person",
-        accessor: "contact_person",
+        Header: "Month",
+        accessor: "month_string",
       },
       {
-        Header: "Phone Number",
-        accessor: "phone_number",
+        Header: "Year",
+        accessor: "year_number",
       },
       {
-        Header: "Total Sales",
-        accessor: "all_sales.stove_price__sum",
-        Cell: (props) => {
-          // JSON.stringify(props.value) !== null ? (
-          //   <span className="text-green-500">KES </span>
-          // ) : (
-          //   <span className="text-red-500">0</span>
-          // );
-          return props.value ? (
-            <span className="text-green-500">KES {props.value} </span>
-          ) : (
-            <span className="text-red-500">0</span>
-          );
-        },
+        Header: "Jiko Kisasa",
+        accessor: "jiko_kisasa",
       },
       {
-        Header: "Action",
-        accessor: "id",
-        Cell: (props) => (
-          <button className="px-4 py-2 text-white bg-blue-500 rounded-md ">
-            Report
-          </button>
-        ),
+        Header: "KCJ",
+        accessor: "kcj",
+      },
+      {
+        Header: "Multipurpose",
+        accessor: "multipurpose",
+      },
+      {
+        Header: "Liners",
+        accessor: "liners",
+      },
+      {
+        Header: "Rocket",
+        accessor: "rocket",
       },
     ],
     []
@@ -102,7 +95,7 @@ function LMEList() {
 
   const handleNameFilterChange = (e: any) => {
     const value = e.target.value || undefined;
-    setFilter("name", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
+    setFilter("lme", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
     setLMENameInput(value);
   };
 
@@ -112,15 +105,15 @@ function LMEList() {
     setFactoryInput(value);
   };
 
-  const handlePhoneNumberChange = (e: any) => {
+  const handleMonthChange = (e: any) => {
     const value = e.target.value || undefined;
-    setFilter("phone_number", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
-    setPhoneNumberInput(value);
+    setFilter("month_string", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
+    setMonthInput(value);
   };
-  const handleContactPersonChange = (e: any) => {
+  const handleYearChange = (e: any) => {
     const value = e.target.value || undefined;
-    setFilter("contact_person", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
-    setContactPersonInput(value);
+    setFilter("year_number", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
+    setYearInput(value);
   };
 
   return (
@@ -128,18 +121,17 @@ function LMEList() {
       {/* <!-- header --> */}
 
       <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
-        <div className="flex flex-row justify-center w-4/12 ">
+        <div className="flex flex-row justify-center w-3/12 ">
           <a
-            href="/environment/lme/create/"
-            className="flex flex-row items-center justify-around px-4 py-2 text-blue-500 bg-gray-300 border-2 rounded-lg outline-blue-500"
+            href="/environment/lme/sales/create/"
+            className="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500"
           >
-            <p className="pr-4 text-indigo-400">Add new LME</p>
-            <i className="fad fa-plus"></i>
+            Add new Sale
           </a>
         </div>
-        <div className="flex flex-row justify-center w-5/12 ">
+        <div className="flex flex-row justify-center w-6/12 ">
           <button className="px-4 py-2 text-red-500 rounded-lg bg-gray-50 outline-blue-500">
-            <h1 className="text-center h6">LME List</h1>
+            <h1 className="text-center h6">LME Monthly Sales List</h1>
           </button>
         </div>
         <div className="flex flex-row justify-center w-3/12 ">
@@ -150,7 +142,7 @@ function LMEList() {
       </div>
       {/* <!-- end header --> */}
 
-      <div className="flex flex-col items-center w-full mx-2 mb-6">
+      <div className="w-full mx-2 mb-6">
         {lme !== null ? (
           <>
             <div className="grid grid-cols-4 gap-4 px-4 py-2 mx-2 mb-4 sm:grid-cols-2">
@@ -184,39 +176,36 @@ function LMEList() {
               </div>
               <div className="flex flex-col justify-around">
                 <div>
-                  <p>Contact Person</p>
+                  <p>Year</p>
                 </div>
                 <div className="mt-2">
                   <input
                     type="text"
                     className="w-full p-2 text-sm border-2 rounded-lg"
-                    placeholder="Search Person"
-                    value={contactPersonInput}
-                    onChange={handleContactPersonChange}
+                    placeholder="e.g 2022"
+                    value={yearInput}
+                    onChange={handleYearChange}
                   />
                 </div>
               </div>
               <div className="flex flex-col justify-around">
                 <div>
-                  <p>Phone Number</p>
+                  <p>Month</p>
                 </div>
                 <div className="mt-2">
                   <input
                     type="text"
                     className="w-full p-2 text-sm border-2 rounded-lg"
-                    placeholder="07XXXXXXXX"
-                    value={phoneNumberInput}
-                    onChange={handlePhoneNumberChange}
+                    placeholder="e.g March"
+                    value={monthInput}
+                    onChange={handleMonthChange}
                   />
                 </div>
               </div>
             </div>
             <hr />
 
-            <table
-              {...getTableProps()}
-              className="w-11/12 text-left table-auto"
-            >
+            <table {...getTableProps()} className="w-full text-left table-auto">
               {/* // Input element */}
 
               <thead>
@@ -261,18 +250,17 @@ function LMEList() {
             </table>
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center bg-pink-200 h-72">
+          <div className="flex flex-col items-center justify-center bg-pink-200 hue-rotate-15 h-72">
             <h1 className="text-2xl tracking-wider text-gray-700">
-              No LME registered yet!
+              No Sales Recorded yet!
             </h1>
             <hr />
             <p className="mt-6 tracking-wider text-gray-700 text-md">
-              Please Add one LME to unlock this page.
+              Add at least one LME Sale to unlock this page
             </p>
-
-            <a href="/environment/lme/create/" className="mt-6">
+            <a href="/environment/lme/sales/create/" className="mt-6">
               <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
-                Add new LME
+                Add new Sale
               </button>
             </a>
           </div>
@@ -282,4 +270,4 @@ function LMEList() {
   );
 }
 
-export default LMEList;
+export default LMESalesList;

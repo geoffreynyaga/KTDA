@@ -18,12 +18,34 @@
 
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from environment.api.serializers import CoachingAndMentorshipSerializer, LMESerializer
-from environment.models import LME, CoachingAndMentorship
+from environment.api.serializers import (
+    TrainingSerializer,
+    CoachingAndMentorshipSerializer,
+    LMESerializer,
+    MonthlyLMESalesSerializer,
+    TreeGrowingSerializer,
+)
+from environment.models import (
+    LME,
+    CoachingAndMentorship,
+    Training,
+    LMESales,
+    MonthlyLMESales,
+    TreeGrowing,
+)
 
 
-class CoachingAndMentorshipListCreateApiView(generics.ListCreateAPIView):
+from django.db.models import Sum
+
+
+class TrainingListCreateApiView(generics.ListCreateAPIView):
+    queryset = Training.objects.all()
+    serializer_class = TrainingSerializer
+
+
+class CoachingAndMentorshipCreateApiView(generics.ListCreateAPIView):
     queryset = CoachingAndMentorship.objects.all()
     serializer_class = CoachingAndMentorshipSerializer
 
@@ -31,3 +53,16 @@ class CoachingAndMentorshipListCreateApiView(generics.ListCreateAPIView):
 class LMEListCreateApiView(generics.ListCreateAPIView):
     queryset = LME.objects.all()
     serializer_class = LMESerializer
+
+
+class LMESalesListAPIView(generics.ListCreateAPIView):
+    queryset = MonthlyLMESales.objects.all()
+    serializer_class = MonthlyLMESalesSerializer
+
+    def get_queryset(self):
+        return super().get_queryset().order_by("-month")
+
+
+class TreeGrowingListCreateApiView(generics.ListCreateAPIView):
+    queryset = TreeGrowing.objects.all()
+    serializer_class = TreeGrowingSerializer

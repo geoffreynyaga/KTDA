@@ -17,16 +17,30 @@
 
 from django.urls import path
 from environment.api.views import (
-    CoachingAndMentorshipListCreateApiView,
     LMEListCreateApiView,
+    LMESalesListAPIView,
+    TrainingListCreateApiView,
+    CoachingAndMentorshipCreateApiView,
+    TreeGrowingListCreateApiView,
 )
 
 
 urlpatterns = [
     path("lme/", LMEListCreateApiView.as_view(), name="lme-list-create-api"),
+    path("lme/sales/list/", LMESalesListAPIView.as_view(), name="lme-sales-list-api"),
+    path(
+        "training/",
+        TrainingListCreateApiView.as_view(),
+        name="cnm-sales-list-api",
+    ),
     path(
         "cnm/",
-        CoachingAndMentorshipListCreateApiView.as_view(),
-        name="cnm-list-create-api",
+        CoachingAndMentorshipCreateApiView.as_view(),
+        name="cnm-create",
+    ),
+    path(
+        "tree-growing/",
+        TreeGrowingListCreateApiView.as_view(),
+        name="tree-growing-list-create-api",
     ),
 ]

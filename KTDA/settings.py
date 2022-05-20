@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "tailwind",
     "theme",
     "django_browser_reload",
@@ -49,11 +50,16 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "crispy_forms",
     "crispy_tailwind",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "accounts",
     "ui",
     "education",
     "environment",
 ]
+
+SITE_ID = 1
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
@@ -90,6 +96,13 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 WSGI_APPLICATION = "KTDA.wsgi.application"
@@ -151,9 +164,21 @@ STATICFILES_DIRS = [
 ]
 
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TAILWIND_APP_NAME = "theme"
+
+
+LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"

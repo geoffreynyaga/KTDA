@@ -6,13 +6,13 @@
         <!-- body -->
         <div class="grid grid-cols-3 gap-2 px-4 py-2 mx-4 shadow">
             <div >
-                <a href="/ui/lme/sales/" className="mt-6">
-                    <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">Sales List</button>
+                <a href="/ui/lme/tree-growing/" className="mt-6">
+                    <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">Back to Trees Activities</button>
                 </a>
             </div>
             <div >
                 <a href="" className="mt-6">
-                    <button class="px-4 py-2 text-red-500 bg-gray-300 border-2 rounded-lg outline-blue-500">Add New SALE</button>
+                    <button class="px-4 py-2 text-red-500 bg-gray-300 border-2 rounded-lg outline-blue-500">Tree Growing Create</button>
                 </a>
             </div>
             <div >
@@ -23,7 +23,6 @@
         <div class="mt-4">
             <form class="grid w-full grid-cols-2 gap-4 px-4 py-2" method="post">
                 {% csrf_token %}
-                {% comment %} {{ form.as_p }} {% endcomment %}
                 {{ form|crispy }}
                 <button class="h-8 px-6 mx-4 bg-blue-500" type="submit">Submit</button>
             </form>

@@ -1,11 +1,22 @@
 from django.shortcuts import render
 
-# Create your views here.
 
 from django.views.generic import TemplateView
 from django.views.generic import CreateView
+from environment.forms import (
+    CoachingAndMentorshipForm,
+    TrainingForm,
+    LMESalesForm,
+    TreeGrowingForm,
+)
 
-from environment.models import LME, LMESales
+from environment.models import (
+    LME,
+    CoachingAndMentorship,
+    LMESales,
+    Training,
+    TreeGrowing,
+)
 
 
 class LMEMainView(TemplateView):
@@ -16,20 +27,17 @@ class LMEAddView(TemplateView):
     template_name = "environment/LMEAdd.html"
 
 
-class LMESalesAddView(TemplateView):
-    template_name = "environment/LMESalesAdd.html"
-
-
 class CapacityBuildingIndividualAddView(TemplateView):
     template_name = "environment/CapacityBuildingIndividualAdd.html"
 
 
-class CapacityBuildingAddView(TemplateView):
-    template_name = "environment/CapacityBuildingAdd.html"
+class CoachingAndMentorshipCreateView(CreateView):
+    queryset = CoachingAndMentorship.objects.all()
+    template_name = "environment/CNMAdd.html"
+    form_class = CoachingAndMentorshipForm
+    # fields = "__all__"
 
-
-class SalesListView(TemplateView):
-    template_name = "environment/SalesList.html"
+    success_url = "/ui/lme/cnm/"
 
 
 class LMECreateView(CreateView):
@@ -56,12 +64,51 @@ class LMECreateView(CreateView):
 class SalesCreateView(CreateView):
     queryset = LMESales.objects.all()
     template_name = "environment/LMESalesCreate.html"
-    fields = (
-        "lme",
-        "customer_name",
-        "customer_phone_number",
-        "stove",
-        "stove_price",
-        "date_of_purchase",
-    )
-    success_url = "/environment/lme/sales/list/"
+    form_class = LMESalesForm
+
+    # fields = (
+    #     "lme",
+    #     "customer_name",
+    #     "customer_phone_number",
+    #     "stove",
+    #     "stove_price",
+    #     "date_of_purchase",
+    # )
+    success_url = "/ui/lme/sales/"
+
+
+class TrainingCreateView(CreateView):
+    queryset = Training.objects.all()
+    template_name = "environment/TrainingCreate.html"
+    form_class = TrainingForm
+
+    success_url = "/ui/lme/training/"
+
+    # fields = (
+    #     "course_name",
+    #     "factory",
+    #     "venue",
+    #     "lme_attendees",
+    #     "start_date",
+    #     "end_date",
+    #     "number_of_attendees",
+    #     "number_of_female_attendees",
+    #     "number_of_male_attendees",
+    #     "number_below_20",
+    #     "number_20_29",
+    #     "number_30_39",
+    #     "number_40_49",
+    #     "number_50_59",
+    #     "number_60_69",
+    #     "number_70_79",
+    #     "number_80_above",
+    # )
+
+
+class TreeGrowingCreateView(CreateView):
+    queryset = TreeGrowing.objects.all()
+    template_name = "environment/TreeGrowingCreate.html"
+    form_class = TreeGrowingForm
+    # fields = "__all__"
+
+    success_url = "/ui/lme/tree-growing/"

@@ -18,7 +18,14 @@
 
 from rest_framework import serializers
 
-from environment.models import LME, CoachingAndMentorship, LMESales
+from environment.models import (
+    LME,
+    CoachingAndMentorship,
+    LMESales,
+    MonthlyLMESales,
+    Training,
+    TreeGrowing,
+)
 from django.db.models import Sum
 
 
@@ -65,3 +72,75 @@ class CoachingAndMentorshipSerializer(serializers.ModelSerializer):
             "action_points",
             "next_meeting_date",
         )
+
+
+class TrainingSerializer(serializers.ModelSerializer):
+    factory = serializers.SerializerMethodField()
+
+    def get_factory(self, obj):
+        return obj.factory.name
+
+    class Meta:
+        model = Training
+        fields = (
+            "course_name",
+            "factory",
+            "venue",
+            "lme_attendees",
+            "start_date",
+            "end_date",
+            "number_of_attendees",
+            "number_of_female_attendees",
+            "number_of_male_attendees",
+            "number_below_20",
+            "number_20_29",
+            "number_30_39",
+            "number_40_49",
+            "number_50_59",
+            "number_60_69",
+            "number_70_79",
+            "number_80_above",
+        )
+
+
+class MonthlyLMESalesSerializer(serializers.ModelSerializer):
+    factory = serializers.SerializerMethodField()
+    lme = serializers.SerializerMethodField()
+
+    def get_factory(self, obj):
+        return obj.lme.factory.name
+
+    def get_lme(self, obj):
+        return obj.lme.name
+
+    class Meta:
+        model = MonthlyLMESales
+        # fields = "__all__"
+        fields = (
+            "lme",
+            "factory",
+            "month",
+            "month_string",
+            "year_number",
+            "jiko_kisasa",
+            "kcj",
+            "multipurpose",
+            "liners",
+            "rocket",
+        )
+
+
+# ('lme', 'month', 'month_string', 'year_number', 'jiko_kisasa', 'kcj', 'multipurpose', 'liners', 'rocket', )
+# Factory,LME,ContactPerson,PhoneNumber, --->Search
+# Factory,LME,Month, Year, Jiko sasa.... ,
+
+
+class TreeGrowingSerializer(serializers.ModelSerializer):
+    factory = serializers.SerializerMethodField()
+
+    def get_factory(self, obj):
+        return obj.factory.name
+
+    class Meta:
+        model = TreeGrowing
+        fields = "__all__"

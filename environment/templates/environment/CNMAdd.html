@@ -6,31 +6,28 @@
         <!-- body -->
         <div class="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
             <div class="flex flex-row items-center justify-center w-3/12 ">
-                <a href="/ui/lme/list/"
+                <a href="/ui/lme/cnm/"
                    class="flex flex-row items-center justify-around px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500 sm:text-sm">
                     <i class="text-gray-600 fad fa-arrow-left"></i>
                     <p class="ml-2">
-                        Back to LME List
+                        Mentorship List
                     </p>
                 </a>
             </div>
             <div class="flex flex-row justify-center w-6/12 ">
                 <button class="px-4 py-2 text-red-500 rounded-lg bg-gray-50 outline-blue-500">
-                    <h1 class="text-center h6">Add New LME</h1>
+                    <h1 class="text-center h6">Add Coaching & Mentorship</h1>
                 </button>
             </div>
             <div class="flex flex-row justify-center w-3/12 ">
                 <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">Report</button>
             </div>
         </div>
+        <form class="grid w-full grid-cols-2 gap-4 px-6 py-2 " method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="h-8 px-6 mx-4 bg-blue-500" type="submit">Submit</button>
+        </form>
         <!-- end Sales Overview -->
-        <div class="w-full mt-4">
-            <form class="grid w-full grid-cols-2 gap-4 px-4 py-2" method="post">
-                {% csrf_token %}
-                {% comment %} {{ form.as_p }} {% endcomment %}
-                {{ form|crispy }}
-                <button class="h-8 px-6 mx-4 bg-blue-500" type="submit">Submit</button>
-            </form>
-        </div>
     </div>
 {% endblock content %}
