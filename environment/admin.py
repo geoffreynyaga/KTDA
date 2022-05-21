@@ -17,6 +17,7 @@ from environment.models import (
     SubCounty,
     Ward,
     CSVUpload,
+    CustomSalesReport,
 )
 
 
@@ -161,6 +162,27 @@ class MonthlyLMESalesAdmin(admin.ModelAdmin):
 
 
 admin.site.register(MonthlyLMESales, MonthlyLMESalesAdmin)
+
+
+class CustomSalesReportAdmin(admin.ModelAdmin):
+    list_display = (
+        "created_by",
+        "query_lme",
+        "query_month",
+        "query_year",
+        "query_factory",
+        "query_jiko_kisasa",
+        "query_kcj",
+        "query_multipurpose",
+        "query_liners",
+        "query_rocket",
+        "query_start_date",
+        "query_end_date",
+    )
+    search_fields = ("query_lme",)
+
+
+admin.site.register(CustomSalesReport, CustomSalesReportAdmin)
 
 
 class TrainingAdmin(admin.ModelAdmin):

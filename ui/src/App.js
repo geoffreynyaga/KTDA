@@ -17,11 +17,7 @@ import React from "react";
 
 import LMEList from "./LMEList";
 function App() {
-  return (
-    <div>
-      <LMEList />
-    </div>
-  );
+  return <LMEList />;
 }
 
 export default App;

@@ -22,12 +22,18 @@ from environment.api.views import (
     TrainingListCreateApiView,
     CoachingAndMentorshipCreateApiView,
     TreeGrowingListCreateApiView,
+    LMESalesCustomReportAPIView,
 )
 
 
 urlpatterns = [
     path("lme/", LMEListCreateApiView.as_view(), name="lme-list-create-api"),
     path("lme/sales/list/", LMESalesListAPIView.as_view(), name="lme-sales-list-api"),
+    path(
+        "lme/sales/report/",
+        LMESalesCustomReportAPIView.as_view(),
+        name="lme-sales-report-api",
+    ),
     path(
         "training/",
         TrainingListCreateApiView.as_view(),

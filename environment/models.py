@@ -3,6 +3,11 @@ from re import sub
 from django.db import models
 from django.db.models.signals import post_save
 
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
+
 
 class County(models.Model):
     class Meta:
@@ -341,3 +346,44 @@ class TreeGrowing(models.Model):
 
     def __str__(self):
         return self.factory.name
+
+
+class CustomSalesReport(models.Model):
+    class Meta:
+        verbose_name = "Custom Sales Report"
+        verbose_name_plural = "Custom Sales Reports"
+
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    query_lme = models.CharField(max_length=60, blank=True, null=True)
+    query_month = models.CharField(max_length=15, blank=True, null=True)
+    query_year = models.IntegerField(blank=True, null=True)
+    query_factory = models.CharField(max_length=50, blank=True, null=True)
+
+    query_jiko_kisasa = models.BooleanField(default=False)
+    query_kcj = models.BooleanField(default=False)
+    query_multipurpose = models.BooleanField(default=False)
+    query_liners = models.BooleanField(default=False)
+    query_rocket = models.BooleanField(default=False)
+
+    query_start_date = models.DateField(blank=True, null=True)
+    query_end_date = models.DateField(blank=True, null=True)
+
+    no_query_results = models.BooleanField(default=False)
+
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.date_created.strftime("%d-%m-%Y")
+
+    def save(self, *args, **kwargs):
+        if (
+            self.query_lme == ""
+            and self.query_month == ""
+            and self.query_year == ""
+            and self.query_factory == ""
+        ):
+            self.no_query_results = True
+        else:
+            self.no_query_results = False
+        super().save(*args, **kwargs)

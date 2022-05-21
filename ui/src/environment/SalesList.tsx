@@ -4,7 +4,7 @@
  * Created Date: Wednesday, May 18th 2022, 3:29:58 pm
  * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
- * Last Modified: Thursday May 19th 2022 8:37:27 pm
+ * Last Modified: Wednesday May 18th 2022 3:29:58 pm
  * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
  * This file should not be copied and/or distributed without the express
@@ -121,22 +121,29 @@ function LMESalesList() {
       {/* <!-- header --> */}
 
       <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
-        <div className="flex flex-row justify-center w-3/12 ">
+        <div className="flex flex-row justify-center w-4/12 ">
           <a
             href="/environment/lme/sales/create/"
-            className="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500"
+            className="flex flex-row items-center justify-around px-4 py-2 text-gray-700 bg-gray-300 border-2 rounded-lg"
           >
-            Add new Sale
+            <i className="text-blue-500 fad fa-plus"></i>
+            <p className="ml-2 tracking-tighter sm:text-xs">Add New Sale</p>
           </a>
         </div>
-        <div className="flex flex-row justify-center w-6/12 ">
-          <button className="px-4 py-2 text-red-500 rounded-lg bg-gray-50 outline-blue-500">
-            <h1 className="text-center h6">LME Monthly Sales List</h1>
+        <div className="flex flex-row justify-center w-5/12 ">
+          <button className="px-4 py-2 rounded-lg bg-gray-50 ">
+            <p className="text-center text-red-500 text-md sm:text-base">
+              LME Monthly Sales List
+            </p>
           </button>
         </div>
         <div className="flex flex-row justify-center w-3/12 ">
-          <button className="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">
-            Report
+          <button className="px-4 py-2 bg-gray-300 border-2 rounded-lg ">
+            <a href="/ui/lme/report/" className=" md:px-4 md:py-2">
+              <p className="tracking-tighter text-blue-400 sm:text-xs">
+                Sales Report
+              </p>
+            </a>
           </button>
         </div>
       </div>

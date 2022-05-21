@@ -4,7 +4,7 @@
  * Created Date: Wednesday, May 18th 2022, 3:29:58 pm
  * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
- * Last Modified: Thursday May 19th 2022 8:37:27 pm
+ * Last Modified: Wednesday May 18th 2022 3:29:58 pm
  * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
  * This file should not be copied and/or distributed without the express
@@ -116,18 +116,18 @@ function TrainingLanding() {
         <div className="flex flex-row justify-center w-3/12 ">
           <a
             href="/environment/training/create/"
-            className="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500"
+            className="px-4 py-2 bg-gray-300 border-2 rounded-lg "
           >
             Add new Training
           </a>
         </div>
         <div className="flex flex-row justify-center w-6/12 ">
-          <button className="px-4 py-2 text-red-500 rounded-lg bg-gray-50 outline-blue-500">
+          <button className="px-4 py-2 text-red-500 rounded-lg bg-gray-50 ">
             <h1 className="text-center h6">Training List</h1>
           </button>
         </div>
         <div className="flex flex-row justify-center w-3/12 ">
-          <button className="px-4 py-2 bg-gray-300 border-2 rounded-lg outline-blue-500">
+          <button className="px-4 py-2 bg-gray-300 border-2 rounded-lg ">
             Report
           </button>
         </div>

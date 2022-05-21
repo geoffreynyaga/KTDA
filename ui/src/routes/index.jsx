@@ -20,7 +20,7 @@ import LMESalesList from "../environment/SalesList";
 import CoachingAndMentorshipLanding from "../environment/CoachingAndMentorshipLanding";
 import TrainingLanding from "../environment/TrainingLanding";
 import TreeGrowingLanding from "../environment/TreeGrowingLanding";
-
+import CustomSalesReport from "../environment/report/CustomSalesReport";
 /**
  * `<Routes>` is a component that takes in a list of `<Route>` components. Each `<Route>` component
  * takes in a `path` prop and an `element` prop. The `path` prop is a string that represents the URL
@@ -36,6 +36,7 @@ function RoutesApp() {
       <Route path="/ui/lme/cnm/" element={<CoachingAndMentorshipLanding />} />
       <Route path="/ui/lme/training/" element={<TrainingLanding />} />
       <Route path="/ui/lme/tree-growing/" element={<TreeGrowingLanding />} />
+      <Route path="/ui/lme/report/" element={<CustomSalesReport />} />
     </Routes>
   );
 }
