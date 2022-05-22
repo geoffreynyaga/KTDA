@@ -13,14 +13,17 @@
  * permission of Swift Lab Limited.
  */
 
-import React from "react";
 import { Route, Routes } from "react-router-dom";
+
+import CoachingAndMentorshipLanding from "../environment/CoachingAndMentorshipLanding";
+import CustomSalesReportLanding from "../environment/report/CustomSalesReportLanding";
+import CustomSalesReportPDF from "../environment/report/CustomSalesReportPDF";
 import LMEList from "../environment/LMEList";
 import LMESalesList from "../environment/SalesList";
-import CoachingAndMentorshipLanding from "../environment/CoachingAndMentorshipLanding";
+import React from "react";
 import TrainingLanding from "../environment/TrainingLanding";
 import TreeGrowingLanding from "../environment/TreeGrowingLanding";
-import CustomSalesReport from "../environment/report/CustomSalesReport";
+
 /**
  * `<Routes>` is a component that takes in a list of `<Route>` components. Each `<Route>` component
  * takes in a `path` prop and an `element` prop. The `path` prop is a string that represents the URL
@@ -36,7 +39,8 @@ function RoutesApp() {
       <Route path="/ui/lme/cnm/" element={<CoachingAndMentorshipLanding />} />
       <Route path="/ui/lme/training/" element={<TrainingLanding />} />
       <Route path="/ui/lme/tree-growing/" element={<TreeGrowingLanding />} />
-      <Route path="/ui/lme/report/" element={<CustomSalesReport />} />
+      <Route path="/ui/lme/report/" element={<CustomSalesReportLanding />} />
+      <Route path="/ui/lme/report/:id/" element={<CustomSalesReportPDF />} />
     </Routes>
   );
 }

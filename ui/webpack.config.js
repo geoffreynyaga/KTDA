@@ -1,18 +1,3 @@
-// /*
-//  * File: /home/geoff/KTDA/ui/webpack.config.js
-//  * Project: /home/geoff/KTDA/ui
-//  * Created Date: Saturday, May 7th 2022, 2:42:18 pm
-//  * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
-//  * -----
-//  * Last Modified: Saturday May 7th 2022 2:42:18 pm
-//  * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
-//  * -----
-//  * This file should not be copied and/or distributed without the express
-//  * permission of Swift Lab Limited.
-//  * -----
-//  * Copyright (c) 2022 Swift Lab Limited.
-//  */
-
 const path = require("path");
 const webpack = require("webpack");
 

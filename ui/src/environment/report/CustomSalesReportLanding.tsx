@@ -1,5 +1,5 @@
 /*
- * File: /home/geoff/KTDA/ui/src/environment/report/CustomSalesReport.tsx
+ * File: /home/geoff/KTDA/ui/src/environment/report/CustomSalesReportLanding.tsx
  * Project: /home/geoff/KTDA/ui
  * Created Date: Saturday, May 21st 2022, 3:59:42 pm
  * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
@@ -13,19 +13,19 @@
  * Copyright (c) 2022 Swift Lab Limited.
  */
 
-import React, { useEffect, useState } from "react";
-import cookie from "react-cookies";
-import { useQuery } from "react-query";
-import { useTable, useFilters } from "react-table";
-import { HashLoader } from "react-spinners";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
-
 import "react-datepicker/dist/react-datepicker.css";
 
-import { IMonthlySales } from "../../../typings/LMETypes";
+import React, { useEffect, useState } from "react";
+import { useFilters, useTable } from "react-table";
 
-function CustomSalesReport() {
+import DatePicker from "react-datepicker";
+import { HashLoader } from "react-spinners";
+import { IMonthlySales } from "../../../typings/LMETypes";
+import { addDays } from "date-fns";
+import cookie from "react-cookies";
+import { useQuery } from "react-query";
+
+function CustomSalesReportLanding() {
   const [lme, setLme] = useState<null | IMonthlySales[]>(null);
 
   const [LMENameInput, setLMENameInput] = useState<string>("");
@@ -39,11 +39,12 @@ function CustomSalesReport() {
   const [kcjInput, setKcjInput] = useState<any>(false);
   const [rocketInput, setRocketInput] = useState<any>(false);
 
-  const [startDate, setStartDate] = useState(undefined);
+  const [startDate, setStartDate] = useState<any>(undefined);
   const [endDate, setEndDate] = useState(new Date());
 
   const [reportReady, setReportReady] = useState<boolean>(false);
   const [reportData, setReportData] = useState<any>([]);
+  const [reportPK, setReportPK] = useState<null | string>(null);
 
   const {
     isLoading,
@@ -87,6 +88,7 @@ function CustomSalesReport() {
         console.log(data, "data");
         setReportReady(true);
         setReportData(data.data);
+        setReportPK(data.report_pk);
         setLme(null);
       });
   }
@@ -206,7 +208,7 @@ function CustomSalesReport() {
 
   return reportReady == true && lme === null ? (
     <div className="flex flex-col items-center justify-center h-screen bg-pink-200 hue-rotate-15">
-      {reportData.length > 1 ? (
+      {reportData.length > 1 && reportPK !== null ? (
         <>
           <h1 className="text-2xl tracking-wider text-gray-700">
             Your Report is Ready!
@@ -216,7 +218,10 @@ function CustomSalesReport() {
             You can refresh the page to reset the filters
           </p>
           <hr />
-          <a href="/environment/lme/sales/report/xx/" className="mt-10">
+          <a
+            href={"/ui/lme/sales/report/xy/".replace("xy", reportPK)}
+            className="mt-10"
+          >
             <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
               Go To Report
             </button>
@@ -609,4 +614,4 @@ function CustomSalesReport() {
   );
 }
 
-export default CustomSalesReport;
+export default CustomSalesReportLanding;

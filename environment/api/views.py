@@ -220,15 +220,102 @@ class LMESalesCustomReportAPIView(APIView):
 
                 try:
                     x.save()
-                    print(x, "x")
+                    # print(x, "x")
                     print(x.pk, "x.pk")
                 except Exception as e:
                     print(e, "error 4")
 
                 return Response(
-                    {"data": serializer.data, "success": True},
+                    {"data": serializer.data, "report_pk": x.pk, "success": True},
                     status=status.HTTP_200_OK,
                 )
+            except Exception as e:
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(
+                {"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class LMESalesCustomReportPDFAPIView(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [
+        AllowAny,
+    ]
+
+    def get(self, args, **kwargs):
+
+        from datetime import datetime
+
+        try:
+            id = int(self.kwargs.get("pk"))
+        except Exception as e:
+            print(e, "error 1")
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        saved_queries = CustomSalesReport.objects.get(pk=id)
+
+        if id:
+            try:
+                queryset = MonthlyLMESales.objects.all()
+                sales_fields = (
+                    "lme",
+                    "month",
+                    "month_string",
+                    "year_number",
+                    "jiko_kisasa",
+                    "kcj",
+                    "multipurpose",
+                    "liners",
+                    "rocket",
+                )
+
+                if saved_queries.query_lme:
+                    queryset = queryset.filter(
+                        lme__name__icontains=saved_queries.query_lme
+                    )
+                if saved_queries.query_factory:
+                    queryset = queryset.filter(
+                        lme__factory__name__icontains=saved_queries.query_factory
+                    )
+                if saved_queries.query_month:
+                    queryset = queryset.filter(
+                        month_string__icontains=saved_queries.query_month
+                    )
+                if saved_queries.query_year:
+                    queryset = queryset.filter(
+                        year_number__icontains=saved_queries.query_year
+                    )
+
+                print(queryset, "queryset")
+
+                if saved_queries.query_start_date:
+                    queryset = queryset.filter(
+                        month__gte=saved_queries.query_start_date
+                    )
+                    print(queryset, "queryset after datetime")
+
+                try:
+                    if saved_queries.query_end_date:
+                        queryset = queryset.filter(
+                            month__lte=saved_queries.query_end_date
+                        )
+                        print(queryset, "queryset after datetime")
+
+                except Exception as e:
+                    print(e, "error 3")
+
+                serializer = MonthlyLMESalesSerializer(queryset, many=True)
+
+                return Response(
+                    {
+                        "data": serializer.data,
+                        "created_by": saved_queries.created_by.username,
+                        "success": True,
+                    },
+                    status=status.HTTP_200_OK,
+                )
+
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         else:

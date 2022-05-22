@@ -23,6 +23,7 @@ from environment.api.views import (
     CoachingAndMentorshipCreateApiView,
     TreeGrowingListCreateApiView,
     LMESalesCustomReportAPIView,
+    LMESalesCustomReportPDFAPIView,
 )
 
 
@@ -33,6 +34,11 @@ urlpatterns = [
         "lme/sales/report/",
         LMESalesCustomReportAPIView.as_view(),
         name="lme-sales-report-api",
+    ),
+    path(
+        "lme/sales/report/<int:pk>/",
+        LMESalesCustomReportPDFAPIView.as_view(),
+        name="lme-sales-report-pdf-api",
     ),
     path(
         "training/",

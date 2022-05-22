@@ -13,14 +13,12 @@
  * Copyright (c) 2022 Swift Lab Limited.
  */
 
-import React from "react";
-
-import ReactDOM from "react-dom/client";
-
-import RoutesApp from "./routes";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
+import RoutesApp from "./routes/index";
 
 const queryClient = new QueryClient();
 
