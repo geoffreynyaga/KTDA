@@ -19,7 +19,6 @@ from django.urls import path
 from environment.views import (
     CoachingAndMentorshipCreateView,
     CapacityBuildingIndividualAddView,
-    LMEAddView,
     LMEMainView,
     SalesCreateView,
     LMECreateView,

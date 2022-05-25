@@ -29,7 +29,8 @@ from django.urls import include, path, re_path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("accounts/", include("allauth.urls")),
+    # path("accounts/", include("allauth.urls")),
+    path("accounts/", include("accounts.urls")),
     path("", home, name="home"),
     path("environment/", include("environment.urls")),
     path("api/v1/environment/", include("environment.api.urls")),

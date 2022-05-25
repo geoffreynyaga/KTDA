@@ -208,7 +208,7 @@ function CustomSalesReportLanding() {
 
   return reportReady == true && lme === null ? (
     <div className="flex flex-col items-center justify-center h-screen bg-pink-200 hue-rotate-15">
-      {reportData.length > 1 && reportPK !== null ? (
+      {reportData.length >= 1 && reportPK !== null ? (
         <>
           <h1 className="text-2xl tracking-wider text-gray-700">
             Your Report is Ready!
@@ -219,7 +219,7 @@ function CustomSalesReportLanding() {
           </p>
           <hr />
           <a
-            href={"/ui/lme/sales/report/xy/".replace("xy", reportPK)}
+            href={"/ui/lme/report/xy/".replace("xy", reportPK)}
             className="mt-10"
           >
             <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
@@ -252,7 +252,7 @@ function CustomSalesReportLanding() {
       </a>
     </div>
   ) : (
-    <div className="flex flex-col items-center flex-1 pt-0 mx-auto bg-gray-100 ">
+    <div className="flex flex-col items-center flex-1 w-full pt-0 mx-auto bg-gray-100 ">
       {/* <!-- header --> */}
 
       <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
@@ -265,19 +265,17 @@ function CustomSalesReportLanding() {
             <p className="ml-4 tracking-tighter sm:text-xs">Sales</p>
           </a>
         </div>
-        <div className="flex flex-row justify-center w-5/12 ">
-          <button className="px-4 py-2 rounded-lg bg-gray-50 ">
-            <p className="text-center text-red-500 text-md sm:text-base">
+        <div className="flex flex-row justify-center w-5/12">
+          <button className="px-4 py-2 rounded-lg bg-gray-50">
+            <p className="text-center text-red-500 text-md sm:text-xs">
               Customized Reports
             </p>
           </button>
         </div>
-        <div className="flex flex-row justify-center w-3/12 ">
-          <button className="px-4 py-2 bg-blue-500 border-2 rounded-lg ">
-            <a href="" className=" md:px-4 md:py-2">
-              <p className="tracking-tighter text-blue-400 sm:text-xs">
-                GENERATE
-              </p>
+        <div className="flex flex-row justify-center w-3/12">
+          <button className="px-4 bg-blue-500 rounded-lg sm:h-1/2 raised md:py-2 sm:py-0 ">
+            <a href="" className="md:px-4 md:py-2">
+              <p className="tracking-tighter text-white sm:text-xs">GENERATE</p>
             </a>
           </button>
         </div>

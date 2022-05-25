@@ -14,8 +14,8 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -50,9 +50,10 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "crispy_forms",
     "crispy_tailwind",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
+    # "allauth",
+    # "allauth.account",
+    # "allauth.socialaccount",
+    "phonenumber_field",
     "accounts",
     "ui",
     "education",
@@ -60,6 +61,8 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
+AUTH_USER_MODEL = "accounts.User"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
@@ -99,10 +102,11 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.RemoteUserBackend",
     # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
     # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend",
+    # "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 WSGI_APPLICATION = "KTDA.wsgi.application"
@@ -181,4 +185,4 @@ TAILWIND_APP_NAME = "theme"
 
 
 LOGIN_REDIRECT_URL = "home"
-ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
+# ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"

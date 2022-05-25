@@ -1,12 +1,17 @@
 from calendar import month_abbr
-from re import sub
 from django.db import models
 from django.db.models.signals import post_save
 
-from django.contrib.auth import get_user_model
+
+from phonenumber_field.modelfields import PhoneNumberField
 
 
-User = get_user_model()
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
 
 
 class County(models.Model):
@@ -136,6 +141,8 @@ RETAILER_OR_INSTALLER_CHOICES = (("RET", "RETAILER"), ("INS", "INSTALLER"))
 
 # A LME is a person who sells or installs stoves
 class LME(models.Model):
+    owner = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+
     name = models.CharField(max_length=50)
     factory = models.ForeignKey(Factory, on_delete=models.CASCADE)
     email = models.EmailField(max_length=254, blank=True, null=True)
@@ -150,9 +157,10 @@ class LME(models.Model):
 
     types_of_stove = models.ManyToManyField("environment.Stove")
 
-    contact_person = models.CharField(max_length=50)
+    contact_person = models.CharField(max_length=50, blank=True, null=True)
     year_of_birth = models.DateField(help_text="YYYY-MM-DD", blank=True, null=True)
-    phone_number = models.CharField(max_length=20, help_text="07xx xxx xxx")
+    # phone_number = models.CharField(max_length=20, help_text="07xx xxx xxx")
+    phone_number = PhoneNumberField(blank=True)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)

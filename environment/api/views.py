@@ -16,6 +16,7 @@
 ##################################################################################
 
 
+from itertools import count
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -287,7 +288,7 @@ class LMESalesCustomReportPDFAPIView(APIView):
                         year_number__icontains=saved_queries.query_year
                     )
 
-                print(queryset, "queryset")
+                # print(queryset, "queryset")
 
                 if saved_queries.query_start_date:
                     queryset = queryset.filter(
@@ -300,17 +301,57 @@ class LMESalesCustomReportPDFAPIView(APIView):
                         queryset = queryset.filter(
                             month__lte=saved_queries.query_end_date
                         )
-                        print(queryset, "queryset after datetime")
-
+                        # print(queryset, "queryset after datetime")
                 except Exception as e:
                     print(e, "error 3")
 
+                # get sum of all jiko_kisasa
+                jiko_kisasa_sum = queryset.aggregate(Sum("jiko_kisasa"))[
+                    "jiko_kisasa__sum"
+                ]
+
+                # print((jiko_kisasa_sum), "jiko_kisasa_sum")
+                kcj_sum = queryset.aggregate(Sum("kcj"))["kcj__sum"]
+                # print(kcj_sum, "kcj_sum")
+                multipurpose_sum = queryset.aggregate(Sum("multipurpose"))[
+                    "multipurpose__sum"
+                ]
+                # print(multipurpose_sum, "multipurpose_sum")
+                liners_sum = queryset.aggregate(Sum("liners"))["liners__sum"]
+                # print(liners_sum, "liners_sum")
+                rocket_sum = queryset.aggregate(Sum("rocket"))["rocket__sum"]
+                # print(rocket_sum, "rocket_sum")
+
+                stove_sums = {
+                    "jiko_kisasa": jiko_kisasa_sum,
+                    "kcj": kcj_sum,
+                    "multipurpose": multipurpose_sum,
+                    "liners": liners_sum,
+                    "rocket": rocket_sum,
+                }
+
                 serializer = MonthlyLMESalesSerializer(queryset, many=True)
+
+                lme_pk = []
+                factory_pk = []
+                for monthly_sale in queryset:
+                    lme_pk.append(monthly_sale.lme.pk)
+                    factory_pk.append(monthly_sale.lme.factory.pk)
+                lme_pk_set = list(set(lme_pk))
+                factory_pk_set = list(set(factory_pk))
+                lme_pk_set_len = len(lme_pk_set)
+                factory_pk_set_len = len(factory_pk_set)
+                # print(lme_pk_set_len, "lme_pk_set_len")
+                # print(factory_pk_set_len, "factory_pk_set_len")
 
                 return Response(
                     {
                         "data": serializer.data,
-                        "created_by": saved_queries.created_by.username,
+                        "sales_entries": queryset.count(),
+                        "created_by": str(saved_queries.created_by.phone_number),
+                        "stove_sums": stove_sums,
+                        "lmes_number": lme_pk_set_len,
+                        "factories_number": factory_pk_set_len,
                         "success": True,
                     },
                     status=status.HTTP_200_OK,

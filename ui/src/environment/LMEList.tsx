@@ -14,11 +14,11 @@
 //  */
 
 import React, { useEffect, useState } from "react";
-import { ILME } from "../../typings/LMETypes";
+import { useFilters, useTable } from "react-table";
 
-import { useTable, useFilters } from "react-table";
-import { useQuery } from "react-query";
 import { HashLoader } from "react-spinners";
+import { ILME } from "../../typings/LMETypes";
+import { useQuery } from "react-query";
 
 function LMEList() {
   const [lme, setLme] = useState<null | ILME[]>(null);
@@ -80,15 +80,6 @@ function LMEList() {
             <span className="text-red-500">0</span>
           );
         },
-      },
-      {
-        Header: "Action",
-        accessor: "id",
-        Cell: (props) => (
-          <button className="px-4 py-2 text-white bg-blue-500 rounded-md ">
-            Report
-          </button>
-        ),
       },
     ],
     []
@@ -182,16 +173,18 @@ function LMEList() {
   }
 
   return (
-    <div className="flex flex-col items-center flex-1 pt-0 mx-auto bg-gray-100 ">
+    <div className="flex flex-col items-center flex-1 w-full pt-0 overflow-scroll bg-gray-100 sm:mx-0 md:mx-auto">
       {/* <!-- header --> */}
 
-      <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
+      <div className="flex flex-row items-center w-full py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow md:w-11/12 md:justify-evenly sm:justify-between">
         <div className="flex flex-row justify-center w-4/12 ">
           <a
             href="/environment/lme/create/"
-            className="flex flex-row items-center justify-around px-4 py-2 text-blue-500 bg-gray-300 border-2 rounded-lg "
+            className="flex items-center justify-around w-full px-4 py-2 text-blue-500 bg-gray-300 border-2 rounded-lg sm:flex-col md:flex-row "
           >
-            <p className="pr-4 text-indigo-400">Add new LME</p>
+            <p className="text-indigo-400 sm:text-center sm:pr-0 md:pr-4 sm:text-xs">
+              New LME
+            </p>
             <i className="fad fa-plus"></i>
           </a>
         </div>
@@ -269,7 +262,10 @@ function LMEList() {
         </div>
         <hr />
         {lme !== null ? (
-          <table {...getTableProps()} className="w-11/12 text-left table-auto">
+          <table
+            {...getTableProps()}
+            className="w-full overflow-scroll text-left sm:table-fixed md:table-auto md:w-11/12"
+          >
             {/* // Input element */}
             <thead>
               {headerGroups.map((headerGroup) => (

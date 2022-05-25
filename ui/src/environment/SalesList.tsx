@@ -14,9 +14,9 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { IMonthlySales } from "../../typings/LMETypes";
+import { useFilters, useTable } from "react-table";
 
-import { useTable, useFilters } from "react-table";
+import { IMonthlySales } from "../../typings/LMETypes";
 
 function LMESalesList() {
   const [lme, setLme] = useState<null | IMonthlySales[]>(null);
@@ -150,7 +150,7 @@ function LMESalesList() {
       {/* <!-- end header --> */}
 
       <div className="w-full mx-2 mb-6">
-        {lme !== null ? (
+        {lme !== null && lme.length > 0 ? (
           <>
             <div className="grid grid-cols-4 gap-4 px-4 py-2 mx-2 mb-4 sm:grid-cols-2">
               <div className="flex flex-col justify-around">

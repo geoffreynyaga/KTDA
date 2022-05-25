@@ -40,10 +40,6 @@ function CustomSalesReportPDF() {
     content: () => componentRef?.current,
   });
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
-
   async function fetchLMEs(id: string) {
     const url = "/api/v1/environment/lme/sales/report/x/".replace("x", id);
     console.log(url, "url");
@@ -142,18 +138,17 @@ function CustomSalesReportPDF() {
             </div>
             <div className="flex flex-row justify-center w-3/12 ">
               <button
-                className="px-4 py-2 bg-indigo-200 rounded-lg shadow-lg "
+                className="px-4 py-2 bg-indigo-200 rounded-lg shadow-lg sm:text-xs "
                 onClick={handlePrint}
               >
                 Print this Report
               </button>
             </div>
           </div>
-          <br />
 
           {/* <!-- component --> */}
           <div
-            className="flex w-11/12 px-1 py-4 mx-0 bg-gray-200"
+            className="flex w-11/12 px-1 py-2 mx-0 bg-gray-200"
             ref={componentRef}
           >
             <div className="flex flex-col items-start w-full px-2 py-2 mx-0 bg-gray-100 rounded-lg justify-evenly raised">
@@ -178,48 +173,78 @@ function CustomSalesReportPDF() {
                 </div>
               </div>
               {/* Address */}
-              <div className="my-4">
-                <div className="flex w-full">
-                  <div className="grid grid-cols-4 gap-12">
+              <div className="flex w-full my-4">
+                <div className="flex w-full border-4">
+                  <div className="grid w-full grid-cols-3 gap-12 sm:grid-cols-2">
                     <div className="text-sm font-light text-slate-500">
-                      <p className="text-sm font-normal text-slate-700">
-                        Invoice Detail:
+                      <p className="text-sm font-normal text-gray-900">
+                        Search Details:
                       </p>
-                      <p>Unwrapped</p>
-                      <p>Fake Street 123</p>
-                      <p>San Javier</p>
-                      <p>CA 1234</p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        LME:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
+                      </p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        Factory:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
+                      </p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        Month:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
+                      </p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        Year:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
+                      </p>
                     </div>
                     <div className="text-sm font-light text-slate-500">
-                      <p className="text-sm font-normal text-slate-700">
-                        Billed To
+                      <p className="text-sm font-semibold text-gray-700">
+                        KCJ:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
                       </p>
-                      <p>The Boring Company</p>
-                      <p>Tesla Street 007</p>
-                      <p>Frisco</p>
-                      <p>CA 0000</p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        Multipurpose:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
+                      </p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        Jiko Sasa:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
+                      </p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        Liners:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
+                      </p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        Rocket:
+                        <span className="ml-2 text-xs font-normal text-gray-500">
+                          xxxx
+                        </span>
+                      </p>
                     </div>
-                    <div className="text-sm font-light text-slate-500">
-                      <p className="text-sm font-normal text-slate-700">
-                        Invoice Number
-                      </p>
-                      <p>000000</p>
 
-                      <p className="mt-2 text-sm font-normal text-slate-700">
-                        Date of Issue
-                      </p>
-                      <p>00.00.00</p>
-                    </div>
                     <div className="text-sm font-light text-slate-500">
-                      <p className="text-sm font-normal text-slate-700">
-                        Terms
+                      <p>
+                        Start Date:<span className="ml-2">xxxx</span>
                       </p>
-                      <p>0 Days</p>
-
-                      <p className="mt-2 text-sm font-normal text-slate-700">
-                        Due
+                      <p>
+                        End Date:<span className="ml-2">xxxx</span>
                       </p>
-                      <p>00.00.00</p>
                     </div>
                   </div>
                 </div>
@@ -275,18 +300,7 @@ function CustomSalesReportPDF() {
               <div className="mt-8 p-9">
                 <div className="border-t pt-9 border-slate-200">
                   <div className="text-sm font-light text-slate-700">
-                    <p>
-                      Payment terms are 14 days. Please be aware that according
-                      to the Late Payment of Unwrapped Debts Act 0000,
-                      freelancers are entitled to claim a 00.00 late fee upon
-                      non-payment of debts after this time, at which point a new
-                      invoice will be submitted with the addition of this fee.
-                      If payment of the revised invoice is not received within a
-                      further 14 days, additional interest will be charged to
-                      the overdue account and a statutory rate of 8% plus Bank
-                      of England base of 0.5%, totalling 8.5%. Parties cannot
-                      contract out of the Act’s provisions.
-                    </p>
+                    <p>Disclaimer statement goes here.......</p>
                   </div>
                 </div>
               </div>

@@ -23,10 +23,6 @@ class LMEMainView(TemplateView):
     template_name = "environment/LMEMain.html"
 
 
-class LMEAddView(TemplateView):
-    template_name = "environment/LMEAdd.html"
-
-
 class CapacityBuildingIndividualAddView(TemplateView):
     template_name = "environment/CapacityBuildingIndividualAdd.html"
 
@@ -44,6 +40,7 @@ class LMECreateView(CreateView):
     queryset = LME.objects.all()
     template_name = "environment/LMECreate.html"
     fields = (
+        # "owner",
         "name",
         "factory",
         "email",

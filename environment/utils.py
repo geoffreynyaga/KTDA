@@ -16,6 +16,7 @@
 ##################################################################################
 
 import csv
+from accounts.utils import convert_local_to_e164
 
 
 from environment.models import (
@@ -77,6 +78,7 @@ def save_factories_from_csv(file_path, command_str=""):
 
             try:
                 print("we are here")
+
                 factory_object = Factory.objects.filter(
                     name=factory,
                     region=region_object,
@@ -89,19 +91,40 @@ def save_factories_from_csv(file_path, command_str=""):
                 if factory_object:
                     print("factory_object exists")
                     # update factory
-                    factory_object.name = factory
-                    factory_object.region = region_object
-                    factory_object.zone = zone_object
-                    factory_object.county = county_object
+                    factory_object.name = factory if factory else factory_object.name
+                    factory_object.region = (
+                        region_object if region_object else factory_object.region
+                    )
+                    factory_object.zone = (
+                        zone_object if zone_object else factory_object.zone
+                    )
+                    factory_object.county = (
+                        county_object if county_object else factory_object.county
+                    )
                     factory_object.save()
                 else:
-                    factory = Factory(
-                        name=factory,
-                        region=region_object,
-                        zone=zone_object,
-                        county=county_object,
-                    )
-                    factory.save()
+                    print("factory_object does not exist")
+                    print(factory)
+                    print(type(factory), "should be str")
+
+                    print(region_object)
+                    print(type(region_object), "should be Region")
+
+                    print(zone_object)
+                    print(type(zone_object), "should be Zone")
+                    print(county_object)
+                    print(type(county_object), "should be County")
+                    try:
+                        factory = Factory.objects.create(
+                            name=factory,
+                            # region=region_object if region_object else None,
+                            # zone=zone_object if zone_object else None,
+                            # county=county_object if county_object else None,
+                        )
+                        print(factory, "factory <<<< ")
+                        # factory.save()
+                    except Exception as e:
+                        print(e, "factory creation failed")
 
             except Exception as e:
                 print(e, "error saving")
@@ -143,6 +166,18 @@ def save_LMEs_from_csv(file_path, command_str=""):
             lme_name = row[6].strip()
             contact_person = row[7].strip()
             phone_number = row[8].strip()
+            try:
+                if phone_number:
+                    if phone_number[0] == "+":
+                        pass
+                    elif phone_number[0] == "0":
+                        phone_number = convert_local_to_e164(phone_number)
+                    else:
+                        phone_number = "0" + phone_number
+                        phone_number = convert_local_to_e164(phone_number)
+            except Exception as e:
+                print(e, "error")
+
             email = row[9].strip()
             employees = row[10].strip()
             male_employees = row[11].strip()
