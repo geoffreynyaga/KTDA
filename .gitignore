@@ -179,3 +179,4 @@ static/
 media/
 server-setup.md
 logfile
+*.csv
