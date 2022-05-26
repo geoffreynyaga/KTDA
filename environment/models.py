@@ -1,4 +1,4 @@
-from calendar import month_abbr
+from decouple import config
 from django.db import models
 from django.db.models.signals import post_save
 
@@ -12,6 +12,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class County(models.Model):
@@ -90,7 +94,22 @@ def parse_csv_file(sender, instance, created, **kwargs):
 
     if created:
         # get the file path
-        file_path = instance.file.path
+        if not settings.IS_CONTABO:
+            file_path = instance.file.path
+
+            print(file_path, "file path")
+            logger.debug(file_path)
+        else:
+            logger.info("IS_CONTABO is true")
+            # logger.info(f"instance.file.path: {instance.file.path}")
+            # file_path = config("S3_ENDPOINT_URL") + instance.file.url
+            # file_path = config("TEST_S3_URL") + instance.file.url
+            # file_path = "s3://ktda-bucket/media/factories/Factories_per_region_and_Zone.xlsx_-_Sheet1.csv"
+            file_path = "https://ktda-bucket.s3.eu-west-1.amazonaws.com/media/factories/Factories_per_region_and_Zone.xlsx_-_Sheet1.csv"
+
+            logger.info(f"file_path: {file_path}")
+            # logger.info(f"file_path2: {file_path2}")
+
         command_str = ""
         print(command_str, "command string")
         # print(instance.is_update_file, "instance.is_update_file")

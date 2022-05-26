@@ -177,3 +177,5 @@ cython_debug/
 node_modules/
 static/
 media/
+server-setup.md
+logfile
