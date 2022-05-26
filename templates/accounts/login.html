@@ -12,6 +12,9 @@
         <div class="flex flex-col items-center justify-center mt-6 text-gray-800 ">
             <form method="post">
                 {% csrf_token %}
+                <p class="text-center">
+                    Put your Phone Number in <span>+254 format</span>
+                </p>
                 {{ form | crispy }}
                 <!-- Submit button -->
                 <button type="submit"
