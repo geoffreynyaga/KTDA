@@ -21,7 +21,7 @@ from django.views import generic
 
 from rest_framework.response import Response
 
-from .forms import UserAdminCreationForm
+from .forms import LoginForm, UserAdminCreationForm
 
 
 class ReactView(TemplateView, LoginRequiredMixin):
@@ -57,8 +57,22 @@ class SignUp(CreateView):
         return super(SignUp, self).form_valid(form)
 
 
+# Login View Django
+def login_view(request):
+    if request.method == "POST":
+        form = LoginForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect("/")
+    else:
+        form = LoginForm()
+    return render(request, "accounts/login.html", {"form": form})
+
+
 class LoginView(generic.FormView):
     form_class = AuthenticationForm
+    # form_class = LoginForm
     success_url = "/"
     template_name = "accounts/login.html"
 
@@ -69,6 +83,7 @@ class LoginView(generic.FormView):
 
     def form_valid(self, form):
         login(self.request, form.get_user())
+        print("form validation in views")
         return super().form_valid(form)
 
 

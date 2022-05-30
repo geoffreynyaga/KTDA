@@ -175,7 +175,7 @@ function CustomSalesReportLanding() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center flex-1 w-full h-screen">
+      <div className="flex-1 w-1/5 w-full h-screen px-2 my-2 overflow-hidden lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6">
         <HashLoader
           color={"#f3558e"}
           loading={isLoading}
@@ -188,7 +188,7 @@ function CustomSalesReportLanding() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-pink-200">
+      <div className="w-1/5 h-screen px-2 my-2 overflow-hidden bg-pink-200 lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6">
         <h1 className="text-2xl tracking-wider text-gray-700">
           Error Occurred getting Sales from server
         </h1>
@@ -207,7 +207,7 @@ function CustomSalesReportLanding() {
   }
 
   return reportReady == true && lme === null ? (
-    <div className="flex flex-col items-center justify-center h-screen bg-pink-200 hue-rotate-15">
+    <div className="w-1/5 h-screen px-2 my-2 overflow-hidden bg-pink-200 lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6 hue-rotate-15">
       {reportData.length >= 1 && reportPK !== null ? (
         <>
           <h1 className="text-2xl tracking-wider text-gray-700">
@@ -252,10 +252,10 @@ function CustomSalesReportLanding() {
       </a>
     </div>
   ) : (
-    <div className="flex flex-col items-center flex-1 w-full pt-0 mx-auto bg-gray-100 ">
+    <div className="flex flex-col items-center flex-1 w-full pt-0 bg-gray-100 ">
       {/* <!-- header --> */}
 
-      <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
+      <div className="flex flex-row items-center w-full py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow md:w-11/12 justify-evenly ">
         <div className="flex flex-row justify-center w-4/12 ">
           <a
             href="/ui/lme/sales/"
@@ -265,18 +265,11 @@ function CustomSalesReportLanding() {
             <p className="ml-4 tracking-tighter sm:text-xs">Sales</p>
           </a>
         </div>
-        <div className="flex flex-row justify-center w-5/12">
+        <div className="flex flex-row justify-center w-8/12">
           <button className="px-4 py-2 rounded-lg bg-gray-50">
             <p className="text-center text-red-500 text-md sm:text-xs">
               Customized Reports
             </p>
-          </button>
-        </div>
-        <div className="flex flex-row justify-center w-3/12">
-          <button className="px-4 bg-blue-500 rounded-lg sm:h-1/2 raised md:py-2 sm:py-0 ">
-            <a href="" className="md:px-4 md:py-2">
-              <p className="tracking-tighter text-white sm:text-xs">GENERATE</p>
-            </a>
           </button>
         </div>
       </div>
@@ -291,8 +284,8 @@ function CustomSalesReportLanding() {
               </p>
             </div>
 
-            <div className="grid grid-cols-4 gap-4 px-4 py-2 mx-2 mb-4 sm:grid-cols-2">
-              <div className="flex flex-col justify-around">
+            <div className="grid grid-cols-3 px-4 py-2 mb-4 sm:grid-cols-2">
+              <div className="flex flex-col justify-around px-4 py-2 md:px-6">
                 <div>
                   <p>LME</p>
                 </div>
@@ -306,7 +299,7 @@ function CustomSalesReportLanding() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around px-4 py-2 md:px-6">
                 <div>
                   <p>Factory</p>
                 </div>
@@ -321,7 +314,7 @@ function CustomSalesReportLanding() {
                 </div>
               </div>
 
-              <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around px-4 py-2 md:px-6">
                 <div>
                   <p>Month</p>
                 </div>
@@ -335,7 +328,7 @@ function CustomSalesReportLanding() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around px-4 py-2 md:px-6">
                 <div>
                   <p>Year</p>
                 </div>
@@ -349,98 +342,10 @@ function CustomSalesReportLanding() {
                   />
                 </div>
               </div>
-            </div>
-            <hr />
-            <div className="grid grid-cols-7 gap-4 px-4 py-2 mx-2 mb-4 sm:grid-cols-4">
-              {/* Jiko Sasa */}
-              <div className="flex flex-col items-center justify-center">
-                <div>
-                  <p className="text-xs">Jiko Sasa</p>
-                </div>
-                <div className="mt-2">
-                  <input
-                    type="checkbox"
-                    className="p-2 text-sm border-blue-500 rounded-sm "
-                    checked={jikoSasaInput}
-                    value={jikoSasaInput}
-                    onChange={() => {
-                      setJikoSasaInput(!jikoSasaInput);
-                    }}
-                  />
-                </div>
-              </div>
-              {/* Liners */}
-              <div className="flex flex-col items-center justify-center">
-                <div>
-                  <p className="text-xs">Liners</p>
-                </div>
-                <div className="mt-2">
-                  <input
-                    type="checkbox"
-                    className="p-2 text-sm border-blue-500 rounded-sm "
-                    checked={linersInput}
-                    value={linersInput}
-                    onChange={() => {
-                      setLinersInput(!linersInput);
-                    }}
-                  />
-                </div>
-              </div>
-              {/* KCJ */}
-              <div className="flex flex-col items-center justify-center">
-                <div>
-                  <p className="text-xs">KCJ</p>
-                </div>
-                <div className="mt-2">
-                  <input
-                    type="checkbox"
-                    className="p-2 text-sm border-blue-500 rounded-sm "
-                    checked={kcjInput}
-                    value={kcjInput}
-                    onChange={() => {
-                      setKcjInput(!kcjInput);
-                    }}
-                  />
-                </div>
-              </div>
-              {/* Multipurpose */}
-              <div className="flex flex-col items-center justify-center">
-                <div>
-                  <p className="text-xs">MultiPurpose</p>
-                </div>
-                <div className="mt-2">
-                  <input
-                    type="checkbox"
-                    className="p-2 text-sm border-blue-500 rounded-sm "
-                    checked={multiPurposeInput}
-                    value={multiPurposeInput}
-                    onChange={() => {
-                      setMultiPurposeInput(!multiPurposeInput);
-                    }}
-                  />
-                </div>
-              </div>
-              {/* Rocket */}
-              <div className="flex flex-col items-center justify-center">
-                <div>
-                  <p className="text-xs">Rocket</p>
-                </div>
-                <div className="mt-2">
-                  <input
-                    type="checkbox"
-                    className="p-2 text-sm border-blue-500 rounded-sm "
-                    checked={rocketInput}
-                    value={rocketInput}
-                    onChange={() => {
-                      setRocketInput(!rocketInput);
-                    }}
-                  />
-                </div>
-              </div>
 
               {/* Start Date */}
 
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col justify-around px-4 py-2 md:px-6">
                 <div>
                   <p className="text-xs">Start Date</p>
                 </div>
@@ -457,7 +362,7 @@ function CustomSalesReportLanding() {
 
               {/* End Date */}
 
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col justify-around px-4 py-2 md:px-6">
                 <div>
                   <p className="text-xs">End Date</p>
                 </div>
@@ -469,6 +374,96 @@ function CustomSalesReportLanding() {
                     onChange={(date: Date) => setEndDate(date)}
                     maxDate={addDays(new Date(), 1)}
                     className="w-full p-1 text-sm border-2 rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+            <hr />
+
+            {/*  */}
+            <div className="flex flex-row justify-around w-full mb-2 -mx-2 overflow-hidden lg:-mx-1 xl:-mx-1">
+              {/* Jiko Sasa */}
+              <div className="flex flex-col items-center justify-around w-1/5 px-2 my-2 overflow-hidden lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6">
+                <div>
+                  <p className="text-xs">Jiko Sasa</p>
+                </div>
+                <div className="mt-2">
+                  <input
+                    type="checkbox"
+                    className="p-2 text-sm border-blue-500 rounded-sm "
+                    checked={jikoSasaInput}
+                    value={jikoSasaInput}
+                    onChange={() => {
+                      setJikoSasaInput(!jikoSasaInput);
+                    }}
+                  />
+                </div>
+              </div>
+              {/* Liners */}
+              <div className="flex flex-col items-center justify-around w-1/5 px-2 my-2 overflow-hidden lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6">
+                <div>
+                  <p className="text-xs">Liners</p>
+                </div>
+                <div className="mt-2">
+                  <input
+                    type="checkbox"
+                    className="p-2 text-sm border-blue-500 rounded-sm "
+                    checked={linersInput}
+                    value={linersInput}
+                    onChange={() => {
+                      setLinersInput(!linersInput);
+                    }}
+                  />
+                </div>
+              </div>
+              {/* KCJ */}
+              <div className="flex flex-col items-center justify-around w-1/5 px-2 my-2 overflow-hidden lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6">
+                <div>
+                  <p className="text-xs">KCJ</p>
+                </div>
+                <div className="mt-2">
+                  <input
+                    type="checkbox"
+                    className="p-2 text-sm border-blue-500 rounded-sm "
+                    checked={kcjInput}
+                    value={kcjInput}
+                    onChange={() => {
+                      setKcjInput(!kcjInput);
+                    }}
+                  />
+                </div>
+              </div>
+              {/* Multipurpose */}
+              <div className="flex flex-col items-center justify-around w-1/5 px-2 my-2 overflow-hidden lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6">
+                <div>
+                  <p className="text-xs">MultiPurpose</p>
+                </div>
+                <div className="mt-2">
+                  <input
+                    type="checkbox"
+                    className="p-2 text-sm border-blue-500 rounded-sm "
+                    checked={multiPurposeInput}
+                    value={multiPurposeInput}
+                    onChange={() => {
+                      setMultiPurposeInput(!multiPurposeInput);
+                    }}
+                  />
+                </div>
+              </div>
+              {/* Rocket */}
+              <div className="flex flex-col items-center justify-around w-1/5 px-2 my-2 overflow-hidden lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6">
+                <div>
+                  <p className="text-xs">Rocket</p>
+                </div>
+                <div className="mt-2">
+                  <input
+                    type="checkbox"
+                    className="p-2 text-sm border-blue-500 rounded-sm "
+                    checked={rocketInput}
+                    value={rocketInput}
+                    onChange={() => {
+                      setRocketInput(!rocketInput);
+                    }}
                   />
                 </div>
               </div>
@@ -592,7 +587,7 @@ function CustomSalesReportLanding() {
             </table>
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center bg-pink-200 hue-rotate-15 h-72">
+          <div className="w-1/5 px-2 my-2 overflow-hidden bg-pink-200 lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6 hue-rotate-15 h-72">
             <h1 className="text-2xl tracking-wider text-gray-700">
               No Sales Recorded yet!
             </h1>

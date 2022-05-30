@@ -117,7 +117,7 @@ function LMESalesList() {
   };
 
   return (
-    <div className="flex flex-col items-center flex-1 pt-0 mx-auto bg-gray-100 ">
+    <div className="flex flex-col items-center w-full pt-0 overflow-scroll">
       {/* <!-- header --> */}
 
       <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
@@ -127,12 +127,12 @@ function LMESalesList() {
             className="flex flex-row items-center justify-around px-4 py-2 text-gray-700 bg-gray-300 border-2 rounded-lg"
           >
             <i className="text-blue-500 fad fa-plus"></i>
-            <p className="ml-2 tracking-tighter sm:text-xs">Add New Sale</p>
+            <p className="ml-2 tracking-tighter sm:text-xs">New Sale</p>
           </a>
         </div>
-        <div className="flex flex-row justify-center w-5/12 ">
+        <div className="flex flex-row justify-center w-5/12 mx-2 ">
           <button className="px-4 py-2 rounded-lg bg-gray-50 ">
-            <p className="text-center text-red-500 text-md sm:text-base">
+            <p className="text-center text-red-500 text-md sm:text-sm">
               LME Monthly Sales List
             </p>
           </button>
@@ -149,11 +149,11 @@ function LMESalesList() {
       </div>
       {/* <!-- end header --> */}
 
-      <div className="w-full mx-2 mb-6">
+      <div className="w-full mb-6 ">
         {lme !== null && lme.length > 0 ? (
-          <>
-            <div className="grid grid-cols-4 gap-4 px-4 py-2 mx-2 mb-4 sm:grid-cols-2">
-              <div className="flex flex-col justify-around">
+          <div className="w-full">
+            <div className="flex flex-row flex-wrap w-full py-2 mb-4 md:flex-1 justify-evenly">
+              <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
                 <div>
                   <p>LME</p>
                 </div>
@@ -167,7 +167,7 @@ function LMESalesList() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
                 <div>
                   <p>Factory</p>
                 </div>
@@ -181,7 +181,7 @@ function LMESalesList() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
                 <div>
                   <p>Year</p>
                 </div>
@@ -195,7 +195,7 @@ function LMESalesList() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
                 <div>
                   <p>Month</p>
                 </div>
@@ -255,7 +255,7 @@ function LMESalesList() {
                 })}
               </tbody>
             </table>
-          </>
+          </div>
         ) : (
           <div className="flex flex-col items-center justify-center bg-pink-200 hue-rotate-15 h-72">
             <h1 className="text-2xl tracking-wider text-gray-700">

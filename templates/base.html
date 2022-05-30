@@ -1,141 +1,46 @@
-{% comment %} /*
- * File: /home/geoff/KTDA/templates/base.html
- * Project: /home/geoff/KTDA/templates
- * Created Date: Saturday, May 7th 2022, 2:32:29 pm
- * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
- * -----
- * Last Modified: Saturday May 7th 2022 2:32:29 pm
- * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
- * -----
- * This file should not be copied and/or distributed without the express
- * permission of Swift Lab Limited.
- * -----
- * Copyright (c) 2022 Swift Lab Limited.
-*/ {% endcomment %}
-<!doctype html>
+<!DOCTYPE html>
 {% load static %}
+{% load tailwind_tags %}
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport"
-              content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="shortcut icon" href="./img/fav.png" type="image/x-icon" />
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {% block title %}
+                KTDA
+            {% endblock title %}
+        </title>
         <link rel="stylesheet"
               href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css"/>
-        <link rel="stylesheet"
-              type="text/css"
-              href=" {% static 'cleo/css/style.css' %}"/>
-        <title>Welcome To KTDA</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
         {% block head %}
         {% endblock head %}
+        <style>[x-cloak] { display: none; }</style>
+        {% tailwind_css %}
     </head>
-    <body class="w-full mx-0 antialiased bg-gray-100 border-8 overflow-hiden">
-        <!-- start navbar -->
-        <div class="flex flex-row flex-wrap items-center p-6 bg-white border-b border-gray-300 md:fixed md:w-full md:top-0 md:z-20">
-            <!-- logo -->
-            <div class="flex flex-row items-center flex-none w-56">
-                <img src="{% static 'cleo/img/logo.png' %}" class="flex-none w-12" />
-                <strong class="flex-1 ml-1 text-green-700 capitalize">M&E Portal</strong>
-                <button id="sliderBtn"
-                        class="flex-none hidden text-right text-gray-900 md:block">
-                    <i class="fad fa-list-ul"></i>
+    <body class="min-h-screen antialiased lg:flex" x-data="{open: false}">
+        <nav class="absolute inset-0 z-10 w-56 h-screen p-3 text-white duration-200 transform bg-green-100 lg:transform-none lg:opacity-100 lg:relative "
+             :class="{'translate-x-0 ease-in opacity-100':open === true, '-translate-x-full ease-out opacity-0': open === false}">
+            <div class="flex justify-between">
+                <img src="{% static 'cleo/img/logo.png' %}" class="flex-none w-1/2" />
+                <button class="p-2 text-green-700 rounded-md focus:outline-none focus:bg-indigo-800 hover:bg-indigo-800 lg:hidden"
+                        @click="open = false">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-6 h-6"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 19l-7-7 7-7"/>
+                    </svg>
                 </button>
             </div>
-            <!-- end logo -->
-            <!-- navbar content toggle -->
-            <button id="navbarToggle" class="right-0 hidden mr-6 md:block md:fixed">
-                <i class="fad fa-chevron-double-down"></i>
-            </button>
-            <!-- end navbar content toggle -->
-            <!-- navbar content -->
-            <div id="navbar"
-                 class="flex flex-row flex-wrap items-center justify-between flex-1 pl-3 animated md:hidden md:fixed md:top-0 md:w-full md:left-0 md:mt-16 md:border-t md:border-b md:border-gray-200 md:p-10 md:bg-white md:flex-col md:items-center">
-                <!-- left -->
-                <div class="flex"></div>
-                {% comment %} <div class="text-gray-600 md:w-full md:flex md:flex-row md:justify-evenly md:pb-10 md:mb-10 md:border-b md:border-gray-200">
-                    <a class="mr-2 transition duration-500 ease-in-out hover:text-gray-900" href="#" title="email"><i class="fad fa-envelope-open-text"></i></a>
-                    <a class="mr-2 transition duration-500 ease-in-out hover:text-gray-900" href="#" title="email"><i class="fad fa-comments-alt"></i></a>
-                    <a class="mr-2 transition duration-500 ease-in-out hover:text-gray-900" href="#" title="email"><i class="fad fa-check-circle"></i></a>
-                    <a class="mr-2 transition duration-500 ease-in-out hover:text-gray-900" href="#" title="email"><i class="fad fa-calendar-exclamation"></i></a>
-                </div> {% endcomment %}
-                <!-- end left -->
-                <!-- right -->
-                <div class="flex flex-row-reverse items-center">
-                    {% if user.is_authenticated %}
-                        <!-- user -->
-                        <div class="relative dropdown md:static">
-                            <button class="flex flex-wrap items-center menu-btn focus:outline-none focus:shadow-outline">
-                                {% comment %} <div class="w-8 h-8 overflow-hidden rounded-full">
-                                <img class="object-cover w-full h-full" src="img/user.svg" />
-                                </div> {% endcomment %}
-                                <div class="flex ml-2 capitalize ">
-                                    <h1 class="p-0 m-0 text-sm font-semibold leading-none text-gray-800">{{ user }}</h1>
-                                    <i class="ml-2 text-xs leading-none fad fa-chevron-down"></i>
-                                </div>
-                            </button>
-                            <button class="fixed top-0 left-0 z-10 hidden w-full h-full menu-overflow"></button>
-                            <div class="absolute right-0 z-20 hidden w-40 py-2 mt-5 text-gray-500 bg-white rounded shadow-md menu md:mt-10 md:w-full animated faster">
-                                <!-- item -->
-                                <a class="block px-4 py-2 text-sm font-medium tracking-wide capitalize transition-all duration-300 ease-in-out bg-white hover:bg-gray-200 hover:text-gray-900"
-                                   href="/admin/">
-                                    <i class="mr-1 text-xs fad fa-user-edit"></i>
-                                    Go to Admin
-                                </a>
-                                <!-- end item -->
-                                <!-- item -->
-                                {% comment %} <a class="block px-4 py-2 text-sm font-medium tracking-wide capitalize transition-all duration-300 ease-in-out bg-white hover:bg-gray-200 hover:text-gray-900" href="#">
-                                <i class="mr-1 text-xs fad fa-inbox-in"></i>
-                                my inbox
-                                </a> {% endcomment %}
-                                <!-- end item -->
-                                <!-- item -->
-                                {% comment %} <a class="block px-4 py-2 text-sm font-medium tracking-wide capitalize transition-all duration-300 ease-in-out bg-white hover:bg-gray-200 hover:text-gray-900" href="#">
-                                <i class="mr-1 text-xs fad fa-badge-check"></i>
-                                tasks
-                                </a> {% endcomment %}
-                                <!-- end item -->
-                                <!-- item -->
-                                {% comment %} <a class="block px-4 py-2 text-sm font-medium tracking-wide capitalize transition-all duration-300 ease-in-out bg-white hover:bg-gray-200 hover:text-gray-900" href="#">
-                                <i class="mr-1 text-xs fad fa-comment-alt-dots"></i>
-                                chats
-                                </a> {% endcomment %}
-                                <!-- end item -->
-                                <hr />
-                                <!-- item -->
-                                <a class="block px-4 py-2 text-sm font-medium tracking-wide capitalize transition-all duration-300 ease-in-out bg-white hover:bg-gray-200 hover:text-gray-900"
-                                   href="/accounts/logout/">
-                                    <i class="mr-1 text-xs fad fa-user-times"></i>
-                                    log out
-                                </a>
-                                <!-- end item -->
-                            </div>
-                        </div>
-                        <!-- end user -->
-                    {% else %}
-                        <!-- login -->
-                        <a class="flex flex-wrap items-center menu-btn focus:outline-none focus:shadow-outline"
-                           href="/accounts/login/">
-                            <i class="mr-1 text-xs fad fa-sign-in-alt"></i>
-                            <span class="capitalize">login</span>
-                        </a>
-                        <a class="flex flex-wrap items-center px-4 py-2 mr-4 bg-yellow-300 rounded-md menu-btn focus:outline-none focus:shadow-outline"
-                           href="/accounts/signup/">
-                            {% comment %} <i class="mr-1 text-xs fad fa-sign-in-alt"></i> {% endcomment %}
-                            <span class="capitalize">Sign Up</span>
-                        </a>
-                    {% endif %}
-                </div>
-                <!-- end right -->
-            </div>
-            <!-- end navbar content -->
-        </div>
-        <!-- end navbar -->
-        <!-- strat wrapper -->
-        <div class="flex flex-row flex-wrap h-screen ">
             {% if user.is_authenticated %}
                 <!-- start sidebar -->
-                <div id="sideBar"
-                     class="relative flex flex-col flex-wrap flex-none w-64 p-6 bg-green-100 border-r border-gray-300 md:-ml-64 md:fixed md:top-0 md:z-30 md:h-screen md:shadow-xl animated faster">
+                <div class="flex flex-col w-full mx-0 bg-green-100">
                     <!-- sidebar content -->
                     <div class="flex flex-col">
                         <!-- sidebar toggle -->
@@ -150,34 +55,34 @@
                         </p>
                         <!-- link -->
                         <a href="/ui/lme/list/"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-home"></i>
                             LMEs
                         </a>
                         <!-- end link -->
                         <!-- link -->
                         <a href="/ui/lme/sales/"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-chart-pie"></i>
                             Sales
                         </a>
                         <!-- end link -->
                         <!-- link -->
                         <a href="/ui/lme/cnm/"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-book"></i>
                             Coaching & Mentorship
                         </a>
                         <!-- end link --><!-- link -->
                         <a href="/ui/lme/training/"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-graduation-cap"></i>
                             Training
                         </a>
                         <!-- end link -->
                         <!-- link -->
                         <a href="/ui/lme/tree-growing/"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-tree"></i>
                             Tree Growing
                         </a>
@@ -187,21 +92,21 @@
                         </p>
                         <!-- link -->
                         <a href="./email.html"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-envelope-open-text"></i>
                             Capacity Building
                         </a>
                         <!-- end link -->
                         <!-- link -->
                         <a href="./email.html"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-graduation-cap"></i>
                             Training
                         </a>
                         <!-- end link -->
                         <!-- link -->
                         <a href="./email.html"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-sun"></i>
                             Climate Smart Agriculture
                         </a>
@@ -211,14 +116,14 @@
                         </p>
                         <!-- link -->
                         <a href="./email.html"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-university"></i>
                             Scholarship
                         </a>
                         <!-- end link -->
                         <!-- link -->
                         <a href="#"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-thermometer-empty"></i>
                             STEM
                         </a>
@@ -229,7 +134,7 @@
                         <!-- end link -->
                         <!-- link -->
                         <a href="#"
-                           class="mb-3 text-sm font-medium capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
                             <i class="mr-2 text-xs fad fa-stethoscope"></i>
                             Screening
                         </a>
@@ -238,18 +143,107 @@
                 </div>
                 <!-- end sidbar -->
             {% endif %}
-            <!-- strat content -->
-            <div class="flex-1 w-full p-0 mx-0 bg-gray-100 md:mt-16">
+        </nav>
+        <div class="relative z-0 border-green-400 lg:flex-grow">
+            <header class="flex items-center px-3 py-2 text-white bg-gray-700 border-red-900 h-11">
+                <button class="p-2 rounded-md focus:outline-none focus:bg-gray-600 hover:bg-gray-600 lg:hidden"
+                        @click="open = true">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-6 h-6"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                <div class="inset-0 flex flex-row items-center justify-between w-full border-green-700 h-fit aniated">
+                    <!-- left -->
+                    <div class="flex">
+                        <span class="p-4 font-bold md:text-xl sm:text-lg">KTDA M&E</span>
+                    </div>
+                    <div class="flex flex-row items-center justify-center ">
+                        {% if user.is_authenticated %}
+                            <!-- user -->
+                            <div class="flex flex-row items-center justify-end w-full ">
+                                <div @click.away="openSort = false"
+                                     class="relative flex-row self-end justify-around w-full "
+                                     x-data="{ openSort: false,sortType:'Sort bya' }">
+                                    <button @click="openSort = !openSort"
+                                            class="flex items-center justify-start w-full py-2 mt-2 text-sm font-semibold text-left text-white bg-transparent rounded-lg ">
+                                        <span class="">{{ user }}</span>
+                                        <svg fill="currentColor"
+                                             viewBox="0 0 20 20"
+                                             :class="{'rotate-180': openSort, 'rotate-0': !openSort}"
+                                             class="w-4 h-4 ml-2 transition-transform duration-200 transform ">
+                                            <path fill-rule="evenodd"
+                                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                  clip-rule="evenodd">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <div x-show="openSort"
+                                         x-cloak
+                                         x-transition:enter="transition ease-out duration-100"
+                                         x-transition:enter-start="transform opacity-0 scale-95"
+                                         x-transition:enter-end="transform opacity-100 scale-100"
+                                         x-transition:leave="transition ease-in duration-75"
+                                         x-transition:leave-start="transform opacity-100 scale-100"
+                                         x-transition:leave-end="transform opacity-0 scale-95"
+                                         class="absolute z-50 w-full origin-top-right">
+                                        <div class="px-2 pt-2 pb-2 bg-white rounded-md shadow-lg dark-mode:bg-gray-700">
+                                            <div class="flex flex-col">
+                                                <a @click="sortType='Most popular',openSort=!openSort"
+                                                   x-show="sortType != 'Most popular'"
+                                                   class="flex flex-row items-start p-2 bg-transparent rounded-lg hover:bg-gray-200 "
+                                                   href="/admin/">
+                                                    <div class="">
+                                                        <p class="font-semibold text-black">
+                                                            Go To Admin
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                                <a @click="sortType='Most upvoted',openSort=!openSort"
+                                                   x-show="sortType != 'Most upvoted'"
+                                                   class="flex flex-row items-start p-2 bg-transparent rounded-lg hover:bg-gray-200 "
+                                                   href="/accounts/logout/">
+                                                    <div class="">
+                                                        <p class="font-semibold text-black">
+                                                            Logout
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end user -->
+                        {% else %}
+                            <!-- login -->
+                            <a class="flex flex-wrap items-center menu-btn focus:outline-none focus:shadow-outline"
+                               href="/accounts/login/">
+                                <i class="mr-1 text-xs fad fa-sign-in-alt"></i>
+                                <span class="capitalize">login</span>
+                            </a>
+                            <a class="flex flex-wrap items-center px-4 py-2 mr-4 bg-yellow-300 rounded-md menu-btn focus:outline-none focus:shadow-outline"
+                               href="/accounts/signup/">
+                                {% comment %} <i class="mr-1 text-xs fad fa-sign-in-alt"></i> {% endcomment %}
+                                <span class="capitalize">Sign Up</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </header>
+            <div class="flex-1 w-full p-0 mx-0 bg-gray-100 ">
                 {% block content %}
                 {% endblock content %}
             </div>
         </div>
-        <!-- status -->
-        <!-- end wrapper -->
-        {% comment %} <div id="root"></div> {% endcomment %}
-        <!-- script -->
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-        <script src=" {% static 'cleo/js/scripts.js' %}"></script>
-        <!-- end script -->
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+        {% block extra_js %}
+        {% endblock extra_js %}
     </body>
 </html>

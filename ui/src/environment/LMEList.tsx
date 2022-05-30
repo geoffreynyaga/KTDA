@@ -173,28 +173,30 @@ function LMEList() {
   }
 
   return (
-    <div className="flex flex-col items-center flex-1 w-full pt-0 overflow-scroll bg-gray-100 sm:mx-0 md:mx-auto">
+    <div className="flex flex-col items-center flex-1 w-full pt-0 bg-gray-100 sm:mx-0 md:mx-auto md:">
       {/* <!-- header --> */}
 
-      <div className="flex flex-row items-center w-full py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow md:w-11/12 md:justify-evenly sm:justify-between">
-        <div className="flex flex-row justify-center w-4/12 ">
+      <div className="flex flex-row items-center justify-between w-full py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow md:w-11/12 md:justify-evenly">
+        <div className="flex flex-row justify-around w-5/12 shadow ring-amber-400 ">
           <a
             href="/environment/lme/create/"
-            className="flex items-center justify-around w-full px-4 py-2 text-blue-500 bg-gray-300 border-2 rounded-lg sm:flex-col md:flex-row "
+            className="flex items-center justify-around w-full py-2 text-blue-500 bg-gray-300 border-2 rounded-lg md:flex-row "
           >
-            <p className="text-indigo-400 sm:text-center sm:pr-0 md:pr-4 sm:text-xs">
+            <p className="text-left text-indigo-400 sm:text-center md:pr-4 sm:text-xs">
               New LME
             </p>
-            <i className="fad fa-plus"></i>
+            <div className="">
+              <i className="fad fa-plus"></i>
+            </div>
           </a>
         </div>
-        <div className="flex flex-row justify-center w-5/12 ">
-          <button className="px-4 py-2 text-red-500 rounded-lg bg-gray-50 ">
+        <div className="flex flex-row justify-center w-4/12 ">
+          <button className="w-full px-2 py-2 text-red-500 rounded-lg bg-gray-50">
             <h1 className="text-center h6">LME List</h1>
           </button>
         </div>
         <div className="flex flex-row justify-center w-3/12 ">
-          <button className="px-4 py-2 bg-gray-300 border-2 rounded-lg ">
+          <button className="w-full py-2 bg-gray-300 border-2 rounded-lg ">
             Report
           </button>
         </div>
@@ -202,10 +204,10 @@ function LMEList() {
       {/* <!-- end header --> */}
 
       <div className="flex flex-col items-center w-full mx-2 mb-6">
-        <div className="grid grid-cols-4 gap-4 px-4 py-2 mx-2 mb-4 sm:grid-cols-2">
-          <div className="flex flex-col justify-around">
+        <div className="flex flex-row flex-wrap w-full py-2 mb-4 md:flex-1 justify-evenly">
+          <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
             <div>
-              <p>LME</p>
+              <p>LME </p>
             </div>
             <div className="mt-2">
               <input
@@ -217,7 +219,7 @@ function LMEList() {
               />
             </div>
           </div>
-          <div className="flex flex-col justify-around">
+          <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
             <div>
               <p>Factory</p>
             </div>
@@ -231,7 +233,7 @@ function LMEList() {
               />
             </div>
           </div>
-          <div className="flex flex-col justify-around">
+          <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
             <div>
               <p>Contact Person</p>
             </div>
@@ -245,7 +247,7 @@ function LMEList() {
               />
             </div>
           </div>
-          <div className="flex flex-col justify-around">
+          <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
             <div>
               <p>Phone Number</p>
             </div>

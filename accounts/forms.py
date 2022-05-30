@@ -26,28 +26,48 @@ from environment.models import LME
 from .models import User
 
 
-class RegisterForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Confirm password", widget=forms.PasswordInput)
+class LoginForm(forms.ModelForm):
+    phone_number = forms.CharField(
+        max_length=13,
+        initial="+254",
+        help_text="Enter your phone number in +254",
+    )
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ("phone_number",)
+        fields = ("phone_number", "password")
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get("phone_number")
         qs = User.objects.filter(phone_number=phone_number)
-        if qs.exists():
-            raise forms.ValidationError("This Phone Number is taken")
+
+        if not qs.exists():
+            raise forms.ValidationError("This Phone Number is not registered")
         return phone_number
 
-    def clean_password2(self):
-        # Check that the two password entries match
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
-        return password2
+    def save(self, commit=True):
+        print("in save")
+        user = super(LoginForm, self).save(commit=False)
+        print(user, "we are here")
+        # login the user
+        from django.contrib.auth import authenticate, login, logout
+
+        try:
+            user = authenticate(
+                phone_number=self.cleaned_data["phone_number"],
+                password=self.cleaned_data["password"],
+            )
+            print(user, "user")
+
+        except Exception as e:
+            print(e)
+
+        print(user, "user")
+        if user is not None:
+            if user.is_active:
+                login(self.request, user)
+        return user
 
 
 class UserAdminCreationForm(forms.ModelForm):

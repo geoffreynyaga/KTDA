@@ -2,17 +2,17 @@
 {% load static %}
 {% load tailwind_filters %}
 {% block content %}
-    <div class="flex flex-col items-center justify-around w-full max-h-screen px-6 ">
+    <div class="flex flex-col items-center justify-around w-full h-full max-h-screen px-6 bg-white ">
         <div class="flex flex-col w-full mt-8 md:w-8/12 lg:w-6/12">
             <h1 class="w-full text-2xl font-bold text-center text-gray-800 sm:text-lg">Welcome to M&E Portal</h1>
             <p class="w-full mt-4 text-center text-gray-600 sm:text-xs ">
                 login here below to get started
             </p>
         </div>
-        <div class="flex flex-col items-center justify-center mt-6 text-gray-800 ">
+        <div class="flex flex-col items-center justify-center mt-8 text-gray-800 ">
             <form method="post">
                 {% csrf_token %}
-                <p class="text-center">
+                <p class="mb-2 text-sm text-center">
                     Put your Phone Number in <span>+254 format</span>
                 </p>
                 {{ form | crispy }}
@@ -25,7 +25,7 @@
                 </button>
             </form>
         </div>
-        <div class="flex mt-4 ">
+        <div class="flex mt-6 ">
             <p class="text-center text-gray-600">
                 Don't have an account? <a href="/accounts/signup/" class="text-blue-600">Register</a>
             </p>

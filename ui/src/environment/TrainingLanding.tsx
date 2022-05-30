@@ -4,7 +4,7 @@
  * Created Date: Wednesday, May 18th 2022, 3:29:58 pm
  * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
- * Last Modified: Wednesday May 18th 2022 3:29:58 pm
+ * Last Modified: Thursday May 19th 2022 9:40:33 am
  * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
  * This file should not be copied and/or distributed without the express
@@ -14,9 +14,9 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { IMonthlySales } from "../../typings/LMETypes";
+import { useFilters, useTable } from "react-table";
 
-import { useTable, useFilters } from "react-table";
+import { IMonthlySales } from "../../typings/LMETypes";
 
 function TrainingLanding() {
   const [lme, setLme] = useState<null | IMonthlySales[]>(null);
@@ -116,9 +116,9 @@ function TrainingLanding() {
         <div className="flex flex-row justify-center w-3/12 ">
           <a
             href="/environment/training/create/"
-            className="px-4 py-2 bg-gray-300 border-2 rounded-lg "
+            className="py-2 bg-gray-300 border-2 rounded-lg md:px-4 sm:text-xs "
           >
-            Add new Training
+            Add Training
           </a>
         </div>
         <div className="flex flex-row justify-center w-6/12 ">
@@ -232,8 +232,8 @@ function TrainingLanding() {
             </table>
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center bg-pink-200 hue-rotate-15 h-72">
-            <h1 className="text-2xl tracking-wider text-gray-700">
+          <div className="flex flex-col items-center justify-center py-4 bg-red-200 hue-rotate-15 h-72">
+            <h1 className="text-lg tracking-wider text-center text-gray-700 md:text-2xl">
               No Training Activity Recorded yet!
             </h1>
             <hr />
@@ -241,7 +241,7 @@ function TrainingLanding() {
               Add at least one activity to unlock this page
             </p>
             <a href="/environment/training/create/" className="mt-6">
-              <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
+              <button className="px-6 py-2 bg-blue-200 rounded-lg shadow-lg ">
                 Add new Training Activity
               </button>
             </a>

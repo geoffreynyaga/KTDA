@@ -4,7 +4,7 @@
  * Created Date: Wednesday, May 18th 2022, 3:29:58 pm
  * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
- * Last Modified: Wednesday May 18th 2022 3:29:58 pm
+ * Last Modified: Thursday May 19th 2022 8:37:27 pm
  * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
  * This file should not be copied and/or distributed without the express
@@ -14,9 +14,9 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { IMonthlySales } from "../../typings/LMETypes";
+import { useFilters, useTable } from "react-table";
 
-import { useTable, useFilters } from "react-table";
+import { IMonthlySales } from "../../typings/LMETypes";
 
 function TreeGrowingLanding() {
   const [lme, setLme] = useState<null | IMonthlySales[]>(null);
@@ -116,7 +116,7 @@ function TreeGrowingLanding() {
         <div className="flex flex-row justify-center w-3/12 ">
           <a
             href="/environment/tree-growing/create/"
-            className="px-4 py-2 bg-gray-300 border-2 rounded-lg  sm:text-sm"
+            className="px-4 py-2 bg-gray-300 border-2 rounded-lg sm:text-sm"
           >
             Add Tree Growing Activity
           </a>
@@ -232,16 +232,16 @@ function TreeGrowingLanding() {
             </table>
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center bg-pink-200 hue-rotate-15 h-72">
-            <h1 className="text-2xl tracking-wider text-gray-700">
+          <div className="flex flex-col items-center justify-center w-full py-4 bg-red-200 h-72">
+            <h1 className="tracking-wider text-center text-gray-700 md:text-2xl text-md">
               No Tree Growing Activity Recorded yet!
             </h1>
             <hr />
             <p className="mt-6 tracking-wider text-gray-700 text-md">
-              Add at least one activity to unlock this page
+              Add at least one activity to unlock this page.
             </p>
             <a href="/environment/tree-growing/create/" className="mt-6">
-              <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
+              <button className="px-6 py-2 bg-red-600 rounded-lg shadow-lg ">
                 Add new Tree Growing Activity
               </button>
             </a>

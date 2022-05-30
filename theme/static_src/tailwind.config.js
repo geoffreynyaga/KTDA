@@ -44,12 +44,12 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        "pdf-200": "#5B691A",
-        "pdf-300": "#4F5D1A",
-        "pdf-400": "#3C4E1A",
-        "pdf-500": "#2B3D1A",
-      },
+      // colors: {
+      //   "pdf-200": "#5B691A",
+      //   "pdf-300": "#4F5D1A",
+      //   "pdf-400": "#3C4E1A",
+      //   "pdf-500": "#2B3D1A",
+      // },
     },
   },
   plugins: [
