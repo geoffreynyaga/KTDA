@@ -6,7 +6,7 @@
 # Created Date: Tuesday, May 24th 2022, 11:52:02 pm                              #
 # Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
 # -----                                                                          #
-# Last Modified: Tuesday May 24th 2022 11:52:02 pm                               #
+# Last Modified: Wednesday May 25th 2022 8:38:40 am                              #
 # Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
@@ -41,9 +41,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = "django-insecure-(%$8dax&)7zn0fc#hgi43k&j2!*1^#-iiw&8q@rn*q^0aiuf-4"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+DEBUG = config("DEBUG", default=False, cast=bool)
+
+
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")]
+)
+
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -71,6 +76,7 @@ INSTALLED_APPS = [
     # "allauth.account",
     # "allauth.socialaccount",
     "phonenumber_field",
+    "storages",
     "accounts",
     "ui",
     "education",
@@ -134,8 +140,12 @@ WSGI_APPLICATION = "KTDA.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "NAME": config("DATABASE_NAME"),
+        "USER": config("DATABASE_USER"),
+        "PASSWORD": config("DATABASE_PASSWORD"),
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
@@ -208,17 +218,6 @@ LOGIN_REDIRECT_URL = "home"
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ktda",
-        "USER": "postgres",
-        "HOST": "localhost",
-        "PASSWORD": "19Scazorla",
-        "PORT": "5432",
-    }
-}
-
 
 CORS_URLS_REGEX = r"^/api.*"
 CORS_ORIGIN_ALLOW_ALL = True
@@ -268,3 +267,8 @@ LOGGING = {
 
 
 IS_TESTING = False
+
+IS_CONTABO = True
+
+
+from KTDA.aws.conf import *
