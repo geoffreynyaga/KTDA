@@ -19,6 +19,7 @@ import { useFilters, useTable } from "react-table";
 import { HashLoader } from "react-spinners";
 import { ILME } from "../../typings/LMETypes";
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet-async";
 
 function LMEList() {
   const [lme, setLme] = useState<null | ILME[]>(null);
@@ -173,12 +174,26 @@ function LMEList() {
   }
 
   return (
-    <div className="flex flex-col items-center flex-1 w-full pt-0 bg-gray-100 sm:mx-0 md:mx-auto md:">
-      {/* <!-- header --> */}
+    <>
+      <Helmet>
+        <title>LME List</title>
+        <link rel="canonical" href="/ui/lme/list/" />
+        <meta name="description" content="LME List" />
+        <meta name="keywords" content="LME List" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="revisit-after" content="1 days" />
+        <meta name="language" content="en" />
+        <meta name="distribution" content="global" />
+        <meta name="rating" content="general" />
+        <meta name="doc-class" content="completed" />
+      </Helmet>
+      <div className="flex flex-col items-center flex-1 w-full pt-0 bg-gray-100 sm:mx-0 md:mx-auto md:">
+        {/* <!-- header --> */}
 
-      <div className="flex flex-row items-center justify-between w-full py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow md:w-11/12 md:justify-evenly">
-        <div className="flex flex-row justify-center w-5/12 px-2 md:w-4/12 ">
-          {/* <a
+        <div className="flex flex-row items-center justify-between w-full py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow md:w-11/12 md:justify-evenly">
+          <div className="flex flex-row justify-center w-5/12 px-2 md:w-4/12 ">
+            {/* <a
             href="/environment/lme/create/"
             className="flex items-center justify-around w-full py-2 text-blue-500 bg-gray-300 border-2 rounded-lg md:px-4 md:justify-center md:flex-row "
           >
@@ -189,154 +204,155 @@ function LMEList() {
               <i className="fad fa-plus"></i>
             </div>
           </a> */}
-          <a
-            href="/environment/lme/create/"
-            className="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
-          >
-            <span className="px-3.5 py-2 text-white bg-purple-500 group-hover:bg-purple-600 flex items-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 4v16m8-8H4"
-                />
-              </svg>
-            </span>
-            <span className="pl-4 pr-5 py-2.5">New LME</span>
-          </a>
-        </div>
-        <div className="flex flex-row justify-center w-4/12 px-1 md:w-5/12 ">
-          <button className="w-full px-2 py-2 text-red-500 rounded-lg ">
-            <h1 className="text-center h6">LME List</h1>
-          </button>
-        </div>
-        <div className="flex flex-row justify-center w-3/12 px-1 ">
-          {/* <button className="w-full py-2 bg-gray-300 border-2 rounded-lg ">
+            <a
+              href="/environment/lme/create/"
+              className="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
+            >
+              <span className="px-3.5 py-2 text-white bg-purple-500 group-hover:bg-purple-600 flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+              </span>
+              <span className="pl-4 pr-5 py-2.5">New LME</span>
+            </a>
+          </div>
+          <div className="flex flex-row justify-center w-4/12 px-1 md:w-5/12 ">
+            <button className="w-full px-2 py-2 text-red-500 rounded-lg ">
+              <h1 className="text-center h6">LME List</h1>
+            </button>
+          </div>
+          <div className="flex flex-row justify-center w-3/12 px-1 ">
+            {/* <button className="w-full py-2 bg-gray-300 border-2 rounded-lg ">
             Report
           </button> */}
-        </div>
-      </div>
-      {/* <!-- end header --> */}
-
-      <div className="flex flex-col items-center w-full mx-2 mb-6">
-        <div className="flex flex-row flex-wrap w-full py-2 mb-4 md:flex-1 justify-evenly">
-          <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
-            <div>
-              <p>LME </p>
-            </div>
-            <div className="mt-2">
-              <input
-                type="text"
-                className="w-full p-2 text-sm border-2 rounded-lg"
-                placeholder="Search LME"
-                value={LMENameInput}
-                onChange={handleNameFilterChange}
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
-            <div>
-              <p>Factory</p>
-            </div>
-            <div className="mt-2">
-              <input
-                type="text"
-                className="w-full p-2 text-sm border-2 rounded-lg"
-                placeholder="Search Factory"
-                value={factoryInput}
-                onChange={handleFactoryFilterChange}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
-            <div>
-              <p>Contact Person</p>
-            </div>
-            <div className="mt-2">
-              <input
-                type="text"
-                className="w-full p-2 text-sm border-2 rounded-lg"
-                placeholder="Search Person"
-                value={contactPersonInput}
-                onChange={handleContactPersonChange}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
-            <div>
-              <p>Phone Number</p>
-            </div>
-            <div className="mt-2">
-              <input
-                type="text"
-                className="w-full p-2 text-sm border-2 rounded-lg"
-                placeholder="07XXXXXXXX"
-                value={phoneNumberInput}
-                onChange={handlePhoneNumberChange}
-              />
-            </div>
           </div>
         </div>
-        <hr />
-        {lme !== null ? (
-          <table
-            {...getTableProps()}
-            className="w-full overflow-scroll text-left sm:table-fixed md:table-auto md:w-11/12"
-          >
-            {/* // Input element */}
-            <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th
-                      {...column.getHeaderProps()}
-                      style={{
-                        // borderBottom: "solid 3px red",
-                        background: "aliceblue",
-                        // color: "black",
-                        // fontWeight: "bold",
-                      }}
-                      className="py-2 text-xs text-center text-red-500 border-b-4 border-r border-b-black"
-                    >
-                      {column.render("Header")}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td
-                          {...cell.getCellProps()}
-                          className="px-1 py-2 text-xs text-center border border-l-0 "
-                        >
-                          {cell.render("Cell")}
-                        </td>
-                      );
-                    })}
+        {/* <!-- end header --> */}
+
+        <div className="flex flex-col items-center w-full mx-2 mb-6">
+          <div className="flex flex-row flex-wrap w-full py-2 mb-4 md:flex-1 justify-evenly">
+            <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
+              <div>
+                <p>LME </p>
+              </div>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  className="w-full p-2 text-sm border-2 rounded-lg"
+                  placeholder="Search LME"
+                  value={LMENameInput}
+                  onChange={handleNameFilterChange}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
+              <div>
+                <p>Factory</p>
+              </div>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  className="w-full p-2 text-sm border-2 rounded-lg"
+                  placeholder="Search Factory"
+                  value={factoryInput}
+                  onChange={handleFactoryFilterChange}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
+              <div>
+                <p>Contact Person</p>
+              </div>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  className="w-full p-2 text-sm border-2 rounded-lg"
+                  placeholder="Search Person"
+                  value={contactPersonInput}
+                  onChange={handleContactPersonChange}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
+              <div>
+                <p>Phone Number</p>
+              </div>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  className="w-full p-2 text-sm border-2 rounded-lg"
+                  placeholder="07XXXXXXXX"
+                  value={phoneNumberInput}
+                  onChange={handlePhoneNumberChange}
+                />
+              </div>
+            </div>
+          </div>
+          <hr />
+          {lme !== null ? (
+            <table
+              {...getTableProps()}
+              className="w-full overflow-scroll text-left sm:table-fixed md:table-auto md:w-11/12"
+            >
+              {/* // Input element */}
+              <thead>
+                {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => (
+                      <th
+                        {...column.getHeaderProps()}
+                        style={{
+                          // borderBottom: "solid 3px red",
+                          background: "aliceblue",
+                          // color: "black",
+                          // fontWeight: "bold",
+                        }}
+                        className="py-2 text-xs text-center text-red-500 border-b-4 border-r border-b-black"
+                      >
+                        {column.render("Header")}
+                      </th>
+                    ))}
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        ) : (
-          "No data"
-        )}
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {rows.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()}>
+                      {row.cells.map((cell) => {
+                        return (
+                          <td
+                            {...cell.getCellProps()}
+                            className="px-1 py-2 text-xs text-center border border-l-0 "
+                          >
+                            {cell.render("Cell")}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          ) : (
+            "No data"
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
