@@ -64,6 +64,15 @@ class LMEDetailView(DetailView):
     template_name = "environment/LMEDetail.html"
     # fields = "__all__"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs.get("slug")
+        lme = LME.objects.get(slug=slug)
+        # get last three sales
+        sales = LMESales.objects.filter(lme=lme).order_by("-date_of_purchase")[:3]
+        context["sales"] = sales
+        return context
+
 
 class SalesCreateView(CreateView):
     queryset = LMESales.objects.all()

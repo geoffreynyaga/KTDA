@@ -165,7 +165,9 @@ class LME(models.Model):
 
     name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    factory = models.ForeignKey(Factory, on_delete=models.CASCADE)
+    factory = models.ForeignKey(
+        Factory, on_delete=models.CASCADE, related_name="lme_factory"
+    )
     email = models.EmailField(max_length=254, blank=True, null=True)
     no_of_employees = models.IntegerField(blank=True, null=True)
     no_of_female_employees = models.IntegerField(default=0)
