@@ -21,6 +21,7 @@ import CustomSalesReportPDF from "../environment/report/CustomSalesReportPDF";
 import LMEList from "../environment/LMEList";
 import LMESalesList from "../environment/SalesList";
 import React from "react";
+import SalesListIndividual from "../environment/SalesListIndividual";
 import TrainingLanding from "../environment/TrainingLanding";
 import TreeGrowingLanding from "../environment/TreeGrowingLanding";
 
@@ -36,6 +37,10 @@ function RoutesApp() {
     <Routes>
       <Route path="/ui/lme/list/" element={<LMEList />} />
       <Route path="/ui/lme/sales/" element={<LMESalesList />} />
+      <Route
+        path="/ui/lme/sales/individual/"
+        element={<SalesListIndividual />}
+      />
       <Route path="/ui/lme/cnm/" element={<CoachingAndMentorshipLanding />} />
       <Route path="/ui/lme/training/" element={<TrainingLanding />} />
       <Route path="/ui/lme/tree-growing/" element={<TreeGrowingLanding />} />

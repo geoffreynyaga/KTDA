@@ -24,6 +24,7 @@ from environment.views import (
     LMECreateView,
     TrainingCreateView,
     TreeGrowingCreateView,
+    LMEIndividualSalesCreateView,
 )
 
 urlpatterns = [
@@ -31,6 +32,11 @@ urlpatterns = [
     # path("lme/add/", LMEAddView.as_view(), name="add_lme"),
     path("lme/create/", LMECreateView.as_view(), name="lme_create"),
     path("lme/sales/create/", SalesCreateView.as_view(), name="lme_sales_create"),
+    path(
+        "lme/sales/individual/create/",
+        LMEIndividualSalesCreateView.as_view(),
+        name="lme_sales_individual_create",
+    ),
     # path("lme/sales/list/", SalesListView.as_view(), name="sales_list_lme"),
     path(
         "lme/capacity/individual-add/",

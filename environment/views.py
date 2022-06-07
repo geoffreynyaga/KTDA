@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from django.views.generic import CreateView
 from environment.forms import (
     CoachingAndMentorshipForm,
+    LMEIndividualSalesForm,
     TrainingForm,
     LMESalesForm,
     TreeGrowingForm,
@@ -72,6 +73,22 @@ class SalesCreateView(CreateView):
     #     "date_of_purchase",
     # )
     success_url = "/ui/lme/sales/"
+
+
+class LMEIndividualSalesCreateView(CreateView):
+    queryset = LMESales.objects.all()
+    template_name = "environment/LMEIndividualSalesCreate.html"
+    form_class = LMEIndividualSalesForm
+
+    success_url = "/"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        lme = LME.objects.all().filter(owner=self.request.user).first()
+        # print(lme, "lme")
+        self.object.lme = lme
+        self.object.save()
+        return super().form_valid(form)
 
 
 class TrainingCreateView(CreateView):

@@ -33,6 +33,7 @@ from rest_framework.authentication import (
     BasicAuthentication,
 )
 from environment.api.serializers import (
+    MonthlyLMEIndividualSalesSerializer,
     TrainingSerializer,
     CoachingAndMentorshipSerializer,
     LMESerializer,
@@ -74,6 +75,17 @@ class LMESalesListAPIView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return super().get_queryset().order_by("-month")
+
+
+class LMEIndividualMonthlySalesListAPIView(generics.ListAPIView):
+    queryset = MonthlyLMESales.objects.all()
+    serializer_class = MonthlyLMEIndividualSalesSerializer
+
+    def get_queryset(self):
+        print("heeeeey")
+        lme = LME.objects.filter(owner=self.request.user).last()
+        print(lme, "lme")
+        return super().get_queryset().filter(lme=lme).order_by("-month")
 
 
 class LMESalesCustomReportAPIView(APIView):

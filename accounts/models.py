@@ -59,6 +59,8 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=20, blank=True, null=True)
     last_name = models.CharField(max_length=20, blank=True, null=True)
 
+    is_lme = models.BooleanField(default=False)
+
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)  # a admin user; non super-user
     admin = models.BooleanField(default=False)  # a superuser
@@ -117,5 +119,10 @@ class User(AbstractBaseUser):
     def is_active(self):
         "Is the user active?"
         return self.active
+
+    @property
+    def is_lme_member(self):
+        "Is the user a lme member?"
+        return self.is_lme
 
     objects = UserManager()

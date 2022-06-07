@@ -55,6 +55,30 @@ class LMESalesForm(forms.ModelForm):
         }
 
 
+class LMEIndividualSalesForm(forms.ModelForm):
+    class Meta:
+        model = LMESales
+
+        fields = (
+            # "lme",
+            "customer_name",
+            "customer_phone_number",
+            "stove",
+            "stove_price",
+            "date_of_purchase",
+        )
+
+        from environment.models import STOVE_NAMES
+
+        widgets = {
+            "stove": forms.RadioSelect(
+                choices=STOVE_NAMES,
+                attrs={"class": "form-control"},
+            ),
+            "date_of_purchase": DatePickerInput(),
+        }
+
+
 class TrainingForm(forms.ModelForm):
     class Meta:
         model = Training

@@ -15,38 +15,82 @@
 # Copyright (c) 2022 Swift Lab Limited.                                          #
 ##################################################################################
 
+from click import password_option
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, AdminPasswordChangeForm
 
 from django.core.validators import RegexValidator
+from pkg_resources import require
 
 from environment.models import LME
+from phonenumber_field.formfields import PhoneNumberField
 
 
 from .models import User
 
 
-class LoginForm(forms.ModelForm):
-    phone_number = forms.CharField(
-        max_length=13,
+class LoginForm(forms.Form):
+
+    # get user field
+    phone_number = PhoneNumberField(
         initial="+254",
         help_text="Enter your phone number in +254",
+        required=True,
     )
-    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+    password = forms.CharField(
+        help_text="Enter your new password",
+        widget=forms.PasswordInput,
+        required=True,
+    )
 
-    class Meta:
-        model = User
-        fields = ("phone_number", "password")
+    # class Meta:
+    #     model = User
+    #     fields = ("phone_number", "password")
 
     def clean_phone_number(self):
+        print("in clean phone number")
         phone_number = self.cleaned_data.get("phone_number")
         qs = User.objects.filter(phone_number=phone_number)
 
+        print(qs, "qs")
+        if qs.exists():
+            print("qs exists")
+
         if not qs.exists():
             raise forms.ValidationError("This Phone Number is not registered")
+
         return phone_number
 
-    def save(self, commit=True):
+    def clean_password(self):
+        print("in clean password")
+        phone_number = self.cleaned_data.get("phone_number")
+        password = self.cleaned_data.get("password")
+        qs = User.objects.filter(phone_number=phone_number)
+
+        print(qs, "qs")
+        if qs.exists():
+            print("qs exists")
+
+        if qs.count() == 1 and self.cleaned_data.get("password"):
+            print("in clean phone number and password")
+            from django.contrib.auth import authenticate, login, logout
+
+            try:
+                user = authenticate(
+                    phone_number=self.cleaned_data["phone_number"],
+                    password=self.cleaned_data["password"],
+                )
+                print(user, "user")
+                if user is None:
+                    raise forms.ValidationError("Invalid  Password")
+            except Exception as e:
+                print(e)
+                raise forms.ValidationError("Invalid Phone Number or Password")
+        else:
+            pass
+        return password
+
+    def save(self, commit=False):
         print("in save")
         user = super(LoginForm, self).save(commit=False)
         print(user, "we are here")
@@ -110,7 +154,21 @@ class UserAdminCreationForm(forms.ModelForm):
                 lme = lme_qs.first()
                 lme.owner = user
                 lme.save()
+                user.is_lme = True
+                user.save()
         return user
+
+
+class MyAdminPasswordChangeForm(AdminPasswordChangeForm):
+    def save(self, commit=True):
+        """
+        Saves the new password.
+        """
+        password = self.cleaned_data["password1"]
+        self.user.set_password(password)
+        if commit:
+            self.user.save()
+        return self.user
 
 
 class UserAdminChangeForm(forms.ModelForm):
@@ -121,6 +179,9 @@ class UserAdminChangeForm(forms.ModelForm):
 
     password = ReadOnlyPasswordHashField()
 
+    # # password reset
+    # new_password1 = forms.CharField(label="New password", widget=forms.PasswordInput)
+
     class Meta:
         model = User
         fields = ("phone_number", "password", "active", "admin")
@@ -130,3 +191,48 @@ class UserAdminChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+
+
+class PasswordResetForm(forms.Form):
+
+    # get user field
+    phone_number = PhoneNumberField(
+        initial="+254",
+        help_text="Enter your phone number in +254",
+        required=True,
+    )
+    password = forms.CharField(
+        help_text="Enter your new password",
+        widget=forms.PasswordInput,
+        required=True,
+    )
+
+    def clean_phone_number(self):
+        print("in save...")
+        phone_number = self.cleaned_data.get("phone_number")
+        qs = User.objects.filter(phone_number=phone_number)
+
+        if not qs.exists():
+            raise forms.ValidationError("This Phone Number is not registered")
+        return phone_number
+
+    def save(self, commit=False):
+        print("in save method")
+        user = super(PasswordResetForm, self).save(commit=False)
+        # print(user, "we are here")
+        # login the user
+
+        # >>> from django.contrib.auth.models import User
+        # >>> u = User.objects.get(username='john')
+        # >>> u.set_password('new password')
+        # >>> u.save()
+
+        # try:
+        #     user = User.objects.get(phone_number=self.cleaned_data.get("phone_number"))
+        #     user.set_password(self.cleaned_data.get("password"))
+        #     user.save()
+
+        # except Exception as e:
+        #     print(e)
+
+        return user

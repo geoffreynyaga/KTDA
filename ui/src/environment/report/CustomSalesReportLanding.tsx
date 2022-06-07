@@ -257,21 +257,44 @@ function CustomSalesReportLanding() {
 
       <div className="flex flex-row items-center w-full py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow md:w-11/12 justify-evenly ">
         <div className="flex flex-row justify-center w-4/12 ">
-          <a
+          {/* <a
             href="/ui/lme/sales/"
             className="flex flex-row items-center justify-around px-4 py-2 text-gray-700 bg-gray-300 border-2 rounded-lg"
           >
             <i className="text-blue-500 fad fa-arrow-left"></i>
             <p className="ml-4 tracking-tighter sm:text-xs">Sales</p>
+          </a> */}
+          <a
+            href="/ui/lme/sales/"
+            className="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
+          >
+            <span className="px-3.5 py-2 text-white bg-purple-500 group-hover:bg-purple-600 flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </span>
+            <span className="pl-4 pr-5 py-2.5">Sales List</span>
           </a>
         </div>
-        <div className="flex flex-row justify-center w-8/12">
+        <div className="flex flex-row justify-center w-4/12">
           <button className="px-4 py-2 rounded-lg bg-gray-50">
             <p className="text-center text-red-500 text-md sm:text-xs">
               Customized Reports
             </p>
           </button>
         </div>
+        <div className="w-4/12"></div>
       </div>
       {/* <!-- end header --> */}
 

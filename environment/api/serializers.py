@@ -130,6 +130,33 @@ class MonthlyLMESalesSerializer(serializers.ModelSerializer):
         )
 
 
+class MonthlyLMEIndividualSalesSerializer(serializers.ModelSerializer):
+    # factory = serializers.SerializerMethodField()
+    # lme = serializers.SerializerMethodField()
+
+    # def get_factory(self, obj):
+    #     return obj.lme.factory.name
+
+    # def get_lme(self, obj):
+    #     return obj.lme.name
+
+    class Meta:
+        model = MonthlyLMESales
+        # fields = "__all__"
+        fields = (
+            # "lme",
+            # "factory",
+            "month",
+            "month_string",
+            "year_number",
+            "jiko_kisasa",
+            "kcj",
+            "multipurpose",
+            "liners",
+            "rocket",
+        )
+
+
 # ('lme', 'month', 'month_string', 'year_number', 'jiko_kisasa', 'kcj', 'multipurpose', 'liners', 'rocket', )
 # Factory,LME,ContactPerson,PhoneNumber, --->Search
 # Factory,LME,Month, Year, Jiko sasa.... ,

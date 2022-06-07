@@ -6,12 +6,25 @@
         <!-- body -->
         <div class="flex flex-row items-center w-full py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow md:w-11/12 justify-evenly ">
             <div class="flex flex-row items-center justify-center w-3/12 ">
-                <a href="/ui/lme/list/"
-                   class="flex flex-row items-center justify-around px-4 py-2 bg-gray-300 border-2 rounded-lg sm:text-sm">
+                {% comment %} <a href="/ui/lme/list/" class="flex flex-row items-center justify-around px-4 py-2 bg-gray-300 border-2 rounded-lg sm:text-sm">
                     <i class="text-gray-600 fad fa-arrow-left"></i>
                     <p class="ml-2 sm:text-xs sm:pl-1">
                         LME List
                     </p>
+                </a> {% endcomment %}
+                <a href="/ui/lme/list/"
+                   class="inline-flex overflow-hidden text-white bg-gray-900 rounded group">
+                    <span class="px-3.5 py-2 text-white bg-purple-500 group-hover:bg-purple-600 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-6 h-6"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </span>
+                    <span class="pl-4 pr-5 py-2.5">LME List</span>
                 </a>
             </div>
             <div class="flex flex-row justify-center w-6/12 ">
@@ -20,7 +33,7 @@
                 </button>
             </div>
             <div class="flex flex-row justify-center w-3/12 ">
-                <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg ">Report</button>
+                {% comment %} <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg ">Report</button> {% endcomment %}
             </div>
         </div>
         <!-- end Sales Overview -->

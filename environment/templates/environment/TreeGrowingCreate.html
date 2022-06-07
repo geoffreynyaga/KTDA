@@ -6,8 +6,22 @@
         <!-- body -->
         <div class="grid grid-cols-3 gap-2 px-4 py-2 mx-4 shadow">
             <div >
-                <a href="/ui/lme/tree-growing/" className="mt-6">
+                {% comment %} <a href="/ui/lme/tree-growing/" className="mt-6">
                     <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg ">Back to Trees Activities</button>
+                </a> {% endcomment %}
+                <a href="/ui/lme/tree-growing/"
+                   class="inline-flex overflow-hidden text-white bg-gray-900 rounded group">
+                    <span class="px-3.5 py-2 text-white bg-purple-500 group-hover:bg-purple-600 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-6 h-6"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </span>
+                    <span class="pl-4 pr-5 py-2.5">Tree Growing Activities List</span>
                 </a>
             </div>
             <div >
@@ -16,7 +30,7 @@
                 </a>
             </div>
             <div >
-                <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg ">Report</button>
+                {% comment %} <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg ">Report</button> {% endcomment %}
             </div>
         </div>
         <!-- end Sales Overview -->

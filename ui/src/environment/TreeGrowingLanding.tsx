@@ -113,20 +113,43 @@ function TreeGrowingLanding() {
       {/* <!-- header --> */}
 
       <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
-        <div className="flex flex-row justify-center w-3/12 ">
-          <a
+        <div className="flex flex-row justify-center w-4/12 ">
+          {/* <a
             href="/environment/tree-growing/create/"
             className="px-4 py-2 bg-gray-300 border-2 rounded-lg sm:text-sm"
           >
             Add Tree Growing Activity
+          </a> */}
+
+          <a
+            href="/environment/tree-growing/create/"
+            className="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
+          >
+            <span className="px-3.5 py-2 text-white bg-purple-500 group-hover:bg-purple-600 flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+            </span>
+            <span className="pl-4 pr-5 py-2.5">New Tree Growing Activity</span>
           </a>
         </div>
-        <div className="flex flex-row justify-center w-6/12 ">
+        <div className="flex flex-row justify-center w-4/12 ">
           <button className="px-4 py-2 text-red-500 rounded-lg bg-gray-50 ">
             <h1 className="text-center h6">Tree Growing List</h1>
           </button>
         </div>
-        <div className="flex flex-row justify-center w-3/12 ">
+        <div className="flex flex-row justify-center w-4/12 ">
           <button className="px-4 py-2 bg-gray-300 border-2 rounded-lg ">
             Report
           </button>
@@ -140,7 +163,7 @@ function TreeGrowingLanding() {
             <div className="grid grid-cols-3 gap-4 px-4 py-2 mx-2 mb-4 sm:grid-cols-2">
               <div className="flex flex-col justify-around">
                 <div>
-                  <p>Course Name</p>
+                  <p>Partner Name</p>
                 </div>
                 <div className="mt-2">
                   <input

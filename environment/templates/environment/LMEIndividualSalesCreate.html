@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% load tailwind_filters %}
+{% block content %}
+    <div class="flex flex-col items-center justify-start h-screen bg-gray-100">
+        <!-- body -->
+        <div class="flex flex-row items-center justify-around w-full py-2 shadow">
+            {% comment %} Sales List {% endcomment %}
+            <div class="flex w-4/12 ">
+                <a href="/ui/lme/sales/individual/" class="w-full px-1 ">
+                    <button class="flex flex-row items-center justify-around w-full p-0 py-2 m-0 bg-gray-300 rounded-lg ">
+                        <i class=" fad fa-arrow-left"></i>
+                        <p>
+                            Sales List
+                        </p>
+                    </button>
+                </a>
+            </div>
+            <div class="flex flex-row justify-center w-4/12 ">
+                <a href="">
+                    <button class="px-4 py-2 text-red-500 bg-gray-300 border-2 rounded-lg ">
+                        <p class="sm:text-xs">
+                            Add New SALE
+                        </p>
+                    </button>
+                </a>
+            </div>
+            <div class="flex flex-row justify-center w-4/12 ">
+                <button class="px-4 py-2 bg-gray-300 border-2 rounded-lg ">Report</button>
+            </div>
+        </div>
+        <!-- end Sales Overview -->
+        <div class="mt-4">
+            <form class="grid w-full grid-cols-2 gap-4 px-4 py-2" method="post">
+                {% csrf_token %}
+                {% comment %} {{ form.as_p }} {% endcomment %}
+                {{ form|crispy }}
+                <button class="h-8 px-6 mx-4 bg-blue-500" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

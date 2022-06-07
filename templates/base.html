@@ -20,25 +20,27 @@
         {% tailwind_css %}
     </head>
     <body class="min-h-screen antialiased lg:flex" x-data="{open: false}">
-        <nav class="absolute inset-0 z-10 w-56 h-screen p-3 text-white duration-200 transform bg-green-100 lg:transform-none lg:opacity-100 lg:relative "
-             :class="{'translate-x-0 ease-in opacity-100':open === true, '-translate-x-full ease-out opacity-0': open === false}">
-            <div class="flex justify-between">
-                <img src="{% static 'cleo/img/logo.png' %}" class="flex-none w-1/2" />
-                <button class="p-2 text-green-700 rounded-md focus:outline-none focus:bg-indigo-800 hover:bg-indigo-800 lg:hidden"
-                        @click="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-6 h-6"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-            </div>
-            {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
+            <nav class="absolute inset-0 z-10 w-56 h-screen p-3 text-white duration-200 transform bg-green-100 lg:transform-none lg:opacity-100 lg:relative "
+                 :class="{'translate-x-0 ease-in opacity-100':open === true, '-translate-x-full ease-out opacity-0': open === false}">
+                <div class="flex justify-between">
+                    <a href="/" class="flex items-center">
+                        <img src="{% static 'cleo/img/logo.png' %}" class="flex-none w-1/2" />
+                    </a>
+                    <button class="p-2 text-green-700 rounded-md focus:outline-none focus:bg-indigo-800 hover:bg-indigo-800 lg:hidden"
+                            @click="open = false">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-6 h-6"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                </div>
                 <!-- start sidebar -->
                 <div class="flex flex-col w-full mx-0 bg-green-100">
                     <!-- sidebar content -->
@@ -49,120 +51,144 @@
                                 <i class="fad fa-times-circle"></i>
                             </button>
                         </div>
-                        <!-- end sidebar toggle -->
-                        <p class="mb-4 text-xs tracking-wider text-gray-600 uppercase">
-                            Environmental Sustainability
-                        </p>
-                        <!-- link -->
-                        <a href="/ui/lme/list/"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-home"></i>
-                            LMEs
-                        </a>
-                        <!-- end link -->
-                        <!-- link -->
-                        <a href="/ui/lme/sales/"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-chart-pie"></i>
-                            Sales
-                        </a>
-                        <!-- end link -->
-                        <!-- link -->
-                        <a href="/ui/lme/cnm/"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-book"></i>
-                            Coaching & Mentorship
-                        </a>
-                        <!-- end link --><!-- link -->
-                        <a href="/ui/lme/training/"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-graduation-cap"></i>
-                            Training
-                        </a>
-                        <!-- end link -->
-                        <!-- link -->
-                        <a href="/ui/lme/tree-growing/"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-tree"></i>
-                            Tree Growing
-                        </a>
-                        <!-- end link -->
-                        <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">
-                            Economic Empowerment
-                        </p>
-                        <!-- link -->
-                        <a href="./email.html"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-envelope-open-text"></i>
-                            Capacity Building
-                        </a>
-                        <!-- end link -->
-                        <!-- link -->
-                        <a href="./email.html"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-graduation-cap"></i>
-                            Training
-                        </a>
-                        <!-- end link -->
-                        <!-- link -->
-                        <a href="./email.html"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-sun"></i>
-                            Climate Smart Agriculture
-                        </a>
-                        <!-- end link -->
-                        <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">
-                            Education
-                        </p>
-                        <!-- link -->
-                        <a href="./email.html"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-university"></i>
-                            Scholarship
-                        </a>
-                        <!-- end link -->
-                        <!-- link -->
-                        <a href="#"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-thermometer-empty"></i>
-                            STEM
-                        </a>
-                        <!-- end link -->
-                        <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">
-                            HEALTH
-                        </p>
-                        <!-- end link -->
-                        <!-- link -->
-                        <a href="#"
-                           class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
-                            <i class="mr-2 text-xs fad fa-stethoscope"></i>
-                            Screening
-                        </a>
+                        {% if user.is_lme == False %}
+                            <!-- end sidebar toggle -->
+                            <p class="mb-4 text-xs tracking-wider text-gray-600 uppercase">
+                                Environmental Sustainability
+                            </p>
+                            <!-- link -->
+                            <a href="/ui/lme/list/"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-home"></i>
+                                LMEs
+                            </a>
+                            <!-- end link -->
+                            <!-- link -->
+                            <a href="/ui/lme/sales/"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-chart-pie"></i>
+                                Sales
+                            </a>
+                            <!-- end link -->
+                            <!-- link -->
+                            <a href="/ui/lme/cnm/"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-book"></i>
+                                Coaching & Mentorship
+                            </a>
+                            <!-- end link --><!-- link -->
+                            <a href="/ui/lme/training/"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-graduation-cap"></i>
+                                Training
+                            </a>
+                            <!-- end link -->
+                            <!-- link -->
+                            <a href="/ui/lme/tree-growing/"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-tree"></i>
+                                Tree Growing
+                            </a>
+                            <!-- end link -->
+                            <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">
+                                Economic Empowerment
+                            </p>
+                            <!-- link -->
+                            <a href="./email.html"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-envelope-open-text"></i>
+                                Capacity Building
+                            </a>
+                            <!-- end link -->
+                            <!-- link -->
+                            <a href="./email.html"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-graduation-cap"></i>
+                                Training
+                            </a>
+                            <!-- end link -->
+                            <!-- link -->
+                            <a href="./email.html"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-sun"></i>
+                                Climate Smart Agriculture
+                            </a>
+                            <!-- end link -->
+                            <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">
+                                Education
+                            </p>
+                            <!-- link -->
+                            <a href="./email.html"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-university"></i>
+                                Scholarship
+                            </a>
+                            <!-- end link -->
+                            <!-- link -->
+                            <a href="#"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-thermometer-empty"></i>
+                                STEM
+                            </a>
+                            <!-- end link -->
+                            <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">
+                                HEALTH
+                            </p>
+                            <!-- end link -->
+                            <!-- link -->
+                            <a href="#"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-stethoscope"></i>
+                                Screening
+                            </a>
+                        {% else %}
+                            <p class="mb-4 text-xs tracking-wider text-gray-600 uppercase">
+                                Environmental Sustainability
+                            </p>
+                            <!-- link -->
+                            <a href="/ui/lme/sales/individual/"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-chart-pie"></i>
+                                My Sales
+                            </a>
+                            <!-- end link -->
+                            <!-- link -->
+                            <a href="/environment/lme/sales/individual/create/"
+                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                                <i class="mr-2 text-xs fad fa-chart-pie"></i>
+                                Create Sale
+                            </a>
+                            <!-- end link -->
+                        {% endif %}
                     </div>
                     <!-- end sidebar content -->
                 </div>
                 <!-- end sidbar -->
-            {% endif %}
-        </nav>
+            </nav>
+        {% endif %}
         <div class="relative z-0 border-green-400 lg:flex-grow">
             <header class="flex items-center px-3 py-2 text-white bg-gray-700 border-red-900 h-11">
-                <button class="p-2 rounded-md focus:outline-none focus:bg-gray-600 hover:bg-gray-600 lg:hidden"
-                        @click="open = true">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-6 h-6"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
+                {% if user.is_authenticated %}
+                    <button class="p-2 rounded-md focus:outline-none focus:bg-gray-600 hover:bg-gray-600 lg:hidden"
+                            @click="open = true">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-6 h-6"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                {% endif %}
                 <div class="inset-0 flex flex-row items-center justify-between w-full border-green-700 h-fit aniated">
                     <!-- left -->
                     <div class="flex">
-                        <span class="p-4 font-bold md:text-xl sm:text-lg">KTDA M&E</span>
+                        <span class="p-4 font-bold md:text-xl sm:text-lg">
+                            <a href='' class="text-white hover:text-blue-600">KTDA M&E</a>
+                        </span>
                     </div>
                     <div class="flex flex-row items-center justify-center ">
                         {% if user.is_authenticated %}
@@ -228,10 +254,10 @@
                                 <i class="mr-1 text-xs fad fa-sign-in-alt"></i>
                                 <span class="capitalize">login</span>
                             </a>
-                            <a class="flex flex-wrap items-center px-4 py-2 mr-4 bg-yellow-300 rounded-md menu-btn focus:outline-none focus:shadow-outline"
+                            <a class="flex flex-wrap items-center px-4 py-2 ml-4 mr-4 bg-yellow-300 rounded-md menu-btn focus:outline-none focus:shadow-outline"
                                href="/accounts/signup/">
                                 {% comment %} <i class="mr-1 text-xs fad fa-sign-in-alt"></i> {% endcomment %}
-                                <span class="capitalize">Sign Up</span>
+                                <span class="text-gray-800 capitalize">Sign Up</span>
                             </a>
                         {% endif %}
                     </div>
