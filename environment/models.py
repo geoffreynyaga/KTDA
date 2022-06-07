@@ -164,7 +164,7 @@ class LME(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
     name = models.CharField(max_length=50)
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
     factory = models.ForeignKey(Factory, on_delete=models.CASCADE)
     email = models.EmailField(max_length=254, blank=True, null=True)
     no_of_employees = models.IntegerField(blank=True, null=True)
