@@ -30,9 +30,9 @@ from environment.views import (
 
 urlpatterns = [
     path("lme/", LMEMainView.as_view(), name="LMEMain"),
-    path("lme/<str:slug>/", LMEDetailView.as_view(), name="lme-detail"),
     # path("lme/add/", LMEAddView.as_view(), name="add_lme"),
     path("lme/create/", LMECreateView.as_view(), name="lme_create"),
+    path("lme/<str:slug>/", LMEDetailView.as_view(), name="lme-detail"),
     path("lme/sales/create/", SalesCreateView.as_view(), name="lme_sales_create"),
     path(
         "lme/sales/individual/create/",
