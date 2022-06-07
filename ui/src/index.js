@@ -13,6 +13,7 @@
  * Copyright (c) 2022 Swift Lab Limited.
  */
 
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 import React from "react";
@@ -25,8 +26,10 @@ const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <QueryClientProvider client={queryClient}>
-    <Router>
-      <RoutesApp />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <RoutesApp />
+      </Router>
+    </HelmetProvider>
   </QueryClientProvider>
 );

@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 
 from django.views.generic import TemplateView
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 from environment.forms import (
     CoachingAndMentorshipForm,
     LMEIndividualSalesForm,
@@ -57,6 +57,12 @@ class LMECreateView(CreateView):
         "phone_number",
     )
     success_url = "/ui/lme/list/"
+
+
+class LMEDetailView(DetailView):
+    queryset = LME.objects.all()
+    template_name = "environment/LMEDetail.html"
+    # fields = "__all__"
 
 
 class SalesCreateView(CreateView):

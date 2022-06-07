@@ -25,7 +25,13 @@ from django.urls import include, path
 
 # from django.conf.urls import url
 from django.urls import include, path, re_path
+from django.contrib.sitemaps.views import sitemap
 
+from environment.sitemaps import LMESitemap
+
+sitemaps = {
+    "lmes": LMESitemap,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -37,6 +43,12 @@ urlpatterns = [
     # path("ui/", ReactView.as_view(), name="react"),
     re_path(r"ui/.*", ReactView.as_view(), name="react"),
     path("__reload__/", include("django_browser_reload.urls")),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
 ]
 
 if settings.DEBUG:

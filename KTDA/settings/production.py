@@ -6,7 +6,7 @@
 # Created Date: Tuesday, May 24th 2022, 11:52:02 pm                              #
 # Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
 # -----                                                                          #
-# Last Modified: Wednesday May 25th 2022 8:38:40 am                              #
+# Last Modified: Monday May 30th 2022 5:53:30 pm                                 #
 # Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "django.contrib.sitemaps",
     "tailwind",
     "theme",
     "django_browser_reload",

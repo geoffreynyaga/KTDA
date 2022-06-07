@@ -1,6 +1,7 @@
 from decouple import config
 from django.db import models
 from django.db.models.signals import post_save
+from django.urls import reverse
 
 
 from phonenumber_field.modelfields import PhoneNumberField
@@ -163,6 +164,7 @@ class LME(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
     name = models.CharField(max_length=50)
+    slug = models.SlugField(blank=True, null=True)
     factory = models.ForeignKey(Factory, on_delete=models.CASCADE)
     email = models.EmailField(max_length=254, blank=True, null=True)
     no_of_employees = models.IntegerField(blank=True, null=True)
@@ -181,12 +183,12 @@ class LME(models.Model):
     # phone_number = models.CharField(max_length=20, help_text="07xx xxx xxx")
     phone_number = PhoneNumberField(blank=True)
 
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
-
     retailer_or_installer = models.CharField(
         max_length=3, choices=RETAILER_OR_INSTALLER_CHOICES
     )
+
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         """
@@ -201,7 +203,20 @@ class LME(models.Model):
         number of male employees and saves the result in the no_of_employees field
         """
         self.no_of_employees = self.no_of_female_employees + self.no_of_male_employees
+
+        if self.name:
+            from django.utils.text import slugify
+
+            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse(
+            "lme-detail",
+            args=[
+                self.slug,
+            ],
+        )
 
 
 class CoachingAndMentorship(models.Model):
