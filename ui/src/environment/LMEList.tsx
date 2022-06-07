@@ -51,9 +51,12 @@ function LMEList() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "LME",
-        accessor: "name", // accessor is the "key" in the data
+        Header: "LME Name",
+        accessor: "name",
       },
+
+      //hidden cell
+
       {
         Header: "Factory",
         accessor: "factory",
@@ -82,6 +85,22 @@ function LMEList() {
           );
         },
       },
+      {
+        Header: "View LME",
+        accessor: "slug", // accessor is the "key" in the data
+        Cell: (props) => {
+          return props.value ? (
+            <a
+              className="text-sm text-blue-500"
+              href={`/environment/lme/${props.value}/`}
+            >
+              <i className="fad fa-eye"></i>
+            </a>
+          ) : (
+            <span className="text-red-500">No Link</span>
+          );
+        },
+      },
     ],
     []
   );
@@ -93,7 +112,16 @@ function LMEList() {
     rows,
     prepareRow,
     setFilter,
-  } = useTable({ columns, data }, useFilters);
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: {
+        // hiddenColumns: ["slug"],
+      },
+    },
+    useFilters
+  );
 
   // Update the state when input changes
 
@@ -342,6 +370,11 @@ function LMEList() {
                           </td>
                         );
                       })}
+                      {/* onClick=
+                      {() => {
+                        //route to the selected LME page
+                        console.log(row.original.id);
+                      }} */}
                     </tr>
                   );
                 })}

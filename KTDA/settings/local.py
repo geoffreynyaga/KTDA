@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.sitemaps",
+    "django.contrib.humanize",
     "tailwind",
     "theme",
     "django_browser_reload",

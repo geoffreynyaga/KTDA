@@ -102,7 +102,7 @@ class LMEAdmin(admin.ModelAdmin):
     )
     search_fields = (
         "name",
-        "factory",
+        "factory__name",
         "email",
         "contact_person",
         "phone_number",
