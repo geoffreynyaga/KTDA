@@ -1,55 +1,92 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% load tailwind_filters %}
 {% block content %}
-    <div class="max-h-screen">
-        <div class="h-full px-6 md:py-6 ">
-            <div class="flex flex-wrap items-center justify-center h-full text-gray-800 g-6">
-                <div class="flex flex-col items-center h-screen md:w-10/12 ">
-                    <h1 class="mt-6 mb-2 text-sm tracking-wider text-gray-500">
-                        Welcome: <span class="font-semibold">{{ user }}</span>
-                    </h1>
-                    {% if user.is_lme == True %}
-                        <p class="mb-6 text-gray-600">
-                            You are a LME.
-                        </p>
-                        <div class="grid w-full grid-cols-2 gap-4 p-4 bg-red-100 md:w-3/4 md:gap-12 justify-evenly ">
-                            <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
-                                <i class="text-red-400 fad fa-plus fa-3x"></i>
-                                <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
-                                    <a href="/environment/lme/sales/individual/create/"
-                                       class="text-sm text-gray-50 hover:text-red-600">Add a Sale</a>
-                                </button>
-                            </div>
-                            <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
-                                <i class="text-red-400 fad fa-chart-line fa-3x"></i>
-                                <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
-                                    <a href="/ui/lme/sales/individual/"
-                                       class="text-sm text-gray-100 hover:text-white">View Sales</a>
-                                </button>
-                            </div>
-                            <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
-                                <i class="text-red-400 fad fa-users-class fa-3x"></i>
-                                <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
-                                    <a href="/lme/training/" class="text-sm text-gray-50 hover:text-red-600">View Training</a>
-                                </button>
-                            </div>
-                            <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
-                                <i class="text-red-400 fad fa-presentation fa-3x"></i>
-                                <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
-                                    <a href="/lme/coaching/"
-                                       class="text-sm text-white odd:hover:text-red-600">View Coaching</a>
-                                </button>
-                            </div>
-                        </div>
-                    {% endif %}
-                    {% if user.is_lme == False %}
-                        <p class="mb-6 text-gray-600">
-                            You are a not registered as LME yet on the system
-                        </p>
-                    {% endif %}
-                    <hr />
+    <div class="flex flex-col items-center justify-start w-full max-h-screen">
+        <div class="flex flex-col items-center justify-start w-full h-screen md:w-10/12 ">
+            <h1 class="mt-4 mb-2 text-sm tracking-wider text-gray-500">
+                Welcome: <span class="font-semibold">{{ user }}</span>
+            </h1>
+            {% if user.is_lme == True %}
+                <p class="mb-6 text-gray-600">
+                    You are a LME.
+                </p>
+                <div class="grid w-full grid-cols-2 gap-4 p-4 bg-red-100 md:w-3/4 md:gap-12 justify-evenly ">
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-plus fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/environment/lme/sales/individual/create/"
+                               class="text-sm text-gray-50 hover:text-red-600">Add a Sale</a>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-chart-line fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/ui/lme/sales/individual/"
+                               class="text-sm text-gray-100 hover:text-white">View Sales</a>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-users-class fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/lme/training/" class="text-sm text-gray-50 hover:text-red-600">View Training</a>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-presentation fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/lme/coaching/"
+                               class="text-sm text-white odd:hover:text-red-600">View Coaching</a>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
+            {% if user.is_lme == False %}
+                <p class="mb-6 text-gray-600">
+                    You are an Admin.
+                </p>
+                <div class="grid w-full grid-cols-2 gap-4 p-8 bg-red-100 rounded-lg md:grid-cols-3 md:w-3/4 md:gap-12 justify-evenly ">
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-plus fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/ui/lme/list/" class="text-sm text-gray-50 hover:text-red-600">Go To LMEs</a>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-chart-line fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/ui/lme/sales/" class="text-sm text-gray-100 hover:text-white">View Sales</a>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-users-class fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/ui/lme/training/"
+                               class="text-sm text-gray-50 hover:text-red-600">View Training</a>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-presentation fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/ui/lme/cnm/" class="text-sm text-white odd:hover:text-red-600">Coaching and Mentorship</a>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-presentation fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/ui/lme/tree-growing/"
+                               class="text-sm text-white odd:hover:text-red-600">Tree Growing</a>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center justify-between h-auto px-2 py-2 bg-white rounded-lg shadow-lg">
+                        <i class="text-red-400 fad fa-presentation fa-3x"></i>
+                        <button class="px-2 py-1 mt-4 bg-blue-400 rounded-md">
+                            <a href="/admin/" class="text-sm text-white odd:hover:text-red-600">Go to Admin Page</a>
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+            <hr />
         </div>
-    {% endblock content %}
+    </div>
+{% endblock content %}
