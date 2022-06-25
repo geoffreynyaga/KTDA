@@ -46,7 +46,8 @@ def login_required(view):
 def home(request):
     if request.user.is_authenticated and request.user.is_lme:
         return render(request, "accounts/lme-home.html")
-    return redirect("/ui/lme/list/")
+    # return redirect("/ui/lme/list/")
+    return render(request, "accounts/lme-home.html")
 
 
 class SignUp(CreateView):

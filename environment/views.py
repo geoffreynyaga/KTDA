@@ -99,6 +99,7 @@ class LMEIndividualSalesCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        # print(self.request.user,"sould be user")
         lme = LME.objects.all().filter(owner=self.request.user).first()
         # print(lme, "lme")
         self.object.lme = lme
