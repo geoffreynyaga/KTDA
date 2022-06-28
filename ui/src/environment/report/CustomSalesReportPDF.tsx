@@ -150,7 +150,7 @@ function CustomSalesReportPDF() {
               <div className="flex flex-row justify-between w-full px-1 py-2 mb-2 rounded-lg shadow-lg md:px-4 bg-green-50 raised">
                 <div className="flex flex-col w-1/2 space-y-2 text-slate-700">
                   <img
-                    className="object-contain w-12 h-12 md:h-12"
+                    className="object-contain h-12 w-14 md:h-12"
                     src="/static/cleo/img/logo.png"
                   />
                   <p className="text-xs font-extrabold tracking-tighter uppercase md:tracking-tight md:text-xl ">

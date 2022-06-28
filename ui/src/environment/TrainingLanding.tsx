@@ -112,15 +112,8 @@ function TrainingLanding() {
     <div className="flex flex-col items-center flex-1 pt-0 mx-auto bg-gray-100 ">
       {/* <!-- header --> */}
 
-      <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
-        <div className="flex flex-row justify-center w-3/12 ">
-          {/* <a
-            href="/environment/training/create/"
-            className="py-2 bg-gray-300 border-2 rounded-lg md:px-4 sm:text-xs "
-          >
-            Add Training
-          </a> */}
-
+      <div className="flex flex-row items-center w-full md:w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly">
+        <div className="flex flex-row justify-center w-5/12 md:w-3/12 ">
           <a
             href="/environment/training/create/"
             className="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
@@ -132,11 +125,11 @@ function TrainingLanding() {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M12 4v16m8-8H4"
                 />
               </svg>
@@ -149,7 +142,7 @@ function TrainingLanding() {
             <h1 className="text-center h6">Training List</h1>
           </button>
         </div>
-        <div className="flex flex-row justify-center w-3/12 ">
+        <div className="flex flex-row justify-center w-1/12 md:w-3/12 ">
           {/* <button className="px-4 py-2 bg-gray-300 border-2 rounded-lg ">
             Report
           </button> */}

@@ -84,7 +84,11 @@ class TrainingForm(forms.ModelForm):
         model = Training
 
         # Representing the many to many related field in Pizza
-        lme_attendees = forms.ModelMultipleChoiceField(queryset=LME.objects.all())
+        # lme_attendees = forms.ModelMultipleChoiceField(queryset=LME.objects.all())
+        lme_attendees = forms.ModelMultipleChoiceField(
+        queryset=LME.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-inline'})
+    )
         fields = (
             "course_name",
             "factory",

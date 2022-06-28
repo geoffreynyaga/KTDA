@@ -33,6 +33,10 @@ sitemaps = {
     "lmes": LMESitemap,
 }
 
+admin.site.site_header = "KTDA M&E Admin"
+admin.site.site_title = "KTDA M&E Admin"
+admin.site.index_title = "Welcome to KTDA M&E Admin Portal"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     # path("accounts/", include("allauth.urls")),

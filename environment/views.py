@@ -71,6 +71,12 @@ class LMEDetailView(DetailView):
         # get last three sales
         sales = LMESales.objects.filter(lme=lme).order_by("-date_of_purchase")[:3]
         context["sales"] = sales
+        # get trainings attended
+
+
+        all_trainings = Training.objects.all().filter(lme_attendees__id = lme.id)
+        # print(all_trainings,"all trainings")
+        context['all_trainings'] = all_trainings
         return context
 
 

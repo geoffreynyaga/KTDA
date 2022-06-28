@@ -207,7 +207,7 @@ function CustomSalesReportLanding() {
   }
 
   return reportReady == true && lme === null ? (
-    <div className="w-1/5 h-screen px-2 my-2 overflow-hidden bg-pink-200 lg:my-1 lg:px-1 lg:w-1/6 xl:my-1 xl:px-1 xl:w-1/6 hue-rotate-15">
+    <div className="flex flex-col items-center justify-center w-11/12 h-screen px-2 py-8 my-2 space-y-4 bg-pink-200 lg:my-1 lg:px-1 xl:my-1 xl:px-1 hue-rotate-15">
       {reportData.length >= 1 && reportPK !== null ? (
         <>
           <h1 className="text-2xl tracking-wider text-gray-700">
@@ -220,7 +220,7 @@ function CustomSalesReportLanding() {
           <hr />
           <a
             href={"/ui/lme/report/xy/".replace("xy", reportPK)}
-            className="mt-10"
+            className="mt-12"
           >
             <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
               Go To Report
@@ -238,7 +238,7 @@ function CustomSalesReportLanding() {
           </p>
           <hr />
           <p className="mt-6 font-serif text-xs italic font-light tracking-tight text-gray-700">
-            Ensure there is some data in the table befoer you click "Generate"
+            Ensure there is some data in the table before you click "Generate"
           </p>
         </>
       )}
