@@ -1,16 +1,13 @@
 from django.shortcuts import render
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
-
-from django.views.generic import TemplateView
-from django.views.generic import CreateView, DetailView
 from environment.forms import (
     CoachingAndMentorshipForm,
     LMEIndividualSalesForm,
-    TrainingForm,
     LMESalesForm,
+    TrainingForm,
     TreeGrowingForm,
 )
-
 from environment.models import (
     LME,
     CoachingAndMentorship,
@@ -73,10 +70,9 @@ class LMEDetailView(DetailView):
         context["sales"] = sales
         # get trainings attended
 
-
-        all_trainings = Training.objects.all().filter(lme_attendees__id = lme.id)
+        all_trainings = Training.objects.all().filter(lme_attendees__id=lme.id)
         # print(all_trainings,"all trainings")
-        context['all_trainings'] = all_trainings
+        context["all_trainings"] = all_trainings
         return context
 
 
@@ -148,3 +144,18 @@ class TreeGrowingCreateView(CreateView):
     # fields = "__all__"
 
     success_url = "/ui/lme/tree-growing/"
+
+
+class LMEIndividualTrainingListView(ListView):
+    queryset = Training.objects.all()
+    template_name = "environment/LMEIndividualTraining.html"
+
+    success_url = "/"
+    context_object_name = "trainings"
+
+    def get_queryset(self):
+        lme = LME.objects.all().filter(owner=self.request.user).first()
+        trainings = Training.objects.all().filter(lme_attendees=lme)
+        # print(trainings, "trainings")
+
+        return trainings

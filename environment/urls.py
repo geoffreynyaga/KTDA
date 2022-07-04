@@ -16,16 +16,18 @@
 ##################################################################################
 
 from django.urls import path
+
 from environment.views import (
-    CoachingAndMentorshipCreateView,
     CapacityBuildingIndividualAddView,
+    CoachingAndMentorshipCreateView,
+    LMECreateView,
+    LMEDetailView,
+    LMEIndividualSalesCreateView,
+    LMEIndividualTrainingListView,
     LMEMainView,
     SalesCreateView,
-    LMECreateView,
     TrainingCreateView,
     TreeGrowingCreateView,
-    LMEIndividualSalesCreateView,
-    LMEDetailView,
 )
 
 urlpatterns = [
@@ -38,6 +40,11 @@ urlpatterns = [
         "lme/sales/individual/create/",
         LMEIndividualSalesCreateView.as_view(),
         name="lme_sales_individual_create",
+    ),
+    path(
+        "lme/training/individual/",
+        LMEIndividualTrainingListView.as_view(),
+        name="lme_training_individual_list",
     ),
     # path("lme/sales/list/", SalesListView.as_view(), name="sales_list_lme"),
     path(
