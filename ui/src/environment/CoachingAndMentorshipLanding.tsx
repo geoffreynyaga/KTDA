@@ -4,7 +4,7 @@
  * Created Date: Wednesday, May 18th 2022, 3:29:58 pm
  * Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
- * Last Modified: Wednesday May 18th 2022 6:15:48 pm
+ * Last Modified: Thursday May 19th 2022 8:37:27 pm
  * Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )
  * -----
  * This file should not be copied and/or distributed without the express
@@ -124,11 +124,11 @@ function CapacityBuildingLanding() {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M12 4v16m8-8H4"
                 />
               </svg>

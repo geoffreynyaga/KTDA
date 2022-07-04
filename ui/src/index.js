@@ -13,9 +13,9 @@
  * Copyright (c) 2022 Swift Lab Limited.
  */
 
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 
+import { HelmetProvider } from "react-helmet-async";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";

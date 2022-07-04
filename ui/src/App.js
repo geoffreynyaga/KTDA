@@ -13,9 +13,9 @@
  * Copyright (c) 2022 Swift Lab Limited.
  */
 
+import LMEList from "./LMEList";
 import React from "react";
 
-import LMEList from "./LMEList";
 function App() {
   return <LMEList />;
 }

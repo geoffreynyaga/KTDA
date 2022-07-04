@@ -17,9 +17,9 @@ import React, { useEffect, useState } from "react";
 import { useFilters, useTable } from "react-table";
 
 import { HashLoader } from "react-spinners";
+import { Helmet } from "react-helmet-async";
 import { ILME } from "../../typings/LMETypes";
 import { useQuery } from "react-query";
-import { Helmet } from "react-helmet-async";
 
 function LMEList() {
   const [lme, setLme] = useState<null | ILME[]>(null);
@@ -243,11 +243,11 @@ function LMEList() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  stroke-width="2"
+                  strokeWidth="2"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 4v16m8-8H4"
                   />
                 </svg>

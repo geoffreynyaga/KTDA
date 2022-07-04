@@ -140,7 +140,7 @@ class LMESalesAdmin(admin.ModelAdmin):
         "stove_price",
         "date_of_purchase",
     )
-    search_fields = ("lme", "customer_phone_number")
+    search_fields = ("lme__name", "customer_phone_number")
 
 
 admin.site.register(LMESales, LMESalesAdmin)
