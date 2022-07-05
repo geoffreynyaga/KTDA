@@ -159,3 +159,18 @@ class LMEIndividualTrainingListView(ListView):
         # print(trainings, "trainings")
 
         return trainings
+
+
+class LMEIndividualCNMListView(ListView):
+    queryset = CoachingAndMentorship.objects.all()
+    template_name = "environment/LMEIndividualCNM.html"
+
+    success_url = "/"
+    context_object_name = "trainings"
+
+    def get_queryset(self):
+        lme = LME.objects.all().filter(owner=self.request.user).first()
+        trainings = CoachingAndMentorship.objects.filter(lme=lme)
+        # print(trainings, "trainings")
+
+        return trainings

@@ -18,21 +18,23 @@
                           d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
                 </svg>
             </span>
-            <span class="tracking-wide">Trainings Attended</span>
+            <span class="tracking-wide">Coaching and Mentorship Attended</span>
         </div>
         <ul class="space-y-2 list-inside">
             {% if trainings %}
                 {% for training in trainings %}
                     <li>
-                        <div class="text-teal-600">{{ training.course_name }}</div>
-                        <div class="text-xs text-gray-500">Start Date:  {{ training.start_date|naturalday }}</div>
-                        <div class="text-xs text-gray-500">End Date:  {{ training.end_date|naturalday }}</div>
+                        <div class="text-teal-600">{{ training.topic_covered }}</div>
+                        <div class="text-xs text-gray-500">Start Date:  {{ training.date|naturalday }}</div>
+                        <div class="text-xs text-gray-500">Next Meeting Date:  {{ training.next_meeting_date|naturalday }}</div>
+                        <div class="text-xs text-gray-500">Remarks by Mentor:  {{ training.remarks_by_mentor }}</div>
+                        <div class="text-xs text-gray-500">Action Points:  {{ training.action_points }}</div>
                     </li>
                     <hr>
                 {% endfor %}
             {% else %}
                 <li>
-                    <div class="py-8 text-3xl text-center text-teal-600">No Trainings Done</div>
+                    <div class="py-8 text-3xl text-center text-teal-600">No Coaching and Mentorship Done</div>
                 </li>
             {% endif %}
         </ul>
