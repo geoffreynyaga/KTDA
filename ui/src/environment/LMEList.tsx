@@ -94,7 +94,7 @@ function LMEList() {
               className="text-sm text-blue-500"
               href={`/environment/lme/${props.value}/`}
             >
-              <i className="fad fa-eye"></i>
+              <p className="text-blue-400">View</p>
             </a>
           ) : (
             <span className="text-red-500">No Link</span>

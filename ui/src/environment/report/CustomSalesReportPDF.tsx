@@ -32,6 +32,8 @@ function CustomSalesReportPDF() {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
+  const [queryData, setQueryData] = useState<null | any>(null);
+
   let { id } = useParams();
 
   const componentRef = useRef(null);
@@ -50,6 +52,7 @@ function CustomSalesReportPDF() {
         console.log(data, "data from server");
         setLme(data.data);
         setCreatedBy(data.created_by);
+        setQueryData(data.query_data);
       });
   }
 
@@ -176,25 +179,27 @@ function CustomSalesReportPDF() {
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       LME:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_lme ? queryData.query_lme : "-"}
                       </span>
                     </p>
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       Factory:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_factory
+                          ? queryData.query_factory
+                          : "-"}
                       </span>
                     </p>
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       Month:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_month ? queryData.query_month : "-"}
                       </span>
                     </p>
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       Year:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_year ? queryData.query_year : "-"}
                       </span>
                     </p>
                   </div>
@@ -202,41 +207,51 @@ function CustomSalesReportPDF() {
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       KCJ:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_kcj ? "yes" : "-"}
                       </span>
                     </p>
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       Multipurpose:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_multipurpose ? "yes" : "-"}
                       </span>
                     </p>
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       Jiko Sasa:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_jiko_sasa ? "yes" : "-"}
                       </span>
                     </p>
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       Liners:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_liners ? "yes" : "-"}
                       </span>
                     </p>
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
                       Rocket:
                       <span className="ml-2 text-xs font-normal text-gray-500">
-                        xxxx
+                        {queryData.query_rocket ? "yes" : "-"}
                       </span>
                     </p>
                   </div>
 
                   <div className="text-sm font-light text-slate-500">
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
-                      Start Date:<span className="ml-2">xxxx</span>
+                      Start Date:
+                      <span className="ml-2">
+                        {queryData.query_start_date
+                          ? queryData.query_start_date
+                          : "-"}
+                      </span>
                     </p>
                     <p className="text-xs font-semibold text-gray-700 md:text-sm">
-                      End Date:<span className="ml-2">xxxx</span>
+                      End Date:
+                      <span className="ml-2">
+                        {queryData.query_end_date
+                          ? queryData.query_end_date
+                          : "-"}
+                      </span>
                     </p>
                   </div>
                 </div>

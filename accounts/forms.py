@@ -48,11 +48,11 @@ class LoginForm(forms.Form):
     #     fields = ("phone_number", "password")
 
     def clean_phone_number(self):
-        print("in clean phone number")
+        # print("in clean phone number")
         phone_number = self.cleaned_data.get("phone_number")
         qs = User.objects.filter(phone_number=phone_number)
 
-        print(qs, "qs")
+        # print(qs, "qs")
         if qs.exists():
             print("qs exists")
 
