@@ -134,11 +134,13 @@ function CustomSalesReportPDF() {
             </div>
 
             <div className="flex flex-row justify-center w-6/12 ">
-              <button
-                className="px-4 py-2 bg-blue-200 rounded-lg shadow-lg sm:text-xs "
-                onClick={handlePrint}
-              >
-                Print this Report
+              <button className="w-1/3" onClick={handlePrint}>
+                {/* Print this Report */}
+                <div className="relative px-6 py-3 font-bold text-black group">
+                  <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform -translate-x-2 -translate-y-2 bg-red-300 group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                  <span className="absolute inset-0 w-full h-full border-4 border-black"></span>
+                  <span className="relative">Print This Report</span>
+                </div>
               </button>
             </div>
           </div>
@@ -153,7 +155,7 @@ function CustomSalesReportPDF() {
               <div className="flex flex-row justify-between w-full px-1 py-2 mb-2 rounded-lg shadow-lg md:px-4 bg-green-50 raised">
                 <div className="flex flex-col w-1/2 space-y-2 text-slate-700">
                   <img
-                    className="object-contain h-12 w-14 md:h-12"
+                    className="object-contain h-12 w-14 md:h-14 md:w-14"
                     src="/static/cleo/img/logo.png"
                   />
                   <p className="text-xs font-extrabold tracking-tighter uppercase md:tracking-tight md:text-xl ">
