@@ -27,7 +27,7 @@ export interface ILME {
   sub_county: string;
   ward: string;
   contact_person: string;
-  year_of_birth: string;
+  age_group: string;
   phone_number: string;
   date_created: string;
   date_modified: string;

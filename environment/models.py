@@ -1,16 +1,14 @@
-from decouple import config
+from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
 
-
+from decouple import config
 from phonenumber_field.modelfields import PhoneNumberField
-
 
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
 
-from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
 
@@ -146,6 +144,9 @@ STOVE_NAMES = (
     ("MULTIPURPOSE", "Multipurpose"),
     ("LINERS", "Liners"),
     ("ROCKET", "Rocket"),
+    ("JIKO_SMART", "Jiko Smart"),
+    ("WISDOM_JIKO", "Wisdom Jiko"),
+    ("OTHER", "Other"),
 )
 
 
@@ -153,10 +154,22 @@ class Stove(models.Model):
     name = models.CharField(max_length=20, choices=STOVE_NAMES)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 RETAILER_OR_INSTALLER_CHOICES = (("RET", "RETAILER"), ("INS", "INSTALLER"))
+AGE_GROUPS_CHOICES = (
+    ("18-25", "18-25"),
+    ("25-35", "25-35"),
+    ("35-45", "35-45"),
+    ("45-55", "45-55"),
+    ("55-65", "55-65"),
+    ("75-75", "75-75"),
+    ("75-85", "75-85"),
+    ("85-AB", "85 and above"),
+
+)
+GENDER_CHOICES = (("M", "MALE"), ("F", "FEMALE"))
 
 
 # A LME is a person who sells or installs stoves
@@ -181,8 +194,10 @@ class LME(models.Model):
     types_of_stove = models.ManyToManyField("environment.Stove")
 
     contact_person = models.CharField(max_length=50, blank=True, null=True)
-    year_of_birth = models.DateField(help_text="YYYY-MM-DD", blank=True, null=True)
+    # year_of_birth = models.DateField(help_text="YYYY-MM-DD", blank=True, null=True)
     # phone_number = models.CharField(max_length=20, help_text="07xx xxx xxx")
+    age_group = models.CharField(max_length=5,choices=AGE_GROUPS_CHOICES,blank=True, null=True)
+    gender = models.CharField(max_length=1,choices=GENDER_CHOICES,blank=True, null=True)
     phone_number = PhoneNumberField(blank=True)
 
     retailer_or_installer = models.CharField(
@@ -197,7 +212,7 @@ class LME(models.Model):
         The __str__ function is a special function that is called when you print an object
         :return: The name of the object.
         """
-        return self.name
+        return str(self.name)
 
     def save(self, *args, **kwargs):
         """
@@ -276,7 +291,7 @@ class LMESales(models.Model):
     lme = models.ForeignKey(LME, on_delete=models.CASCADE)
 
     customer_name = models.CharField(max_length=100)
-
+    # TODO: shorten this
     customer_phone_number = models.CharField(max_length=100)
     stove = models.ForeignKey("environment.Stove", on_delete=models.CASCADE)
     stove_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -284,7 +299,7 @@ class LMESales(models.Model):
     date_of_purchase = models.DateField(help_text="DD-MM-YYYY")
 
     def __str__(self):
-        return self.customer_name
+        return str(self.customer_name)
 
     # if created post_save signal
 

@@ -50,7 +50,7 @@ class LMECreateView(CreateView):
         "ward",
         "types_of_stove",
         "contact_person",
-        "year_of_birth",
+        "age_group",
         "phone_number",
     )
     success_url = "/ui/lme/list/"

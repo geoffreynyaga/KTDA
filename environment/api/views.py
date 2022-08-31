@@ -17,41 +17,43 @@
 
 
 from itertools import count
+
+from django.db.models import Sum
+
 from rest_framework import generics, status
+from rest_framework.authentication import (
+    BasicAuthentication,
+    SessionAuthentication,
+    TokenAuthentication,
+)
+from rest_framework.permissions import (
+    AllowAny,
+    IsAdminUser,
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from rest_framework.permissions import (
-    IsAuthenticated,
-    IsAdminUser,
-    IsAuthenticatedOrReadOnly,
-    AllowAny,
-)
-from rest_framework.authentication import (
-    TokenAuthentication,
-    SessionAuthentication,
-    BasicAuthentication,
-)
 from environment.api.serializers import (
-    MonthlyLMEIndividualSalesSerializer,
-    TrainingSerializer,
     CoachingAndMentorshipSerializer,
     LMESerializer,
+    MonthlyLMEIndividualSalesSerializer,
     MonthlyLMESalesSerializer,
+    StoveSerializer,
+    TrainingSerializer,
     TreeGrowingSerializer,
 )
 from environment.models import (
     LME,
     CoachingAndMentorship,
     CustomSalesReport,
-    Training,
     LMESales,
     MonthlyLMESales,
+    Stove,
+    Training,
     TreeGrowing,
 )
-
-
-from django.db.models import Sum
 
 
 class TrainingListCreateApiView(generics.ListCreateAPIView):
@@ -167,9 +169,7 @@ class LMESalesCustomReportAPIView(APIView):
                 if data["lme"]:
                     queryset = queryset.filter(lme__name__icontains=data["lme"])
                 if data["factory"]:
-                    queryset = queryset.filter(
-                        lme__factory__name__icontains=data["factory"]
-                    )
+                    queryset = queryset.filter(lme__factory__name__icontains=data["factory"])
                 if data["month"]:
                     queryset = queryset.filter(month_string__icontains=data["month"])
                 if data["year"]:
@@ -221,9 +221,7 @@ class LMESalesCustomReportAPIView(APIView):
 
                         except Exception as e:
                             x = "2022-05-21T21:14:36.386Z"
-                            end_date_datetime = datetime.strptime(
-                                x, "%Y-%m-%dT%H:%M:%S.%fZ"
-                            )
+                            end_date_datetime = datetime.strptime(x, "%Y-%m-%dT%H:%M:%S.%fZ")
 
                             print(e, "error 2")
                 except Exception as e:
@@ -245,9 +243,7 @@ class LMESalesCustomReportAPIView(APIView):
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(
-                {"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LMESalesCustomReportPDFAPIView(APIView):
@@ -284,50 +280,36 @@ class LMESalesCustomReportPDFAPIView(APIView):
                 )
 
                 if saved_queries.query_lme:
-                    queryset = queryset.filter(
-                        lme__name__icontains=saved_queries.query_lme
-                    )
+                    queryset = queryset.filter(lme__name__icontains=saved_queries.query_lme)
                 if saved_queries.query_factory:
                     queryset = queryset.filter(
                         lme__factory__name__icontains=saved_queries.query_factory
                     )
                 if saved_queries.query_month:
-                    queryset = queryset.filter(
-                        month_string__icontains=saved_queries.query_month
-                    )
+                    queryset = queryset.filter(month_string__icontains=saved_queries.query_month)
                 if saved_queries.query_year:
-                    queryset = queryset.filter(
-                        year_number__icontains=saved_queries.query_year
-                    )
+                    queryset = queryset.filter(year_number__icontains=saved_queries.query_year)
 
                 # print(queryset, "queryset")
 
                 if saved_queries.query_start_date:
-                    queryset = queryset.filter(
-                        month__gte=saved_queries.query_start_date
-                    )
+                    queryset = queryset.filter(month__gte=saved_queries.query_start_date)
                     print(queryset, "queryset after datetime")
 
                 try:
                     if saved_queries.query_end_date:
-                        queryset = queryset.filter(
-                            month__lte=saved_queries.query_end_date
-                        )
+                        queryset = queryset.filter(month__lte=saved_queries.query_end_date)
                         # print(queryset, "queryset after datetime")
                 except Exception as e:
                     print(e, "error 3")
 
                 # get sum of all jiko_kisasa
-                jiko_kisasa_sum = queryset.aggregate(Sum("jiko_kisasa"))[
-                    "jiko_kisasa__sum"
-                ]
+                jiko_kisasa_sum = queryset.aggregate(Sum("jiko_kisasa"))["jiko_kisasa__sum"]
 
                 # print((jiko_kisasa_sum), "jiko_kisasa_sum")
                 kcj_sum = queryset.aggregate(Sum("kcj"))["kcj__sum"]
                 # print(kcj_sum, "kcj_sum")
-                multipurpose_sum = queryset.aggregate(Sum("multipurpose"))[
-                    "multipurpose__sum"
-                ]
+                multipurpose_sum = queryset.aggregate(Sum("multipurpose"))["multipurpose__sum"]
                 # print(multipurpose_sum, "multipurpose_sum")
                 liners_sum = queryset.aggregate(Sum("liners"))["liners__sum"]
                 # print(liners_sum, "liners_sum")
@@ -385,11 +367,115 @@ class LMESalesCustomReportPDFAPIView(APIView):
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(
-                {"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TreeGrowingListCreateApiView(generics.ListCreateAPIView):
     queryset = TreeGrowing.objects.all()
     serializer_class = TreeGrowingSerializer
+
+
+class LMESandStovesAPIView(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [
+        AllowAny,
+    ]
+
+    def get(self, args, **kwargs):
+
+        all_stoves = Stove.objects.all()
+        serialized_stoves = StoveSerializer(all_stoves, many=True).data
+        # print(serialized_stoves, "serialized stoves")
+        all_lmes = LME.objects.all()
+        serialized_lmes = LMESerializer(all_lmes, many=True).data
+        # print(serialized_lmes, "serialized_lmes")
+
+        return Response({"lmes": serialized_lmes, "stoves": serialized_stoves})
+
+
+class LMESalesCreateAPIView(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [
+        AllowAny,
+    ]
+
+    def post(self, args, **kwargs):
+        from django.utils.dateparse import parse_datetime
+
+        data = self.request.data
+        print(data, "data")
+        # print(type(data), "type of data")
+
+        """
+        data_example = {
+            "lme": selectedLME,
+            "customerName": selectedCustomerName,
+            "customerPhone": selectedCustomerPhoneNumber,
+            "stovesList": [selectedStovesArray],
+            "dateSold": startDate,
+        }
+        """
+        lme = data["lme"]
+        customer_name = data["customerName"]
+        customer_phone = data["customerPhone"]
+
+        date_sold = parse_datetime(data["dateSold"])
+        print(date_sold)
+
+        stoves_list = data["stovesList"]
+        print(stoves_list, "stoves_list")
+
+        # LMESales
+        """
+        lme
+        customer_name
+        customer_phone_number
+        stove
+        stove_price
+        date_of_purchase
+        """
+        try:
+            #
+            lme_obj = LME.objects.filter(name=lme).first()
+            print(lme_obj, "lme_obj")
+        except Exception as e:
+            print(e, "error getting LME")
+
+        for stove_item in stoves_list:
+            """
+            id?: number;
+            price?: number;
+            name?: string;
+            """
+
+            stove_id = stove_item["id"]
+            stove_price = stove_item["price"]
+
+            try:
+                if stove_item["name"] and len(stove_item["name"]) > 0:
+                    stove_obj = Stove.objects.get_or_create(name=stove_item["name"])
+                    print(stove_obj, "stove_obj")
+            except:
+                # get stove
+                stove_obj = Stove.objects.get(pk=stove_id)
+                print(stove_obj, "stove_obj")
+            # create sale
+
+            try:
+                sale = LMESales.objects.create(
+                    lme=lme_obj,
+                    customer_name=customer_name,
+                    customer_phone_number=customer_phone,
+                    stove=stove_obj,
+                    stove_price=stove_price,
+                    date_of_purchase=date_sold,
+                )
+
+                print(sale, "sale")
+            except Exception as e:
+                print(e, "e")
+
+        return Response(
+            {"message": "Created Sale", "success": True},
+            status=status.HTTP_200_OK,
+        )

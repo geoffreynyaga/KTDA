@@ -91,16 +91,16 @@
                                     <div class="px-4 py-2">{{ object.county }}</div>
                                 </div>
                                 <div class="grid grid-cols-2">
-                                    <div class="px-4 py-2 font-semibold">Email.</div>
+                                    <div class="px-4 py-2 font-semibold">Gender</div>
                                     <div class="px-4 py-2">
-                                        <a class="text-blue-800">{{ object.email }}</a>
+                                        <a class="text-blue-800">{{ object.gender }}</a>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2">
-                                    <div class="px-4 py-2 font-semibold">Birthday</div>
-                                    {% if object.year_of_birth %}
+                                    <div class="px-4 py-2 font-semibold">Age Group</div>
+                                    {% if object.age_group %}
                                         <div class="px-4 py-2">
-                                            {{ object.year_of_birth | naturalday }}
+                                            {{ object.get_age_group_display }}
                                         </div>
                                     {% else %}
                                         <div class="px-4 py-2">
@@ -138,12 +138,10 @@
                                 <ul class="space-y-2 list-inside">
                                     {% for stove in object.types_of_stove.all %}
                                         <li>
-                                            <div class="text-teal-600 text-sm font-semibold">
-                                                {{ stove.name }}
+                                            <div class="text-sm font-semibold text-teal-600">
+                                                {{ stove.get_name_display }}
                                             </div>
-                                            {% comment %} <div class="text-xs text-gray-500">
-                                            March 2020 - Now
-                                            </div> {% endcomment %}
+                                            
                                         </li>
                                     {% endfor %}
                                 </ul>

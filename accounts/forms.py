@@ -15,12 +15,10 @@
 # Copyright (c) 2022 Swift Lab Limited.                                          #
 ##################################################################################
 
-from click import password_option
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField, AdminPasswordChangeForm
 
 from django.core.validators import RegexValidator
-from pkg_resources import require
 
 from environment.models import LME
 from phonenumber_field.formfields import PhoneNumberField

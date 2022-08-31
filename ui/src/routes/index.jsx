@@ -16,6 +16,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import CoachingAndMentorshipLanding from "../environment/CoachingAndMentorshipLanding";
+import CreateSale from '../environment/sales/CreateSale';
 import CustomSalesReportLanding from "../environment/report/CustomSalesReportLanding";
 import CustomSalesReportPDF from "../environment/report/CustomSalesReportPDF";
 import LMEList from "../environment/LMEList";
@@ -37,6 +38,8 @@ function RoutesApp() {
     <Routes>
       <Route path="/ui/lme/list/" element={<LMEList />} />
       <Route path="/ui/lme/sales/" element={<LMESalesList />} />
+      <Route path="/ui/lme/sales/create/" element={<CreateSale />} />
+      
       <Route
         path="/ui/lme/sales/individual/"
         element={<SalesListIndividual />}

@@ -330,7 +330,7 @@ function CustomSalesReportPDF() {
           <p className="mt-6 tracking-wider text-gray-700 text-md">
             Add at least one LME Sale to unlock this page
           </p>
-          <a href="/environment/lme/sales/create/" className="mt-6">
+          <a href="/ui/lme/sales/create/" className="mt-6">
             <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
               Add new Sale
             </button>

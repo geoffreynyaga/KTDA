@@ -257,14 +257,10 @@ function LMEList() {
           </div>
           <div className="flex flex-row justify-center w-4/12 px-1 md:w-5/12 ">
             <button className="w-full px-2 py-2 text-red-500 rounded-lg ">
-              <h1 className="text-center h6">LME List</h1>
+              <h1 className="text-2xl text-center h6">LME List</h1>
             </button>
           </div>
-          <div className="flex flex-row justify-center w-3/12 px-1 ">
-            {/* <button className="w-full py-2 bg-gray-300 border-2 rounded-lg ">
-            Report
-          </button> */}
-          </div>
+          <div className="flex flex-row justify-center w-3/12 px-1 "></div>
         </div>
         {/* <!-- end header --> */}
 

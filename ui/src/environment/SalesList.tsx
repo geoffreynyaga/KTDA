@@ -123,14 +123,14 @@ function LMESalesList() {
       <div className="flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly ">
         <div className="flex flex-row justify-center w-4/12 ">
           {/* <a
-            href="/environment/lme/sales/create/"
+            href="/ui/lme/sales/create/"
             className="flex flex-row items-center justify-around px-4 py-2 text-gray-700 bg-gray-300 border-2 rounded-lg"
           >
             <i className="text-blue-500 fad fa-plus"></i>
             <p className="ml-2 tracking-tighter sm:text-xs">New Sale</p>
           </a> */}
           <a
-            href="/environment/lme/sales/create/"
+            href="/ui/lme/sales/create/"
             className="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
           >
             <span className="px-3.5 py-2 text-white bg-purple-500 group-hover:bg-purple-600 flex items-center justify-center">
@@ -299,7 +299,7 @@ function LMESalesList() {
             <p className="mt-6 tracking-wider text-gray-700 text-md">
               Add at least one LME Sale to unlock this page
             </p>
-            <a href="/environment/lme/sales/create/" className="mt-6">
+            <a href="/ui/lme/sales/create/" className="mt-6">
               <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
                 Add new Sale
               </button>

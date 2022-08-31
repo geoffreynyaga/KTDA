@@ -16,21 +16,25 @@
 ##################################################################################
 
 from django.urls import path
+
 from environment.api.views import (
-    LMEListCreateApiView,
-    LMESalesListAPIView,
-    TrainingListCreateApiView,
     CoachingAndMentorshipCreateApiView,
-    TreeGrowingListCreateApiView,
+    LMEIndividualMonthlySalesListAPIView,
+    LMEListCreateApiView,
+    LMESalesCreateAPIView,
     LMESalesCustomReportAPIView,
     LMESalesCustomReportPDFAPIView,
-    LMEIndividualMonthlySalesListAPIView,
+    LMESalesListAPIView,
+    LMESandStovesAPIView,
+    TrainingListCreateApiView,
+    TreeGrowingListCreateApiView,
 )
-
 
 urlpatterns = [
     path("lme/", LMEListCreateApiView.as_view(), name="lme-list-create-api"),
     path("lme/sales/list/", LMESalesListAPIView.as_view(), name="lme-sales-list-api"),
+    path("lme/sales/lmeandstoves/", LMESandStovesAPIView.as_view(), name="lme-and-stoves-api"),
+    path("lme/sales/create/", LMESalesCreateAPIView.as_view(), name="lme-create-api"),
     path(
         "lme/sales/list/individual/",
         LMEIndividualMonthlySalesListAPIView.as_view(),

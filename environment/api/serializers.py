@@ -16,6 +16,8 @@
 ##################################################################################
 
 
+from django.db.models import Sum
+
 from rest_framework import serializers
 
 from environment.models import (
@@ -23,18 +25,28 @@ from environment.models import (
     CoachingAndMentorship,
     LMESales,
     MonthlyLMESales,
+    Stove,
     Training,
     TreeGrowing,
 )
-from django.db.models import Sum
 
+
+class StoveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stove
+        fields = ("id","name")
 
 class LMESerializer(serializers.ModelSerializer):
     factory = serializers.SerializerMethodField()
     all_sales = serializers.SerializerMethodField()
 
     def get_factory(self, obj):
+        # print(obj,"obj")
         return obj.factory.name
+        # if obj.factory:
+        #     return obj.factory.name 
+        # else:
+        #     return"None"
 
     def get_all_sales(self, obj):
         sales = LMESales.objects.filter(lme=obj).aggregate(Sum("stove_price"))
@@ -43,16 +55,6 @@ class LMESerializer(serializers.ModelSerializer):
     class Meta:
         model = LME
         fields = "__all__"
-        # fields = (
-        #     "name",
-        #     "factory",
-        #     "county",
-        #     "sub_county",
-        #     "ward",
-        #     "contact_person",
-        #     "phone_number",
-        #     "all_sales",
-        # )
 
 
 class CoachingAndMentorshipSerializer(serializers.ModelSerializer):
