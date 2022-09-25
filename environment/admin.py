@@ -1,24 +1,26 @@
 from django.contrib import admin
 
-# Register your models here.
+from leaflet.admin import LeafletGeoAdmin
 
 from environment.models import (
-    Factory,
-    LMESales,
-    Stove,
     LME,
     CoachingAndMentorship,
-    MonthlyLMESales,
-    Training,
-    TreeGrowing,
-    Region,
-    Zone,
     County,
-    SubCounty,
-    Ward,
     CSVUpload,
     CustomSalesReport,
+    Factory,
+    LMESales,
+    MonthlyLMESales,
+    Region,
+    Stove,
+    SubCounty,
+    Training,
+    TreeGrowing,
+    Ward,
+    Zone,
 )
+
+# Register your models here.
 
 
 class CSVUploadAdmin(admin.ModelAdmin):
@@ -215,7 +217,7 @@ class TrainingAdmin(admin.ModelAdmin):
 admin.site.register(Training, TrainingAdmin)
 
 
-class TreeGrowingAdmin(admin.ModelAdmin):
+class TreeGrowingAdmin(LeafletGeoAdmin):
     list_display = (
         "factory",
         "partner",

@@ -15,15 +15,17 @@
 # Copyright (c) 2022 Swift Lab Limited.                                          #
 ##################################################################################
 
+from django import forms
+
+from leaflet.forms.widgets import LeafletWidget
 
 from environment.models import (
     LME,
     CoachingAndMentorship,
-    Training,
     LMESales,
+    Training,
     TreeGrowing,
 )
-from django import forms
 
 
 class DatePickerInput(forms.DateInput):
@@ -86,9 +88,9 @@ class TrainingForm(forms.ModelForm):
         # Representing the many to many related field in Pizza
         # lme_attendees = forms.ModelMultipleChoiceField(queryset=LME.objects.all())
         lme_attendees = forms.ModelMultipleChoiceField(
-        queryset=LME.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-inline'})
-    )
+            queryset=LME.objects.all(),
+            widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-inline"}),
+        )
         fields = (
             "course_name",
             "factory",
@@ -191,8 +193,7 @@ class TreeGrowingForm(forms.ModelForm):
             "indigenous_trees",
             "exotic_trees",
             "fruit_trees",
+            "planting_location",
         )
 
-        widgets = {
-            "date": DatePickerInput(),
-        }
+        widgets = {"date": DatePickerInput(), "planting_location": LeafletWidget()}

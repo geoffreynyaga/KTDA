@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
@@ -167,7 +168,6 @@ AGE_GROUPS_CHOICES = (
     ("75-75", "75-75"),
     ("75-85", "75-85"),
     ("85-AB", "85 and above"),
-
 )
 GENDER_CHOICES = (("M", "MALE"), ("F", "FEMALE"))
 
@@ -178,17 +178,13 @@ class LME(models.Model):
 
     name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    factory = models.ForeignKey(
-        Factory, on_delete=models.CASCADE, related_name="lme_factory"
-    )
+    factory = models.ForeignKey(Factory, on_delete=models.CASCADE, related_name="lme_factory")
     email = models.EmailField(max_length=254, blank=True, null=True)
     no_of_employees = models.IntegerField(blank=True, null=True)
     no_of_female_employees = models.IntegerField(default=0)
     no_of_male_employees = models.IntegerField(default=0)
     county = models.ForeignKey(County, on_delete=models.CASCADE, blank=True, null=True)
-    sub_county = models.ForeignKey(
-        SubCounty, on_delete=models.CASCADE, blank=True, null=True
-    )
+    sub_county = models.ForeignKey(SubCounty, on_delete=models.CASCADE, blank=True, null=True)
     ward = models.ForeignKey(Ward, on_delete=models.CASCADE, blank=True, null=True)
 
     types_of_stove = models.ManyToManyField("environment.Stove")
@@ -196,13 +192,11 @@ class LME(models.Model):
     contact_person = models.CharField(max_length=50, blank=True, null=True)
     # year_of_birth = models.DateField(help_text="YYYY-MM-DD", blank=True, null=True)
     # phone_number = models.CharField(max_length=20, help_text="07xx xxx xxx")
-    age_group = models.CharField(max_length=5,choices=AGE_GROUPS_CHOICES,blank=True, null=True)
-    gender = models.CharField(max_length=1,choices=GENDER_CHOICES,blank=True, null=True)
+    age_group = models.CharField(max_length=5, choices=AGE_GROUPS_CHOICES, blank=True, null=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     phone_number = PhoneNumberField(blank=True)
 
-    retailer_or_installer = models.CharField(
-        max_length=3, choices=RETAILER_OR_INSTALLER_CHOICES
-    )
+    retailer_or_installer = models.CharField(max_length=3, choices=RETAILER_OR_INSTALLER_CHOICES)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -402,6 +396,10 @@ class TreeGrowing(models.Model):
     indigenous_trees = models.IntegerField(default=0)
     exotic_trees = models.IntegerField(default=0)
     fruit_trees = models.IntegerField(default=0)
+
+    planting_location = gis_models.PointField(
+        blank=True, null=True, help_text="click on the top right to search"
+    )
 
     def __str__(self):
         return self.factory.name

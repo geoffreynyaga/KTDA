@@ -42,6 +42,7 @@ from environment.api.serializers import (
     MonthlyLMESalesSerializer,
     StoveSerializer,
     TrainingSerializer,
+    TreeActivityListGeoSerializer,
     TreeGrowingSerializer,
 )
 from environment.models import (
@@ -479,3 +480,19 @@ class LMESalesCreateAPIView(APIView):
             {"message": "Created Sale", "success": True},
             status=status.HTTP_200_OK,
         )
+
+
+class TreeActivityPinsListAPIView(APIView):
+    """
+    List all County Boundaries
+    """
+
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+
+        all_activities_qs = TreeGrowing.objects.all()
+
+        serialized_data = TreeActivityListGeoSerializer(all_activities_qs, many=True)
+
+        return Response(serialized_data.data)

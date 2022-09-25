@@ -137,6 +137,15 @@ class TrainingCreateView(CreateView):
     # )
 
 
+class TreeGrowingMainView(TemplateView):
+    template_name = "environment/TreeGrowingList.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["activities"] = TreeGrowing.objects.all()
+        return context
+
+
 class TreeGrowingCreateView(CreateView):
     queryset = TreeGrowing.objects.all()
     template_name = "environment/TreeGrowingCreate.html"

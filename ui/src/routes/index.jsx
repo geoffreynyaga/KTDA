@@ -47,6 +47,8 @@ function RoutesApp() {
       <Route path="/ui/lme/cnm/" element={<CoachingAndMentorshipLanding />} />
       <Route path="/ui/lme/training/" element={<TrainingLanding />} />
       <Route path="/ui/lme/tree-growing/" element={<TreeGrowingLanding />} />
+  
+      
       <Route path="/ui/lme/report/" element={<CustomSalesReportLanding />} />
       <Route path="/ui/lme/report/:id/" element={<CustomSalesReportPDF />} />
     </Routes>

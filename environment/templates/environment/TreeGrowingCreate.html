@@ -1,6 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
 {% load tailwind_filters %}
+{% load leaflet_tags %}
+
+{% block head %}
+
+{% leaflet_css plugins="forms, geocoder" %}
+    {% leaflet_js plugins="forms, geocoder" %}
+    
+   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+   <style>
+    .leaflet-control-geocoder-icon {
+        border-radius: 4px;
+        width: 26px;
+        height: 26px;
+        border: none;
+        background-color: #c51515;
+        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z' /%3E%3C/svg%3E%0A");
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+        z-index: 99999;
+
+        
+      }
+   </style>
+{% endblock head %}
+    
 {% block content %}
     <div class="flex-1 p-6 mx-auto bg-gray-100 ">
         <!-- body -->
@@ -42,4 +69,12 @@
             </form>
         </div>
     </div>
+    <script type="text/javascript">
+        window.addEventListener("map:init", function(e) {
+                var detail = e.detail;
+                L.Control.geocoder().addTo(detail.map);
+            }, false
+        ); //end of window.addEventListener
+    
+    </script>
 {% endblock content %}

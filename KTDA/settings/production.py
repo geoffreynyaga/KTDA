@@ -26,8 +26,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,9 +46,7 @@ SECRET_KEY = "django-insecure-(%$8dax&)7zn0fc#hgi43k&j2!*1^#-iiw&8q@rn*q^0aiuf-4
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")]
-)
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")])
 
 
 INTERNAL_IPS = [
@@ -67,17 +66,17 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.humanize",
+    "django.contrib.gis",
     "tailwind",
     "theme",
     "django_browser_reload",
     "rest_framework",
+    "rest_framework_gis",
     "rest_framework.authtoken",
     "crispy_forms",
     "crispy_tailwind",
-    # "allauth",
-    # "allauth.account",
-    # "allauth.socialaccount",
     "phonenumber_field",
+    "leaflet",
     "storages",
     "accounts",
     "ui",
@@ -215,6 +214,20 @@ TAILWIND_APP_NAME = "theme"
 
 LOGIN_REDIRECT_URL = "home"
 # ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
+
+LEAFLET_CONFIG = {
+    "DEFAULT_CENTER": (-0.966408, 37.048688),
+    "DEFAULT_ZOOM": 15,
+    "MIN_ZOOM": 8,
+    "MAX_ZOOM": 23,
+    "PLUGINS": {
+        "forms": {"auto-include": True},
+        "geocoder": {
+            "css": ["https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"],
+            "js": ["https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"],
+        },
+    },
+}
 
 
 # Database

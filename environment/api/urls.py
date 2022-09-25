@@ -27,6 +27,7 @@ from environment.api.views import (
     LMESalesListAPIView,
     LMESandStovesAPIView,
     TrainingListCreateApiView,
+    TreeActivityPinsListAPIView,
     TreeGrowingListCreateApiView,
 )
 
@@ -64,5 +65,10 @@ urlpatterns = [
         "tree-growing/",
         TreeGrowingListCreateApiView.as_view(),
         name="tree-growing-list-create-api",
+    ),
+    path(
+        "tree-growing/pins/",
+        TreeActivityPinsListAPIView.as_view(),
+        name="tree-growing-pins-list-api",
     ),
 ]

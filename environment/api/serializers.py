@@ -14,11 +14,10 @@
 # -----                                                                          #
 # Copyright (c) 2022 Swift Lab Limited.                                          #
 ##################################################################################
-
-
 from django.db.models import Sum
 
 from rest_framework import serializers
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from environment.models import (
     LME,
@@ -34,7 +33,8 @@ from environment.models import (
 class StoveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stove
-        fields = ("id","name")
+        fields = ("id", "name")
+
 
 class LMESerializer(serializers.ModelSerializer):
     factory = serializers.SerializerMethodField()
@@ -44,7 +44,7 @@ class LMESerializer(serializers.ModelSerializer):
         # print(obj,"obj")
         return obj.factory.name
         # if obj.factory:
-        #     return obj.factory.name 
+        #     return obj.factory.name
         # else:
         #     return"None"
 
@@ -173,3 +173,20 @@ class TreeGrowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = TreeGrowing
         fields = "__all__"
+
+
+class TreeActivityListGeoSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = TreeGrowing
+        geo_field = "planting_location"
+        fields = (
+            "factory",
+            "partner",
+            "venue",
+            "trees_planted",
+            "date",
+            "indigenous_trees",
+            "exotic_trees",
+            "fruit_trees",
+            "planting_location",
+        )

@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tailwind_tags %}
+{% load leaflet_tags %}
+{% load humanize %}
+
+
+
+{% block head %}
+{% leaflet_js %} {% leaflet_css %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+
+ <script type="text/javascript"  src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+ <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js" integrity="sha512-eYE5o0mD7FFys0tVot8r4AnRXzVVXhjVpzNK+AcHkg4zNLvUAaCOJyLFKjmfpJMj6L/tuCzMN7LULBvNDhy5pA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ <style>
+    .leaflet-container { height: 100%; }
+  </style>
+
+  {% endblock head %}
+  {% block content %}
+  <div class="flex flex-col w-full h-full pt-4 md:flex-row">
+    {% comment %} items column {% endcomment %}
+    <div class="flex flex-col w-full h-full md:w-6/12">
+      
+      <div class="flex flex-row justify-around w-full mt-2">
+        <p class="pl-4 tracking-wide text-md">
+          Found <b>{{ activities.count }} Activities</b>
+          
+        </p>
+        <a href="/ui/lme/tree-growing/" class="font-bold text-blue-700 no-underline font-sm">Go to Report</a>
+      </div>
+      {% comment %} Go Back {% endcomment %}
+      {% comment %} cards grid {% endcomment %}
+      <div class="grid w-full min-h-full grid-cols-2 gap-4 px-4 py-2 mt-2">
+        {% comment %}  {% endcomment %}
+        {% for activity in activities %}
+          <div class="flex flex-col justify-between items-start   rounded-md shadow-md bg-gray-50 border-[1px]">
+            {% comment %} <div class="flex flex-col items-center justify-center w-full h-[110px]">
+              {% if activity.featured_image %}
+                <img src="{{ activity.featured_image.url }}"
+                     class="object-contain w-full h-[110px] "
+                     style="width: 100%"
+                     alt=""/>
+              {% else %}
+                <p>No image uploaded yet</p>
+              {% endif %}
+            </div> {% endcomment %}
+            <div class="flex flex-col w-full py-4 pl-2 ">
+              <p class="text-xs font-semibold text-gray-600">Venue: {{ activity.venue }}</p>
+              <p class="text-xs font-semibold text-gray-600">Factory: {{ activity.factory }}</p>
+              <p class="text-xs font-semibold text-gray-600">Partner: {{ activity.partner }}</p>
+              <p class="text-xs font-semibold text-gray-600"># Planted: {{ activity.trees_planted }}</p>
+
+              <p class="text-xs font-semibold text-gray-600">Date Planted: {{ activity.date | naturalday }}</p>
+            </div>
+            <div class="flex flex-col w-full pl-2 ">
+              {% if activity.indigenous_trees %}
+                <div class="w-3/4 px-0 my-2 bg-green-600 rounded-sm">
+                  <p class="text-xs text-center text-white">{{activity.indigenous_trees }} Indegenous Trees</p>
+                </div>
+              {% endif %}
+
+              {% if activity.exotic_trees   %}
+                <div class="w-3/4 px-0 my-2 bg-red-400 rounded-sm">
+                  <p class="text-xs text-center text-white">{{ activity.exotic_trees}} Exotic Trees</p>
+                </div>
+              {% endif %}
+
+              {% if activity.fruit_trees   %}
+                <div class="w-3/4 px-0 my-2 bg-red-400 rounded-sm">
+                  <p class="text-xs text-center text-white">{{ activity.fruit_trees}} Fruit Trees</p>
+                </div>
+              {% endif %}
+            </div>
+            {% comment %} <a href="/ui/activitys/upload/{{ activity.id }}/"
+               class="flex flex-row items-center justify-center w-full py-1 bg-indigo-50">
+              <p class="text-center text-indigo-400 text-md">View activity -></p>
+            </a> {% endcomment %}
+          </div>
+        {% endfor %}
+      </div>
+      {% comment %} cards grid {% endcomment %}
+    </div>
+    {% comment %} end items column {% endcomment %}
+    {% comment %} map column {% endcomment %}
+    <div class="flex flex-col w-11/12 mx-4 border-4 h-96 md:h-screen md:w-6/12 rounded-xl overflow-clip">
+      {% comment %} {% leaflet_map "main" %} {% endcomment %}
+      <div id="map"></div>
+    </div>
+    {% comment %}end map column {% endcomment %}
+  </div>
+{% endblock content %}
+{% block extra_js %}
+ 
+<script>
+  // leaflet map at div with id map1
+  
+var map = L.map('map', {
+  preferCanvas: false,
+  fullscreenControl: true,
+  fullscreenControlOptions: {
+      position: 'topleft'
+  },
+});
+
+
+    
+map.setView([-1.2616166, 36.64391576], 8);
+
+
+var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+var streetMaps = L.tileLayer(osmUrl, {
+    maxZoom: 24,
+    minZoom: 6,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var baseMaps = {}
+var overlayMaps = {}
+
+/*var counties_url = ' url "sites_activitys_pins" site_pk=site_pk '; */
+var counties_url = " {% url 'tree-growing-pins-list-api' %} ";
+
+
+console.log(counties_url, "counties_url")
+
+
+
+var geojsonLayer = new L.GeoJSON.AJAX(counties_url, {
+    interactive: true,
+    pointToLayer: function(feature, latlng) {
+        console.log(latlng,"latlong")
+        return L.marker(latlng);
+    },
+    onEachFeature: function onEachFeature(feature, layer) {
+        // style each feature
+        var props = feature.properties;
+        //console.log(props, "props")
+        var site_name = props['venue']
+        var site_pk = props['pk']
+        var trees_planted = props['trees_planted']
+
+        var django_url = " {% url 'tree-growing-pins-list-api' %} ";
+
+
+        var x = `
+                <div>
+                    <p class="mb-2 font-sans text-sm font-semibold text-gray-600">${site_name}</p>
+                    <p># trees: ${trees_planted}</p>
+                    <hr >
+                    
+                </div>`;
+
+
+        layer.bindPopup(x);
+
+
+    },
+  
+});
+
+
+
+geojsonLayer.addTo(map);
+baseMaps["activities"] = geojsonLayer;
+// end of boundaries fetch and load
+
+
+var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+});
+
+baseMaps["Google Satellite"] = googleHybrid;
+
+
+var overlayControl = L.control.layers(baseMaps)
+
+overlayControl.addTo(map);
+
+
+
+
+</script>
+  
+{% endblock extra_js %}
+
