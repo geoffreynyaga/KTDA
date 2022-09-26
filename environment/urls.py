@@ -20,6 +20,8 @@ from django.urls import path
 from environment.views import (
     CapacityBuildingIndividualAddView,
     CoachingAndMentorshipCreateView,
+    LessonLearntCreateView,
+    LessonLearntListView,
     LMECreateView,
     LMEDetailView,
     LMEIndividualCNMListView,
@@ -78,5 +80,15 @@ urlpatterns = [
         "tree-growing/create/",
         TreeGrowingCreateView.as_view(),
         name="tree_growing_create",
+    ),
+    path(
+        "lessons/",
+        LessonLearntListView.as_view(),
+        name="lessons_list",
+    ),
+    path(
+        "lessons/create/",
+        LessonLearntCreateView.as_view(),
+        name="lessons_create",
     ),
 ]

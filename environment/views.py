@@ -1,8 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from environment.forms import (
     CoachingAndMentorshipForm,
+    LessonForm,
     LMEIndividualSalesForm,
     LMESalesForm,
     TrainingForm,
@@ -11,10 +13,13 @@ from environment.forms import (
 from environment.models import (
     LME,
     CoachingAndMentorship,
+    LessonLearnt,
     LMESales,
     Training,
     TreeGrowing,
 )
+
+User = get_user_model()
 
 
 class LMEMainView(TemplateView):
@@ -168,6 +173,32 @@ class LMEIndividualTrainingListView(ListView):
         # print(trainings, "trainings")
 
         return trainings
+
+
+class LessonLearntListView(ListView):
+    queryset = LessonLearnt.objects.all().order_by("-id")
+    template_name = "environment/LessonLearntList.html"
+
+    success_url = "/"
+    context_object_name = "lessons"
+
+
+class LessonLearntCreateView(CreateView):
+    # queryset = LessonLearnt.objects.all()
+    template_name = "environment/LessonLearntCreate.html"
+    form_class = LessonForm
+    # fields = "__all__"
+
+    success_url = "/environment/lessons/"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        # print(self.request.user,"sould be user")
+        created_by = User.objects.filter(phone_number=self.request.user.phone_number).first()
+        # print(lme, "lme")
+        self.object.created_by = created_by
+        self.object.save()
+        return super().form_valid(form)
 
 
 class LMEIndividualCNMListView(ListView):

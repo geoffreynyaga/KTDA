@@ -22,6 +22,7 @@ from leaflet.forms.widgets import LeafletWidget
 from environment.models import (
     LME,
     CoachingAndMentorship,
+    LessonLearnt,
     LMESales,
     Training,
     TreeGrowing,
@@ -197,3 +198,16 @@ class TreeGrowingForm(forms.ModelForm):
         )
 
         widgets = {"date": DatePickerInput(), "planting_location": LeafletWidget()}
+
+
+class LessonForm(forms.ModelForm):
+    class Meta:
+        model = LessonLearnt
+
+        fields = (
+            # "created_by",
+            "topic_summary",
+            "message",
+        )
+
+        # widgets = {"date": DatePickerInput(), "planting_location": LeafletWidget()}

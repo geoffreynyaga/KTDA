@@ -9,6 +9,7 @@ from environment.models import (
     CSVUpload,
     CustomSalesReport,
     Factory,
+    LessonLearnt,
     LMESales,
     MonthlyLMESales,
     Region,
@@ -231,3 +232,6 @@ class TreeGrowingAdmin(LeafletGeoAdmin):
 
 
 admin.site.register(TreeGrowing, TreeGrowingAdmin)
+
+
+admin.site.register(LessonLearnt)

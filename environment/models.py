@@ -444,3 +444,20 @@ class CustomSalesReport(models.Model):
         else:
             self.no_query_results = False
         super().save(*args, **kwargs)
+
+
+class LessonLearnt(models.Model):
+    class Meta:
+        verbose_name_plural = "Lessons Learnt"
+
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    topic_summary = models.CharField(max_length=120, blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
+
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+    # query_month = models.CharField(max_length=15, blank=True, null=True)
+    # query_year = models.IntegerField(blank=True, null=True)
+    # query_factory = models.CharField(max_length=50, blank=True, null=True)
