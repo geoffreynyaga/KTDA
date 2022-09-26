@@ -316,9 +316,7 @@ def post_save_lme_sales_create(sender, instance, created, *args, **kwargs):
             )
         except Exception as e:
             print(e, "no monthly sales found")
-            x = x = MonthlyLMESales.objects.create(
-                lme=instance.lme, month=instance.date_of_purchase
-            )
+            x = MonthlyLMESales.objects.create(lme=instance.lme, month=instance.date_of_purchase)
 
         print(instance.stove.name, "stove name in post save")
         if instance.stove.name == "KCJ":

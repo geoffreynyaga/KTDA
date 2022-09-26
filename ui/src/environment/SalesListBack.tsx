@@ -14,12 +14,9 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { useFilters, useSortBy, useTable } from 'react-table';
+import { useFilters, useTable } from 'react-table';
 
 import { IMonthlySales } from '../../typings/LMETypes';
-// import JsPDF from "jspdf";
-import Papa from 'papaparse';
-import { useExportData } from 'react-table-plugins';
 
 function LMESalesList() {
   const [lme, setLme] = useState<null | IMonthlySales[]>(null);
@@ -32,7 +29,7 @@ function LMESalesList() {
     await fetch('/api/v1/environment/lme/sales/list/')
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data, 'data');
+        console.log(data, 'data');
         setLme(data);
       });
   }
@@ -91,9 +88,8 @@ function LMESalesList() {
     headerGroups,
     rows,
     prepareRow,
-    setFilter,
-    exportData
-  } = useTable({ columns, data, getExportFileBlob }, useFilters, useExportData);
+    setFilter
+  } = useTable({ columns, data }, useFilters);
 
   // Update the state when input changes
 
@@ -120,40 +116,86 @@ function LMESalesList() {
     setYearInput(value);
   };
 
-  function getExportFileBlob({ columns, data, fileType, fileName }) {
-    if (fileType === 'csv') {
-      // CSV example
-      const headerNames = columns.map((col) => col.exportValue);
-      const csvString = Papa.unparse({ fields: headerNames, data });
-      return new Blob([csvString], { type: 'text/csv' });
+  function getHeader(column: any): any {
+    console.log(column, 'column');
+    if (column.totalHeaderCount === 1) {
+      return [
+        {
+          value: column.Header,
+          type: 'string'
+        }
+      ];
+    } else {
+      const span = [...Array(column.totalHeaderCount - 1)].map((x) => ({
+        value: '',
+        type: 'string'
+      }));
+      return [
+        {
+          value: column.Header,
+          type: 'string'
+        },
+        ...span
+      ];
     }
-    //PDF example
-    //if (fileType === "pdf") {
-    //  const headerNames = columns.map((column) => column.exportValue);
-    //  const doc = new JsPDF();
-    //  doc.autoTable({
-    //    head: [headerNames],
-    //    body: data,
-    //    margin: { top: 20 },
-    //    styles: {
-    //      minCellHeight: 9,
-    //      halign: "left",
-    //      valign: "center",
-    //      fontSize: 11,
-    //    },
-    //  });
-    //  doc.save(`${fileName}.pdf`);
-    //
-    //  return false;
-    //}
+  }
 
-    // Other formats goes here
-    return false;
+  function getExcel() {
+    const config: any = {
+      filename: 'general-ledger-Q1',
+      sheet: {
+        data: []
+      }
+    };
+
+    const dataSet = config.sheet.data;
+
+    // review with one level nested config
+    // HEADERS
+    headerGroups.forEach((headerGroup: any) => {
+      const headerRow: any = [];
+      if (headerGroup.headers) {
+        headerGroup.headers.forEach((column) => {
+          console.log('321');
+
+          console.log(getHeader(column), 'ok now');
+          headerRow.push(getHeader(column));
+        });
+      }
+
+      dataSet.push(headerRow);
+    });
+
+    // FILTERED ROWS
+    if (rows.length > 0) {
+      rows.forEach((row: any) => {
+        const dataRow: any = [];
+
+        Object.values(row.values).forEach((value: any) =>
+          dataRow.push({
+            value,
+            type: typeof value === 'number' ? 'number' : 'string'
+          })
+        );
+
+        dataSet.push(dataRow);
+      });
+    } else {
+      dataSet.push([
+        {
+          value: 'No data',
+          type: 'string'
+        }
+      ]);
+    }
+
+    return generateExcel(config);
   }
 
   return (
     <div className='flex flex-col items-center w-full pt-0 overflow-scroll'>
       {/* <!-- header --> */}
+      <button onClick={getExcel}>Get Excel</button>
 
       <div className='flex flex-row items-center w-11/12 py-2 mt-2 mb-4 bg-gray-200 rounded-lg shadow justify-evenly '>
         <div className='flex flex-row justify-center w-4/12 '>
@@ -280,25 +322,6 @@ function LMESalesList() {
               </div>
             </div>
             <hr />
-
-            <div className='flex flex-row items-center justify-center w-full py-4'>
-              <button
-                className='h-10 px-4 py-1 mx-2 bg-gray-200 rounded-md shadow-md '
-                onClick={() => {
-                  exportData('csv', true);
-                }}
-              >
-                Export All as CSV
-              </button>
-              <button
-                className='h-10 px-4 py-1 mx-2 bg-gray-200 rounded-md shadow-md '
-                onClick={() => {
-                  exportData('csv', false);
-                }}
-              >
-                Export Current View as CSV
-              </button>
-            </div>
 
             <table {...getTableProps()} className='w-full text-left table-auto'>
               {/* // Input element */}
