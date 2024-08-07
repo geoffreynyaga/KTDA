@@ -4,31 +4,28 @@
 # File: /home/geoff/KTDA/accounts/forms.py                                       #
 # Project: /home/geoff/KTDA/accounts                                             #
 # Created Date: Tuesday, May 24th 2022, 9:07:52 pm                               #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Tuesday May 24th 2022 9:07:52 pm                                #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField, AdminPasswordChangeForm
-
+from django.contrib.auth.forms import AdminPasswordChangeForm, ReadOnlyPasswordHashField
 from django.core.validators import RegexValidator
-
-from environment.models import LME
 from phonenumber_field.formfields import PhoneNumberField
 
+from environment.models import LME
 
 from .models import User
 
 
 class LoginForm(forms.Form):
-
     # get user field
     phone_number = PhoneNumberField(
         initial="+254",
@@ -192,7 +189,6 @@ class UserAdminChangeForm(forms.ModelForm):
 
 
 class PasswordResetForm(forms.Form):
-
     # get user field
     phone_number = PhoneNumberField(
         initial="+254",

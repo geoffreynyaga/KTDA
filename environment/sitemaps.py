@@ -4,20 +4,21 @@
 # File: /home/geoff/KTDA/environment/sitemaps.py                                 #
 # Project: /home/geoff/KTDA/environment                                          #
 # Created Date: Tuesday, June 7th 2022, 7:45:31 pm                               #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Tuesday June 7th 2022 7:45:31 pm                                #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
 
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+
 from .models import LME
 
 

@@ -4,19 +4,18 @@
 # File: /home/geoff/KTDA/environment/forms.py                                    #
 # Project: /home/geoff/KTDA/environment                                          #
 # Created Date: Wednesday, May 18th 2022, 5:46:32 pm                             #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Wednesday May 18th 2022 5:46:32 pm                              #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
 from django import forms
-
 from leaflet.forms.widgets import LeafletWidget
 
 from environment.models import (

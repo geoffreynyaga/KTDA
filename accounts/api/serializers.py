@@ -4,34 +4,31 @@
 # File: /home/geoff/KTDA/accounts/api/serializers.py                             #
 # Project: /home/geoff/KTDA/accounts/api                                         #
 # Created Date: Tuesday, May 24th 2022, 9:11:58 pm                               #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Tuesday May 24th 2022 9:11:58 pm                                #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
-from rest_framework import serializers, exceptions
-from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import authenticate, get_user_model
+from rest_framework import exceptions, serializers
 
 User = get_user_model()
 
-from phonenumber_field.serializerfields import PhoneNumberField
-
 from django.core.exceptions import ValidationError
+from phonenumber_field.serializerfields import PhoneNumberField
 
 
 class LoginSerializer(serializers.Serializer):
-
     phone_number = PhoneNumberField()
     password = serializers.CharField()
 
     def validate(self, data):
-
         # print(data, "this is data")
 
         """
@@ -88,7 +85,6 @@ class SignupSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def validate_phone_number(self, value):
-
         phone_number = str(value)
         # str because it comes in a a PhoneNumberField class
 
@@ -163,7 +159,6 @@ class UserPushNotificationTokenCreateSerializer(serializers.ModelSerializer):
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
-
     full_name = serializers.ReadOnlyField(source="get_full_name")
 
     class Meta:

@@ -176,13 +176,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
-STATIC_ROOT = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "staticfiles"),
-    os.path.join(BASE_DIR, "ui/static/ui"),
+    os.path.join(BASE_DIR, "ui/static/"),
 ]
 
 
@@ -214,8 +214,15 @@ LEAFLET_CONFIG = {
     "PLUGINS": {
         "forms": {"auto-include": True},
         "geocoder": {
-            "css": ["https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"],
-            "js": ["https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"],
+            "css": [
+                "https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+            ],
+            "js": [
+                "https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"
+            ],
         },
     },
 }
+
+
+IS_CONTABO = False

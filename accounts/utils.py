@@ -4,15 +4,15 @@
 # File: /home/geoff/KTDA/accounts/utils.py                                       #
 # Project: /home/geoff/KTDA/accounts                                             #
 # Created Date: Tuesday, May 24th 2022, 10:56:20 pm                              #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Tuesday May 24th 2022 10:56:20 pm                               #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
 import phonenumbers
@@ -189,7 +189,6 @@ def check_is_possible_number(phone_number):
 
 
 def standardize_phone_number_to_e164(phone_number):
-
     phone_number = str(phone_number).replace(" ", "")
 
     first_five_digits = phone_number[:5]

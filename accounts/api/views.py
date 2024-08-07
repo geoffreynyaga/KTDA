@@ -4,44 +4,45 @@
 # File: /home/geoff/KTDA/accounts/api/views.py                                   #
 # Project: /home/geoff/KTDA/accounts/api                                         #
 # Created Date: Tuesday, May 24th 2022, 9:13:06 pm                               #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Tuesday May 24th 2022 9:13:06 pm                                #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
 from django.conf import settings
-
+from django.contrib.auth import (
+    authenticate as django_authenticate,
+)
+from django.contrib.auth import get_user_model
+from django.contrib.auth import (
+    login as django_login,
+)
+from django.contrib.auth import (
+    logout as django_logout,
+)
 from rest_framework import permissions, status
-from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
-from rest_framework.views import APIView
-
 from rest_framework.authtoken.models import Token
+from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .serializers import (
     LoginSerializer,
     SignupSerializer,
 )
 
-from django.contrib.auth import (
-    login as django_login,
-    logout as django_logout,
-    authenticate as django_authenticate,
-)
-from django.contrib.auth import get_user_model
-
 User = get_user_model()
+
+import logging
 
 from django.core.exceptions import ValidationError
 from rest_framework.authentication import TokenAuthentication
-
-import logging
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -52,7 +53,6 @@ class LoginAPIView(APIView):
     authentication_classes = (TokenAuthentication,)
 
     def post(self, request):
-
         serializer = LoginSerializer(data=request.data)
         # print(serializer, "serializer")
         serializer.is_valid(raise_exception=True)

@@ -4,39 +4,36 @@
 # File: /home/geoff/KTDA/environment/utils.py                                    #
 # Project: /home/geoff/KTDA/environment                                          #
 # Created Date: Friday, May 20th 2022, 4:24:01 pm                                #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Wednesday May 25th 2022 8:38:40 am                              #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
 import csv
+
 from accounts.utils import convert_local_to_e164
-
-
 from environment.models import (
     LME,
+    County,
     Factory,
     Region,
     SubCounty,
     Ward,
     Zone,
-    County,
 )
 
 
 def save_factories_from_csv(file_path, command_str=""):
-
     print("Reading CSV file: {}".format(file_path))
 
     # read csv file
     with open(file_path, "r") as csv_file:
-
         csv_reader = csv.reader(csv_file, delimiter=",")
         # skip header
         next(csv_reader)
@@ -133,7 +130,6 @@ def save_factories_from_csv(file_path, command_str=""):
 def save_factories_from_json(
     json,
 ):
-
     for factory_item in json:
         #     factory_item  = {
         #     "Region": "Region 1",
@@ -228,19 +224,16 @@ def save_factories_from_json(
 
 
 def save_LMEs_from_csv(file_path, command_str=""):
-
     print("Reading CSV file: {}".format(file_path))
 
     # read csv file
     with open(file_path, "r") as csv_file:
-
         csv_reader = csv.reader(csv_file, delimiter=",")
         # skip header
         next(csv_reader)
         # iterate over rows
 
         for row in csv_reader:
-
             # Organization Name
             # 1.Factory
             # 2.Cluster
@@ -379,9 +372,7 @@ def save_LMEs_from_csv(file_path, command_str=""):
 
 
 def save_LMEs_from_json(json, command_str=""):
-
     for lme_item in json:
-
         # lme_item = {
         #     "Organization Name": "KTDA F",
         #     "Factory": "Mudete",

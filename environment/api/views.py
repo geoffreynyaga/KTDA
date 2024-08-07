@@ -4,22 +4,21 @@
 # File: /home/geoff/KTDA/environment/api/views.py                                #
 # Project: /home/geoff/KTDA/environment/api                                      #
 # Created Date: Sunday, May 15th 2022, 1:52:41 pm                                #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Sunday May 15th 2022 2:00:39 pm                                 #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
 
 from itertools import count
 
 from django.db.models import Sum
-
 from rest_framework import generics, status
 from rest_framework.authentication import (
     BasicAuthentication,
@@ -98,7 +97,6 @@ class LMESalesCustomReportAPIView(APIView):
     ]
 
     def post(self, args, **kwargs):
-
         from datetime import datetime
 
         data = self.request.data
@@ -170,7 +168,9 @@ class LMESalesCustomReportAPIView(APIView):
                 if data["lme"]:
                     queryset = queryset.filter(lme__name__icontains=data["lme"])
                 if data["factory"]:
-                    queryset = queryset.filter(lme__factory__name__icontains=data["factory"])
+                    queryset = queryset.filter(
+                        lme__factory__name__icontains=data["factory"]
+                    )
                 if data["month"]:
                     queryset = queryset.filter(month_string__icontains=data["month"])
                 if data["year"]:
@@ -222,7 +222,9 @@ class LMESalesCustomReportAPIView(APIView):
 
                         except Exception as e:
                             x = "2022-05-21T21:14:36.386Z"
-                            end_date_datetime = datetime.strptime(x, "%Y-%m-%dT%H:%M:%S.%fZ")
+                            end_date_datetime = datetime.strptime(
+                                x, "%Y-%m-%dT%H:%M:%S.%fZ"
+                            )
 
                             print(e, "error 2")
                 except Exception as e:
@@ -244,7 +246,9 @@ class LMESalesCustomReportAPIView(APIView):
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class LMESalesCustomReportPDFAPIView(APIView):
@@ -254,7 +258,6 @@ class LMESalesCustomReportPDFAPIView(APIView):
     ]
 
     def get(self, args, **kwargs):
-
         from datetime import datetime
 
         try:
@@ -281,36 +284,50 @@ class LMESalesCustomReportPDFAPIView(APIView):
                 )
 
                 if saved_queries.query_lme:
-                    queryset = queryset.filter(lme__name__icontains=saved_queries.query_lme)
+                    queryset = queryset.filter(
+                        lme__name__icontains=saved_queries.query_lme
+                    )
                 if saved_queries.query_factory:
                     queryset = queryset.filter(
                         lme__factory__name__icontains=saved_queries.query_factory
                     )
                 if saved_queries.query_month:
-                    queryset = queryset.filter(month_string__icontains=saved_queries.query_month)
+                    queryset = queryset.filter(
+                        month_string__icontains=saved_queries.query_month
+                    )
                 if saved_queries.query_year:
-                    queryset = queryset.filter(year_number__icontains=saved_queries.query_year)
+                    queryset = queryset.filter(
+                        year_number__icontains=saved_queries.query_year
+                    )
 
                 # print(queryset, "queryset")
 
                 if saved_queries.query_start_date:
-                    queryset = queryset.filter(month__gte=saved_queries.query_start_date)
+                    queryset = queryset.filter(
+                        month__gte=saved_queries.query_start_date
+                    )
                     print(queryset, "queryset after datetime")
 
                 try:
                     if saved_queries.query_end_date:
-                        queryset = queryset.filter(month__lte=saved_queries.query_end_date)
+                        queryset = queryset.filter(
+                            month__lte=saved_queries.query_end_date
+                        )
                         # print(queryset, "queryset after datetime")
                 except Exception as e:
                     print(e, "error 3")
 
                 # get sum of all jiko_kisasa
-                jiko_kisasa_sum = queryset.aggregate(Sum("jiko_kisasa"))["jiko_kisasa__sum"]
+                jiko_kisasa_sum = queryset.aggregate(Sum("jiko_kisasa"))[
+                    "jiko_kisasa__sum"
+                ]
 
                 # print((jiko_kisasa_sum), "jiko_kisasa_sum")
                 kcj_sum = queryset.aggregate(Sum("kcj"))["kcj__sum"]
                 # print(kcj_sum, "kcj_sum")
-                multipurpose_sum = queryset.aggregate(Sum("multipurpose"))["multipurpose__sum"]
+                multipurpose_sum = queryset.aggregate(Sum("multipurpose"))[
+                    "multipurpose__sum"
+                ]
                 # print(multipurpose_sum, "multipurpose_sum")
                 liners_sum = queryset.aggregate(Sum("liners"))["liners__sum"]
                 # print(liners_sum, "liners_sum")
@@ -368,7 +385,9 @@ class LMESalesCustomReportPDFAPIView(APIView):
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "No data provided"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class TreeGrowingListCreateApiView(generics.ListCreateAPIView):
@@ -383,7 +402,6 @@ class LMESandStovesAPIView(APIView):
     ]
 
     def get(self, args, **kwargs):
-
         all_stoves = Stove.objects.all()
         serialized_stoves = StoveSerializer(all_stoves, many=True).data
         # print(serialized_stoves, "serialized stoves")
@@ -490,7 +508,6 @@ class TreeActivityPinsListAPIView(APIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-
         all_activities_qs = TreeGrowing.objects.all()
 
         serialized_data = TreeActivityListGeoSerializer(all_activities_qs, many=True)

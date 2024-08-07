@@ -4,15 +4,15 @@
 # File: /home/geoff/KTDA/KTDA/settings/production.py                             #
 # Project: /home/geoff/KTDA/KTDA/settings                                        #
 # Created Date: Tuesday, May 24th 2022, 11:52:02 pm                              #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Monday May 30th 2022 5:53:30 pm                                 #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 """
 Django settings for KTDA project.
@@ -46,7 +46,9 @@ SECRET_KEY = "django-insecure-(%$8dax&)7zn0fc#hgi43k&j2!*1^#-iiw&8q@rn*q^0aiuf-4
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")])
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")]
+)
 
 
 INTERNAL_IPS = [
@@ -223,8 +225,12 @@ LEAFLET_CONFIG = {
     "PLUGINS": {
         "forms": {"auto-include": True},
         "geocoder": {
-            "css": ["https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"],
-            "js": ["https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"],
+            "css": [
+                "https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+            ],
+            "js": [
+                "https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"
+            ],
         },
     },
 }

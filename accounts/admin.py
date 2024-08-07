@@ -4,28 +4,24 @@
 # File: /home/geoff/KTDA/accounts/admin.py                                       #
 # Project: /home/geoff/KTDA/accounts                                             #
 # Created Date: Saturday, May 7th 2022, 2:12:13 pm                               #
-# Author: Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )                     #
+# Author: Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )                     #
 # -----                                                                          #
 # Last Modified: Saturday May 7th 2022 2:12:13 pm                                #
-# Modified By:  Geoffrey Nyaga Kinyua ( <geoffrey@swiftlab.tech> )               #
+# Modified By:  Geoffrey Nyaga Kinyua ( <geoffreynyagagk@gmail.com> )               #
 # -----                                                                          #
 # This file should not be copied and/or distributed without the express          #
-# permission of Swift Lab Limited.                                               #
+# permission of Geoffrey Nyaga Kinyua.                                               #
 # -----                                                                          #
-# Copyright (c) 2022 Swift Lab Limited.                                          #
+# Copyright (c) 2022 Geoffrey Nyaga Kinyua.                                          #
 ##################################################################################
 
 from django.contrib import admin
-
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.admin import UserAdmin
-
-
-from .forms import MyAdminPasswordChangeForm, UserAdminCreationForm, UserAdminChangeForm
-
-from .models import User
-
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
+
+from .forms import MyAdminPasswordChangeForm, UserAdminChangeForm, UserAdminCreationForm
+from .models import User
 
 
 class UserAdmin1(BaseUserAdmin):
