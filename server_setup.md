@@ -1,8 +1,34 @@
 # Server Setup
 
+./manage.py dumpdata --exclude auth.permission > db.json
+./manage.py loaddata db.json
+
 ```bash
 sudo apt update
-sudo apt install python3-pip python3-dev python3-venv libpq-dev nginx curl
+sudo apt install python3-pip python3-dev python3-venv libpq-dev nginx curl zsh
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+
+nano ~/.zshrc
+
+plugins=( [plugins...] history zsh-syntax-highlighting zsh-autosuggestions)
+
+alias sba="source venv/bin/activate"
+alias rs="python3 manage.py runserver 0.0.0.0:8000"
+alias migrate="python3 manage.py migrate"
+alias makemigrations="python3 manage.py makemigrations"
+alias collectstatic="python3 manage.py collectstatic"
+alias resg="sudo systemctl restart gunicorn"
+
+
+source ~/.zshrc
+
+
 ```
 
 ```bash
@@ -16,7 +42,7 @@ see postgres_setup.md
 sudo -H pip3 install --upgrade pip
 
 
-cd /home/geoff/Bursary
+cd /home/geoff/KTDA
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -36,40 +62,8 @@ ALLOWED_HOSTS = ['your_server_domain_or_IP', 'second_domain_or_IP', . . ., 'loca
 ```bash
 python manage.py migrate
 python manage.py runserver
-python manage.py createsuperuser
-python manage.py collectstatic
+
 ```
-
-```bash
-- from gis
-sudo apt install openssh-server
-sudo systemctl status ssh
-
-sudo ufw enable
-sudo ufw allow ssh
-sudo ufw allow http
-sudo ufw allow 8080
-sudo ufw allow 8000
-sudo ufw allow from any to any port 80
-
-sudo ufw status
-```
-
-```bash
-from gis
-
-1. Basic server setup
-2. Installation of essential tools
-3. PostGIS database setup
-4. Geoserver installation
-5. Django project implementation
-6. Nginx and gunicorn configuration
-
-sudo apt update
-sudo apt upgrade
-
-# Installation of gdal
-sudo apt install -y gdal-bin libgdal-dev libgeos-dev libproj-dev
 
 
 
@@ -78,6 +72,9 @@ sudo apt install -y gdal-bin libgdal-dev libgeos-dev libproj-dev
 ```bash
 sudo ufw allow 8000
 python manage.py runserver 0.0.0.0:8000
+
+python manage.py createsuperuser
+python manage.py collectstatic
 ```
 
 ```bash
@@ -87,7 +84,7 @@ http://server_domain_or_IP:8000
 
 ```bashp
 pip install gunicorn
-gunicorn --bind 0.0.0.0:8000 BursaryMashinani.wsgi
+gunicorn --bind 0.0.0.0:8000 KTDA.wsgi
 
 ```
 
@@ -101,19 +98,19 @@ deactivate
 sudo nano /etc/systemd/system/gunicorn.socket
 ```
 
-```nano
+```CONF
 [Unit]
 Description=gunicorn socket
 
 [Socket]
-ListenStream=/home/geoff/Bursary-Mashinani/gunicorn.sock
+ListenStream=/home/geoff/KTDA/gunicorn.sock
 
 [Install]
 WantedBy=sockets.target
 ```
 
 ```bash
-sudo nano /etc/systemd/system/gunicorn.service
+sudo nano /etc/systemd/system/gunicorn.service 
 ```
 
 ```bash
@@ -125,12 +122,12 @@ After=network.target
 [Service]
 User=geoff
 Group=www-data
-WorkingDirectory=/home/geoff/Bursary-Mashinani
-ExecStart=/home/geoff/Bursary-Mashinani/venv/bin/gunicorn \
+WorkingDirectory=/home/geoff/KTDA
+ExecStart=/home/geoff/KTDA/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
-          --bind unix:/home/geoff/Bursary-Mashinani/gunicorn.sock \
-          Bursary.wsgi:application
+          --bind unix:/home/geoff/KTDA/gunicorn.sock \
+          KTDA.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
@@ -153,31 +150,35 @@ sudo journalctl -u gunicorn
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl restart gunicorn
+sudo systemctl status gunicorn
+
 ```
 
 ```bash
-sudo nano /etc/nginx/sites-available/Bursary
+sudo nano /etc/nginx/sites-available/KTDA
 ```
 
-```
+``` conf
 server {
     listen 80;
-    server_name 20.90.102.57;
+    server_name 20.68.145.54;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        root /home/geoff/Bursary-Mashinani;
+        root /home/geoff/KTDA;
     }
 
     location / {
         include proxy_params;
-        proxy_pass http://unix:/home/geoff/Bursary-Mashinani/gunicorn.sock;
+        proxy_pass http://unix:/home/geoff/KTDA/gunicorn.sock;
     }
 }
+
+
 ```
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/Bursary /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/KTDA /etc/nginx/sites-enabled
 
 ```
 
@@ -202,4 +203,7 @@ sudo ufw allow 'Nginx Full'
 ```
 
 http://example.com
+
+and the GeoServer will run on the following URL:
+http://example.com/geoserver
 

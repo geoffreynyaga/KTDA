@@ -16,9 +16,9 @@
 ##################################################################################
 
 
-from .local import *
+# from .local import *
 
-# try:
-#     from .production import *
-# except ImportError:
-#     pass
+try:
+    from .production import *
+except ImportError:
+    pass
