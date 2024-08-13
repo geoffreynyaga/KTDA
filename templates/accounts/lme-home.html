@@ -5,11 +5,23 @@
     <div class="flex flex-col items-center justify-start w-full h-screen max-h-screen">
         <div class="flex flex-col items-center justify-center w-full h-auto md:w-10/12 ">
             <h1 class="mt-4 mb-2 text-sm tracking-wider text-gray-500">
-                Welcome: <span class="font-semibold">{{ user }}</span>
+                {% if user.first_name %}
+                    Welcome: <span class="font-semibold">{{ user.first_name }}</span>
+                {% else %}
+                    <div class="flex flex-col items-center justify-center w-full h-auto ">
+                        Welcome: <span class="font-semibold">{{ user.phone_number }}</span>
+                        <p class='text-sm text-red-600 md:text-md'>Kindly provide your first name and last name</p>
+                        <a href="/accounts/profile/edit/{{ user.id }}/"">
+                            <button class="px-2 py-1 mt-4 bg-red-400 rounded-md">
+                                <p class='text-white'>Edit Profile</p>
+                            </button>
+                        </a>
+                    </div>
+                {% endif %}
             </h1>
             {% if user.is_lme == True %}
-                <p class="mb-6 text-gray-600">You are a LME.</p>
-                <div class="grid w-full grid-cols-2 gap-4 p-4 bg-red-100 h-1/2 md:w-3/4 md:gap-12 justify-evenly">
+                <p class="mb-6 text-gray-600 font-montserrat">You are a LME.</p>
+                <div class="grid w-full h-full grid-cols-2 gap-2 p-4 bg-red-100 md:w-3/4 md:gap-6 justify-evenly rounded-xl">
                     <div class="flex flex-col items-center h-auto px-2 py-2 bg-white rounded-lg shadow-lg justify-evenly">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              class="w-8 text-red-400 h-9"

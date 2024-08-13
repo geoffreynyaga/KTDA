@@ -20,9 +20,8 @@ from django.contrib.auth.forms import AdminPasswordChangeForm, ReadOnlyPasswordH
 from django.core.validators import RegexValidator
 from phonenumber_field.formfields import PhoneNumberField
 
+from accounts.models import User
 from environment.models import LME
-
-from .models import User
 
 
 class LoginForm(forms.Form):
@@ -109,11 +108,24 @@ class LoginForm(forms.Form):
         return user
 
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email"]  # Add fields as needed
+
+
 class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
 
     phone_number = forms.CharField(max_length=13, initial="+254")
+    first_name = forms.CharField(
+        max_length=40,
+    )
+    last_name = forms.CharField(
+        max_length=40,
+    )
+
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(
         label="Password confirmation", widget=forms.PasswordInput
@@ -121,7 +133,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("phone_number",)
+        fields = ("phone_number", "first_name", "last_name")
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -137,6 +149,8 @@ class UserAdminCreationForm(forms.ModelForm):
         user = super(UserAdminCreationForm, self).save(commit=False)
         print(dir(user), "uer")
         user.phone_number = self.cleaned_data["phone_number"]
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()

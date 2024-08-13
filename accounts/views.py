@@ -1,28 +1,24 @@
-from django.shortcuts import redirect, render
-
-# Create your views here.
-
-from django.views.generic import TemplateView
-
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from django.shortcuts import render
-
 # Create your views here.
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-
-from django.views.generic.edit import CreateView
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.views import generic
 
+# Create your views here.
+from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView, UpdateView
 from rest_framework.response import Response
 
-from .forms import LoginForm, PasswordResetForm, UserAdminCreationForm
-from .models import User
+from accounts.forms import (
+    LoginForm,
+    PasswordResetForm,
+    UserAdminCreationForm,
+    UserUpdateForm,
+)
+from accounts.models import User
 
 
 class ReactView(TemplateView, LoginRequiredMixin):
@@ -62,6 +58,19 @@ class SignUp(CreateView):
         return super(SignUp, self).form_valid(form)
 
 
+class ProfileEdit(UpdateView):
+    template_name = "accounts/edit-profile.html"
+    form_class = UserUpdateForm
+    success_url = "/"
+    queryset = User.objects.all()
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        # form.send_email()
+        return super(ProfileEdit, self).form_valid(form)
+
+
 # Login View Django
 def login_view(request):
     if request.method == "POST":
@@ -95,7 +104,6 @@ class LoginView(generic.FormView):
             print(user, "user")
 
         except Exception as e:
-
             print(e)
 
         print(user, "user")
