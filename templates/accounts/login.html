@@ -1,35 +1,34 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 {% load tailwind_filters %}
 {% block content %}
-    <div class="flex flex-col items-center justify-start w-full h-screen max-h-screen px-6 bg-[#fafaf6] ">
+    <div class="flex flex-col items-center justify-start w-full h-screen max-h-screen px-6 bg-[#fafaf6]">
         <div class="flex flex-col w-full mt-8 md:w-8/12 lg:w-6/12">
             <h1 class="w-full text-2xl font-bold text-center text-gray-800 sm:text-xl">Welcome to M&E Portal</h1>
-            <p class="w-full mt-4 text-center text-gray-600 sm:text-xs ">login here below to get started</p>
+            <p class="w-full mt-4 text-center text-gray-600 sm:text-xs">login here below to get started</p>
         </div>
-        <div class="flex flex-col items-center justify-center px-6 py-8 mt-8 text-gray-800 bg-white border shadow-md md:py-12 md:w-1/3 rounded-xl ">
-            <form method="post">
+        <div class="flex flex-col items-center justify-between px-6 py-8 mt-8 text-gray-800 bg-white border shadow-md md:py-4 md:w-1/3 rounded-xl">
+            <form method="post" class="flex flex-col">
                 {% csrf_token %}
                 {% comment %} <p class="mb-2 text-sm text-center">
                     Put your Phone Number in <span>+254 format</span>
                 </p> {% endcomment %}
-                {{ form | crispy }}
+                {{ form|crispy }}
                 <!-- Submit button -->
-                <button type="submit"
-                        class="inline-block w-full py-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out bg-blue-600 rounded shadow-md px-7 hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg"
-                        data-mdb-ripple="true"
-                        data-mdb-ripple-color="light">Sign in</button>
+                <button type="submit" class="inline-block w-full py-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out bg-blue-600 rounded shadow-md px-7 hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg" data-mdb-ripple="true" data-mdb-ripple-color="light">Sign in</button>
             </form>
+
+            <div class="flex mt-8">
+                <p class="font-semibold text-center text-gray-600 text-md">
+                    Forgot Password? <a href="{% url 'password_reset' %}" class="text-blue-600">Reset Password</a>
+                </p>
+            </div>
         </div>
-        <div class="flex mt-6 ">
-            <p class="text-sm text-center text-gray-600">
-                Forgot Password? <a href="{% url 'password_reset' %}" class="text-sm text-blue-600">Reset Password</a>
-            </p>
-        </div>
-        <div class="flex mt-6 ">
+
+        <div class="flex mt-6">
             <p class="text-center text-gray-600">
                 Don't have an account? <a href="{% url 'signup' %}" class="text-blue-600">Register</a>
             </p>
         </div>
     </div>
-{% endblock content %}
+{% endblock %}
