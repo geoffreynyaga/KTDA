@@ -15,13 +15,13 @@
 
 import {Route, Routes} from "react-router-dom";
 
-import React from "react";
 import CoachingAndMentorshipLanding from "../environment/CoachingAndMentorshipLanding";
-import LMEList from "../environment/LMEList";
+import CreateSale from "../environment/sales/CreateSale";
 import CustomSalesReportLanding from "../environment/report/CustomSalesReportLanding";
 import CustomSalesReportPDF from "../environment/report/CustomSalesReportPDF";
-import CreateSale from "../environment/sales/CreateSale";
-import LMESalesList from "../environment/SalesList";
+import LMEList from "../environment/LMEList";
+import LMESalesList from "../environment/sales/SalesList";
+import React from "react";
 import SalesListIndividual from "../environment/SalesListIndividual";
 import TrainingLanding from "../environment/TrainingLanding";
 import TreeGrowingLanding from "../environment/TreeGrowingLanding";

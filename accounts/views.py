@@ -1,5 +1,10 @@
 # Create your views here.
-from django.contrib.auth import login, logout
+import json
+import os
+
+import requests
+from decouple import config
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
@@ -9,6 +14,7 @@ from django.views import generic
 
 # Create your views here.
 from django.views.generic import TemplateView
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from rest_framework.response import Response
 
@@ -20,9 +26,64 @@ from accounts.forms import (
 )
 from accounts.models import User
 
+BASE_DIR = os.path.dirname((os.path.dirname(os.path.abspath(__file__))))
 
-class ReactView(TemplateView, LoginRequiredMixin):
-    template_name = "ui/index.html"
+
+def get_js_bundle():
+    print(BASE_DIR, "BASE DIR")
+
+    IS_PROD = config("IS_PROD", default=False, cast=bool)
+
+    print(IS_PROD, "is prod")
+
+    # if IS_PROD:
+    #     url = os.path.join(BASE_DIR, "static/ui/manifest.json")
+    # else:
+    #     s3_endpoint = config('RASTER_S3_ENDPOINT_URL')
+    #     url = f"{s3_endpoint}/static/ui/manifest.json"
+    # with open(url) as f:
+    #     manifest = json.load(f)
+    #     return manifest["main.js"]
+
+    # print(IS_PROD == "True", "what is this")
+    # print(IS_PROD is True, "what is this is True")
+    # print(IS_PROD is False, "what is this is false")
+
+    if IS_PROD is False:
+        # Local file path
+        url = os.path.join(BASE_DIR, "ui/static/ui/manifest.json")
+        with open(url, "r") as f:
+            manifest = json.load(f)
+    else:
+        # S3 endpoint for prod
+        s3_endpoint = config("RASTER_S3_ENDPOINT_URL")
+        url = f"{s3_endpoint}/static/ui/manifest.json"
+        response = requests.get(url)
+        if response.status_code == 200:
+            manifest = response.json()
+        else:
+            raise Exception(f"Error fetching manifest from S3: {response.status_code}")
+
+    return manifest["main.js"]
+
+
+def react_view(request):
+    # IS_PROD = config("IS_PROD")
+
+    # if IS_PROD:
+    #     js_bundle = "static/ui/manifest.json"
+    # else:
+    #     js_bundle = "ui/static/ui/manifest.json"
+
+    js_bundle = get_js_bundle()
+
+    print(js_bundle, "JS BUNDLE")
+
+    return render(request, "ui/index.html", {"js_bundle": js_bundle})
+
+
+# class ReactView(TemplateView, LoginRequiredMixin):
+#     template_name = "ui/index.html"
 
 
 # loginrequired decorator

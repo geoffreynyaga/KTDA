@@ -35,7 +35,7 @@ export interface ILME {
 }
 
 export interface IMonthlySales {
-    lme: number;
+    lme: string;
     factory: string;
     month: string;
     month_string: string;
@@ -45,6 +45,7 @@ export interface IMonthlySales {
     multipurpose: number;
     liners: number;
     rocket: number;
+    lme_slug: string;
 }
 
 interface ICNM {

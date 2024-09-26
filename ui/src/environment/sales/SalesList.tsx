@@ -16,7 +16,8 @@
 import React, {useEffect, useState} from "react";
 import {useFilters, useTable} from "react-table";
 
-import {IMonthlySales} from "../../typings/LMETypes";
+import {IMonthlySales} from "../../../typings/LMETypes";
+import LMESalesListTableComponent from "./LMESalesListTableComponent";
 // import JsPDF from "jspdf";
 import Papa from "papaparse";
 import {useExportData} from "react-table-plugins";
@@ -217,6 +218,16 @@ function LMESalesList() {
                 </div>
             </div>
             {/* <!-- end header --> */}
+
+            {lme !== null && lme.length > 0 ? (
+                <LMESalesListTableComponent data={lme} />
+            ) : (
+                <div className="flex flex-col items-center justify-center h-screen bg-pink-200">
+                    <div className="flex flex-col items-center justify-center h-screen bg-pink-200">
+                        No Sales registered yet!
+                    </div>
+                </div>
+            )}
 
             <div className="w-full mb-6 ">
                 {lme !== null && lme.length > 0 ? (

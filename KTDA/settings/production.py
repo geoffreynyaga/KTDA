@@ -295,5 +295,7 @@ IS_TESTING = False
 
 IS_CONTABO = True
 
+IS_PROD = True
+
 
 from KTDA.aws.conf import *

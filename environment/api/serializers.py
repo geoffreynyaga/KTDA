@@ -107,12 +107,16 @@ class TrainingSerializer(serializers.ModelSerializer):
 class MonthlyLMESalesSerializer(serializers.ModelSerializer):
     factory = serializers.SerializerMethodField()
     lme = serializers.SerializerMethodField()
+    lme_slug = serializers.SerializerMethodField()
 
     def get_factory(self, obj):
         return obj.lme.factory.name
 
     def get_lme(self, obj):
         return obj.lme.name
+
+    def get_lme_slug(self, obj):
+        return obj.lme.slug
 
     class Meta:
         model = MonthlyLMESales
@@ -128,6 +132,7 @@ class MonthlyLMESalesSerializer(serializers.ModelSerializer):
             "multipurpose",
             "liners",
             "rocket",
+            "lme_slug",
         )
 
 

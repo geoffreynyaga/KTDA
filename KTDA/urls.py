@@ -14,19 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.contrib import admin
-from django.urls import path
-from django.urls import include, path
-
 from django.conf.urls.static import static
-from django.conf import settings
-from accounts.views import ReactView, home
-from django.urls import include, path
+from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 
 # from django.conf.urls import url
 from django.urls import include, path, re_path
-from django.contrib.sitemaps.views import sitemap
 
+from accounts.views import home, react_view
 from environment.sitemaps import LMESitemap
 
 sitemaps = {
@@ -45,7 +40,7 @@ urlpatterns = [
     path("environment/", include("environment.urls")),
     path("api/v1/environment/", include("environment.api.urls")),
     # path("ui/", ReactView.as_view(), name="react"),
-    re_path(r"ui/.*", ReactView.as_view(), name="react"),
+    re_path(r"ui/.*", react_view, name="react"),
     path("__reload__/", include("django_browser_reload.urls")),
     path(
         "sitemap.xml",
