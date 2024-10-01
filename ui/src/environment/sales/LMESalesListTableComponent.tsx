@@ -48,12 +48,19 @@ export const columns: ColumnDef<IMonthlySales>[] = [
     {
         accessorKey: "lme",
         header: "LME Name",
-        cell: ({row}) => (
-            <div className="capitalize font-montserrat text-[14px] font-semibold">
-                {row.getValue("lme")}
-            </div>
-        ),
+
+        cell: ({row}) => {
+            let slug = row.getValue("lme_slug");
+            return (
+                <a className=" hover:underline" href={`/environment/lme/${slug}/`}>
+                    <p className="capitalize font-montserrat text-[14px] text-sm text-blue-600 font-semibold">
+                        {row.getValue("lme")}
+                    </p>
+                </a>
+            );
+        },
     },
+
     {
         accessorKey: "factory",
         header: "Factory",
@@ -205,6 +212,7 @@ export const columns: ColumnDef<IMonthlySales>[] = [
         },
     },
     {
+        enableHiding: true,
         accessorKey: "lme_slug",
         header: "View LME",
         cell: ({row}) => {
@@ -212,11 +220,24 @@ export const columns: ColumnDef<IMonthlySales>[] = [
 
             return slug ? (
                 <a className="text-sm text-blue-500" href={`/environment/lme/${slug}/`}>
-                    <p className="text-blue-600">View LME</p>
+                    <p className="text-blue-600">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-8 h-8"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                            />
+                        </svg>
+                    </p>
                 </a>
-            ) : (
-                <span className="text-red-500">No Link</span>
-            );
+            ) : null;
         },
     },
 ];
@@ -227,7 +248,7 @@ export default function LMESalesListTableComponent({data}: {data: IMonthlySales[
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = React.useState({});
 
-    console.log(JSON.stringify(data), "sales data");
+    // console.log(JSON.stringify(data), "sales data");
 
     const table = useReactTable({
         data,
@@ -253,6 +274,77 @@ export default function LMESalesListTableComponent({data}: {data: IMonthlySales[
             },
         },
     });
+
+    // export all data  to csv
+    const exportToCSV = () => {
+        const csvData = data.map((row) => ({
+            lme: row.lme,
+            factory: row.factory,
+            month: row.month,
+            year: row.year_number,
+            jiko_kisasa: row.jiko_kisasa,
+
+            kcj: row.kcj,
+            multipurpose: row.multipurpose,
+            liners: row.liners,
+            rocket: row.rocket,
+        }));
+
+        const csvString = [
+            Object.keys(csvData[0]).join(","),
+            ...csvData.map((row) => Object.values(row).join(",")),
+        ].join("\n");
+
+        const blob = new Blob([csvString], {type: "text/csv;charset=utf-8;"});
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "lme_sales_data.csv");
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
+
+    // Export filtered data to CSV
+    const exportFilteredToCSV = () => {
+        const filteredData = table
+            .getFilteredRowModel()
+            .rows.map((row) => row.original);
+
+        const csvData = filteredData.map((row) => ({
+            lme: row.lme,
+            factory: row.factory,
+            month: row.month_string,
+            year: row.year_number,
+            jiko_kisasa: row.jiko_kisasa,
+            kcj: row.kcj,
+            multipurpose: row.multipurpose,
+            liners: row.liners,
+            rocket: row.rocket,
+        }));
+
+        const csvString = [
+            Object.keys(csvData[0]).join(","),
+            ...csvData.map((row) => Object.values(row).join(",")),
+        ].join("\n");
+
+        const blob = new Blob([csvString], {type: "text/csv;charset=utf-8;"});
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "filtered_lme_sales_data.csv");
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
+
+    const isFiltered = table.getState().columnFilters.length > 0;
 
     return (
         <div className="w-full px-4 rounded-xl">
@@ -285,6 +377,20 @@ export default function LMESalesListTableComponent({data}: {data: IMonthlySales[
                         }
                         className="max-w-sm"
                     />
+                </div>
+            </div>
+
+            <div className="w-full px-4 rounded-xl">
+                <div className="flex justify-end mb-4">
+                    {isFiltered ? (
+                        <Button onClick={exportFilteredToCSV} className="text-blue-600">
+                            Export Filtered Data to CSV
+                        </Button>
+                    ) : null}
+
+                    <Button onClick={exportToCSV} className="text-blue-600">
+                        Export to CSV
+                    </Button>
                 </div>
             </div>
 

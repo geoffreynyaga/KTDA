@@ -17,10 +17,10 @@
     </head>
     <body class="min-h-screen antialiased lg:flex" x-data="{open: false}">
         {% if user.is_authenticated %}
-            <nav class="absolute inset-0 z-10 w-56 h-screen p-3 text-white duration-200 transform bg-green-100 lg:transform-none lg:opacity-100 lg:relative "
+            <nav class="absolute inset-0 z-10 w-56 h-screen  text-white duration-200 transform bg-[#166434] lg:transform-none lg:opacity-100 lg:relative "
                  :class="{'translate-x-0 ease-in opacity-100':open === true, '-translate-x-full ease-out opacity-0': open === false}">
                 <div class="flex justify-between">
-                    <a href="/" class="flex items-center">
+                    <a href="/" class="flex items-center w-full bg-white">
                         <img src="{% static 'cleo/img/logo.png' %}" class="flex-none w-1/2" />
                     </a>
                     <button class="p-2 text-green-700 rounded-md focus:outline-none focus:bg-indigo-800 hover:bg-indigo-800 lg:hidden"
@@ -35,7 +35,7 @@
                     </button>
                 </div>
                 <!-- start sidebar -->
-                <div class="flex flex-col w-full mx-0 bg-green-100">
+                <div class="flex flex-col w-full mx-0 bg-[#166434] p-3">
                     <!-- sidebar content -->
                     <div class="flex flex-col">
                         <!-- sidebar toggle -->
@@ -46,111 +46,114 @@
                         </div>
                         {% if user.is_lme == False %}
                             <!-- end sidebar toggle -->
-                            <p class="mb-4 text-xs tracking-wider text-gray-600 uppercase">Environmental Sustainability</p>
+                            <p class="mb-4 text-xs font-semibold tracking-wider text-white uppercase">Environmental Sustainability</p>
                             <!-- link -->
                             <a href="/ui/lme/list/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-home"></i>
                                 LMEs
                             </a>
                             <!-- end link -->
                             <!-- link -->
                             <a href="/ui/lme/sales/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-chart-pie"></i>
                                 Sales
                             </a>
                             <!-- end link -->
                             <!-- link -->
                             <a href="/ui/lme/cnm/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-book"></i>
                                 Coaching & Mentorship
                             </a>
                             <!-- end link --><!-- link -->
                             <a href="/ui/lme/training/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-graduation-cap"></i>
                                 Training
                             </a>
+
+
+                          
                             <!-- end link -->
                             <!-- link -->
                             <a href="/environment/tree-growing/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-tree"></i>
                                 Tree Growing
                             </a>
                             <!-- end link -->
                             <!-- link -->
                             <a href="/environment/lessons/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-tree"></i>
                                 Lessons Learnt
                             </a>
                             <!-- end link -->
-                            <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">Economic Empowerment</p>
+                            <p class="mt-4 mb-4 text-xs font-semibold tracking-wider text-white uppercase">Economic Empowerment</p>
                             <!-- link -->
                             <a href="./email.html"
-                               class="mb-3 text-sm text-gray-500 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-envelope-open-text"></i>
                                 Capacity Building
                             </a>
                             <!-- end link -->
                             <!-- link -->
                             <a href="./email.html"
-                               class="mb-3 text-sm text-gray-500 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-graduation-cap"></i>
                                 Training
                             </a>
                             <!-- end link -->
                             <!-- link -->
                             <a href="./email.html"
-                               class="mb-3 text-sm text-gray-500 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-sun"></i>
                                 Climate Smart Agriculture
                             </a>
                             <!-- end link -->
-                            <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">Education</p>
+                            <p class="mt-4 mb-4 text-xs font-semibold tracking-wider text-white uppercase">Education</p>
                             <!-- link -->
                             <a href="./email.html"
-                               class="mb-3 text-sm text-gray-500 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-university"></i>
                                 Scholarship
                             </a>
                             <!-- end link -->
                             <!-- link -->
                             <a href="#"
-                               class="mb-3 text-sm text-gray-500 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-thermometer-empty"></i>
                                 STEM
                             </a>
                             <!-- end link -->
-                            <p class="mt-4 mb-4 text-xs tracking-wider text-gray-600 uppercase">HEALTH</p>
+                            <p class="mt-4 mb-4 text-xs font-semibold tracking-wider text-white uppercase">HEALTH</p>
                             <!-- end link -->
                             <!-- link -->
                             <a href="#"
-                               class="mb-3 text-sm text-gray-500 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-stethoscope"></i>
                                 Screening
                             </a>
                         {% else %}
-                            <p class="mb-4 text-xs tracking-wider text-gray-600 uppercase">Environmental Sustainability</p>
+                            <p class="mb-4 text-xs font-semibold tracking-wider text-white uppercase">Environmental Sustainability</p>
                             <!-- link -->
                             <a href="/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-chart-pie"></i>
                                 Home
                             </a>
                             <!-- link -->
                             <a href="/ui/lme/sales/individual/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-chart-pie"></i>
                                 My Sales
                             </a>
                             <!-- end link -->
                             <!-- link -->
                             <a href="/environment/lme/sales/individual/create/"
-                               class="mb-3 text-sm font-medium text-gray-700 capitalize transition duration-500 ease-in-out hover:text-teal-600">
+                               class="mb-3 text-sm font-medium text-white capitalize transition duration-500 ease-in-out hover:bg-green-700">
                                 <i class="mr-2 text-xs fad fa-chart-pie"></i>
                                 Create Sale
                             </a>

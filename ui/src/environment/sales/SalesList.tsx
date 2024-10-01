@@ -220,7 +220,9 @@ function LMESalesList() {
             {/* <!-- end header --> */}
 
             {lme !== null && lme.length > 0 ? (
-                <LMESalesListTableComponent data={lme} />
+                <>
+                    <LMESalesListTableComponent data={lme} />
+                </>
             ) : (
                 <div className="flex flex-col items-center justify-center h-screen bg-pink-200">
                     <div className="flex flex-col items-center justify-center h-screen bg-pink-200">
@@ -228,153 +230,6 @@ function LMESalesList() {
                     </div>
                 </div>
             )}
-
-            <div className="w-full mb-6 ">
-                {lme !== null && lme.length > 0 ? (
-                    <div className="w-full">
-                        <div className="flex flex-row flex-wrap w-full py-2 mb-4 md:flex-1 justify-evenly">
-                            <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
-                                <div>
-                                    <p>LME</p>
-                                </div>
-                                <div className="mt-2">
-                                    <input
-                                        type="text"
-                                        className="w-full p-2 text-sm border-2 rounded-lg"
-                                        placeholder="Search LME"
-                                        value={LMENameInput}
-                                        onChange={handleNameFilterChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
-                                <div>
-                                    <p>Factory</p>
-                                </div>
-                                <div className="mt-2">
-                                    <input
-                                        type="text"
-                                        className="w-full p-2 text-sm border-2 rounded-lg"
-                                        placeholder="Search Factory"
-                                        value={factoryInput}
-                                        onChange={handleFactoryFilterChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
-                                <div>
-                                    <p>Year</p>
-                                </div>
-                                <div className="mt-2">
-                                    <input
-                                        type="text"
-                                        className="w-full p-2 text-sm border-2 rounded-lg"
-                                        placeholder="e.g 2022"
-                                        value={yearInput}
-                                        onChange={handleYearChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex flex-col justify-around sm:w-1/2 md:w-1/4 md:px-6">
-                                <div>
-                                    <p>Month</p>
-                                </div>
-                                <div className="mt-2">
-                                    <input
-                                        type="text"
-                                        className="w-full p-2 text-sm border-2 rounded-lg"
-                                        placeholder="e.g March"
-                                        value={monthInput}
-                                        onChange={handleMonthChange}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="flex flex-row items-center justify-center w-full py-4">
-                            <button
-                                className="h-10 px-4 py-1 mx-2 bg-gray-200 rounded-md shadow-md "
-                                onClick={() => {
-                                    exportData("csv", true);
-                                }}
-                            >
-                                Export All as CSV
-                            </button>
-                            <button
-                                className="h-10 px-4 py-1 mx-2 bg-gray-200 rounded-md shadow-md "
-                                onClick={() => {
-                                    exportData("csv", false);
-                                }}
-                            >
-                                Export Current View as CSV
-                            </button>
-                        </div>
-
-                        <table
-                            {...getTableProps()}
-                            className="w-full text-left table-auto"
-                        >
-                            {/* // Input element */}
-
-                            <thead>
-                                {headerGroups.map((headerGroup) => (
-                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                        {headerGroup.headers.map((column) => (
-                                            <th
-                                                {...column.getHeaderProps()}
-                                                style={{
-                                                    // borderBottom: "solid 3px red",
-                                                    background: "aliceblue",
-                                                    // color: "black",
-                                                    // fontWeight: "bold",
-                                                }}
-                                                className="py-2 text-xs text-center text-red-500 border-b-4 border-r border-b-black"
-                                            >
-                                                {column.render("Header")}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                ))}
-                            </thead>
-                            <tbody {...getTableBodyProps()}>
-                                {rows.map((row) => {
-                                    prepareRow(row);
-                                    return (
-                                        <tr {...row.getRowProps()}>
-                                            {row.cells.map((cell) => {
-                                                return (
-                                                    <td
-                                                        {...cell.getCellProps()}
-                                                        className="px-1 py-2 text-xs text-center border border-l-0 "
-                                                    >
-                                                        {cell.render("Cell")}
-                                                    </td>
-                                                );
-                                            })}
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                ) : (
-                    <div className="flex flex-col items-center justify-center bg-pink-200 hue-rotate-15 h-72">
-                        <h1 className="text-2xl tracking-wider text-gray-700">
-                            No Sales Recorded yet!
-                        </h1>
-                        <hr />
-                        <p className="mt-6 tracking-wider text-gray-700 text-md">
-                            Add at least one LME Sale to unlock this page
-                        </p>
-                        <a href="/ui/lme/sales/create/" className="mt-6">
-                            <button className="px-6 py-2 bg-indigo-300 rounded-lg shadow-lg ">
-                                Add new Sale
-                            </button>
-                        </a>
-                    </div>
-                )}
-            </div>
         </div>
     );
 }
