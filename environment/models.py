@@ -1,10 +1,9 @@
+from decouple import config
 from django.conf import settings
 from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse
-
-from decouple import config
 from phonenumber_field.modelfields import PhoneNumberField
 
 # from django.contrib.auth import get_user_model
@@ -91,7 +90,6 @@ class CSVUpload(models.Model):
 
 
 def parse_csv_file(sender, instance, created, **kwargs):
-
     if created:
         # get the file path
         if not settings.IS_CONTABO:
@@ -178,13 +176,17 @@ class LME(models.Model):
 
     name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    factory = models.ForeignKey(Factory, on_delete=models.CASCADE, related_name="lme_factory")
+    factory = models.ForeignKey(
+        Factory, on_delete=models.CASCADE, related_name="lme_factory"
+    )
     email = models.EmailField(max_length=254, blank=True, null=True)
     no_of_employees = models.IntegerField(blank=True, null=True)
     no_of_female_employees = models.IntegerField(default=0)
     no_of_male_employees = models.IntegerField(default=0)
     county = models.ForeignKey(County, on_delete=models.CASCADE, blank=True, null=True)
-    sub_county = models.ForeignKey(SubCounty, on_delete=models.CASCADE, blank=True, null=True)
+    sub_county = models.ForeignKey(
+        SubCounty, on_delete=models.CASCADE, blank=True, null=True
+    )
     ward = models.ForeignKey(Ward, on_delete=models.CASCADE, blank=True, null=True)
 
     types_of_stove = models.ManyToManyField("environment.Stove")
@@ -192,11 +194,17 @@ class LME(models.Model):
     contact_person = models.CharField(max_length=50, blank=True, null=True)
     # year_of_birth = models.DateField(help_text="YYYY-MM-DD", blank=True, null=True)
     # phone_number = models.CharField(max_length=20, help_text="07xx xxx xxx")
-    age_group = models.CharField(max_length=5, choices=AGE_GROUPS_CHOICES, blank=True, null=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
+    age_group = models.CharField(
+        max_length=5, choices=AGE_GROUPS_CHOICES, blank=True, null=True
+    )
+    gender = models.CharField(
+        max_length=1, choices=GENDER_CHOICES, blank=True, null=True
+    )
     phone_number = PhoneNumberField(blank=True)
 
-    retailer_or_installer = models.CharField(max_length=3, choices=RETAILER_OR_INSTALLER_CHOICES)
+    retailer_or_installer = models.CharField(
+        max_length=3, choices=RETAILER_OR_INSTALLER_CHOICES
+    )
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -278,7 +286,6 @@ class Training(models.Model):
 
 class LMESales(models.Model):
     class Meta:
-
         verbose_name = "LME Sales"
         verbose_name_plural = "LME Sales"
 
@@ -295,12 +302,12 @@ class LMESales(models.Model):
     def __str__(self):
         return str(self.customer_name)
 
-    # if created post_save signal
-
 
 def post_save_lme_sales_create(sender, instance, created, *args, **kwargs):
     if created:
         # get stove_price
+
+        from environment.models import MonthlyLMESales
 
         print("created!!!!")
         print("instance: ", instance)
@@ -316,7 +323,9 @@ def post_save_lme_sales_create(sender, instance, created, *args, **kwargs):
             )
         except Exception as e:
             print(e, "no monthly sales found")
-            x = MonthlyLMESales.objects.create(lme=instance.lme, month=instance.date_of_purchase)
+            x = MonthlyLMESales.objects.create(
+                lme=instance.lme, month=instance.date_of_purchase
+            )
 
         print(instance.stove.name, "stove name in post save")
         if instance.stove.name == "KCJ":
@@ -335,13 +344,37 @@ def post_save_lme_sales_create(sender, instance, created, *args, **kwargs):
 
         x.save()
 
+    else:
+        from environment.models import MonthlyLMESales
+
+        # Get the current month and year
+        current_month = instance.date_of_purchase.month
+        current_year = instance.date_of_purchase.year
+
+        # Try to get the existing MonthlyLMESales object for the current month and year
+        try:
+            monthly_sales = MonthlyLMESales.objects.get(
+                lme=instance.lme, month__month=current_month, month__year=current_year
+            )
+
+            monthly_sales.save()
+        except MonthlyLMESales.DoesNotExist:
+            # If it doesn't exist, create a new one
+            print("not there")
+            monthly_sales = MonthlyLMESales.objects.create(
+                lme=instance.lme, month=instance.date_of_purchase
+            )
+
+            monthly_sales.save()
+
+        # Save the updated MonthlyLMESales object
+
 
 post_save.connect(post_save_lme_sales_create, sender=LMESales)
 
 
 class MonthlyLMESales(models.Model):
     class Meta:
-
         verbose_name = "Monthly LME Sales"
         verbose_name_plural = "Monthly LME Sales"
 
@@ -367,7 +400,91 @@ class MonthlyLMESales(models.Model):
 
         print(self.month_string, "month string")
         print(self.year_number, "year number")
+
         super().save(*args, **kwargs)
+
+
+def update_monthly_sales(sender, instance, created, **kwargs):
+    if not created:
+        # Get the current month and year
+
+        current_date = instance.month
+
+        print(" \n ")
+        print(" \n update_monthly_sales")
+
+        print(current_date, "instance.month")
+        print(instance, "instance.month")
+
+        # monthly_sales = MonthlyLMESales.objects.filter(
+        #     lme=instance.lme,
+        #     date_of_purchase__month=current_date.month,
+        #     date_of_purchase__year=current_date.year,
+        # )
+
+        # Filter LMESales for the same month and year as the MonthlyLMESales
+        sales = LMESales.objects.filter(
+            lme=instance.lme,
+            date_of_purchase__month=current_date.month,
+            date_of_purchase__year=current_date.year,
+        )
+
+        print(sales, "sales qs")
+
+        # Aggregate sales for the current month and year
+
+        jk_num = 0
+        kcj_num = 0
+        mp_num = 0
+        liners_num = 0
+        rocket_num = 0
+
+        # Update the MonthlyLMESales instance
+        for sale in sales:
+            print(sale, "aggregated_sale")
+
+            stove_name = sale.stove.name
+            print(stove_name, "stove_name")
+
+            if stove_name == "JIKO_KISASA":
+                jk_num = jk_num + 1
+            elif stove_name == "KCJ":
+                kcj_num += 1
+            elif stove_name == "MULTIPURPOSE":
+                mp_num += 1
+            elif stove_name == "LINERS":
+                liners_num += 1
+            elif stove_name == "ROCKET":
+                rocket_num += 1
+
+        # Save the updated instance
+
+        # Check if any values have changed before saving
+        if (
+            instance.jiko_kisasa != jk_num
+            or instance.kcj != kcj_num
+            or instance.multipurpose != mp_num
+            or instance.liners != liners_num
+            or instance.rocket != rocket_num
+        ):
+            instance.jiko_kisasa = jk_num
+            instance.kcj = kcj_num
+            instance.multipurpose = mp_num
+            instance.liners = liners_num
+            instance.rocket = rocket_num
+
+            # Disconnect the signal temporarily
+            post_save.disconnect(update_monthly_sales, sender=MonthlyLMESales)
+            instance.save()
+            # Reconnect the signal
+            post_save.connect(update_monthly_sales, sender=MonthlyLMESales)
+
+        # monthly_sales.save()
+    else:
+        print(" created")
+
+
+post_save.connect(update_monthly_sales, sender=MonthlyLMESales)
 
 
 # # A tuple of tuples. It is used to create a dropdown menu in the admin panel.
