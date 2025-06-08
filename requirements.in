@@ -16,6 +16,7 @@ djangorestframework
 djangorestframework-gis
 djlint
 
+gunicorn
 
 isort
 Jinja2
@@ -37,7 +38,8 @@ pytest-cov
 pytest-sugar
 
 python-decouple
-
+django-storages
+boto3
 
 PyYAML
 
